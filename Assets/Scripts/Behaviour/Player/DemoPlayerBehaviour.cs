@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Behaviour.Camera;
 using Behaviour.Gravity;
 using Behaviour.Player.Abstract;
+using Behaviour.UI;
 using Lib.Logic;
 using Lib.Logic.Gravity;
 using Lib.State.GravAffection;
@@ -14,15 +15,14 @@ namespace Behaviour.Player
 {
     public class DemoPlayerBehaviour : APlayerBehaviour
     {
-        [SerializeField]
-        private float speed = 5f;
-        
+        private const float Speed = 5f;
+
         [SerializeField]
         private VGravBehaviour gravBehaviour;
+        [SerializeField]
+        private DirectionUIWrapper directionUIWrapper;
         
-        
-        private Vector3 _prevPos;
-        private PlayerGravCtrlContext _playerGravCtrlContext;
+        private GravType _targetGravType = GravType.XNegative;
 
         #region Unity Methods
         
@@ -33,18 +33,6 @@ namespace Behaviour.Player
                 Debug.LogError("GravBehaviour is not assigned.");
                 return;
             }
-            
-            // 初期位置設定
-            _prevPos = transform.position;
-            
-            // コンテキストの初期化
-            _playerGravCtrlContext =
-                new PlayerGravCtrlContext(
-                    new PlayerNormal(
-                        _playerGravCtrlContext,
-                        gravBehaviour,
-                        playerCam
-                    ));
         }
         
         private new void Update()
@@ -53,7 +41,7 @@ namespace Behaviour.Player
             base.Update();
             
             // スペースで影響を受けているならフローティングに変換
-            if (Input.GetMouseButton(0) && _playerGravCtrlContext.CurrentState.GetCurrentState == GravCtrlState.Normal)
+            if (Input.GetMouseButton(0))
             {
                 // カメラの先のオブジェクトを取得
                 var target = playerCam.GetCameraTarget();
@@ -65,24 +53,26 @@ namespace Behaviour.Player
                 if (targetGravBehaviour == null)
                     return;
                 
-                // 待機に遷移
-                _playerGravCtrlContext.SetState(
-                    new PlayerChanging(
-                        _playerGravCtrlContext,
-                        gravBehaviour,
-                        targetGravBehaviour,
-                        playerCam
-                    ));
+                // ターゲット重力方向にセット
+                targetGravBehaviour.SetGravAffected(_targetGravType);
+            }
+            
+            // 右クリックでターゲットの方向を変更
+            if (Input.GetMouseButton(1))
+            {
+                // カメラの向いている方向を取得
+                var camTransform = playerCam.transform;
+                var camForward = camTransform.forward;
+                
+                // ターゲットの重力方向を変更
+                _targetGravType = GravUtils.GetMaxDirection(camForward);
+                
+                // UIに重力方向を通知
+                directionUIWrapper.SetGravType(_targetGravType);
             }
             
             // カメラに位置を通知
             playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
-        }
-        
-        private void FixedUpdate()
-        {
-            // プレイヤーの重力状態を更新
-            _playerGravCtrlContext.OnFixedUpdate();
         }
         
         #endregion
@@ -115,7 +105,7 @@ namespace Behaviour.Player
             
             
             // 移動速度を掛けて、時間を掛ける
-            moveDirection *= speed * deltaTime;
+            moveDirection *= Speed * deltaTime;
             
             return moveDirection;
         }
