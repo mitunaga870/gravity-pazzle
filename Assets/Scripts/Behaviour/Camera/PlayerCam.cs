@@ -12,19 +12,32 @@ namespace Behaviour.Camera
     {
         private const float Threshold = 0.01f;
         private const float Sensitivity = 5f;
+        private const float xOffset = 5f;
+        private const float yOffset = 2f;
         
-        private Vector3? _playerPos = null;
+        private Transform? _playerTrans = null;
         private GravType? _gravType = null;
+        
+        private Vector3 _prevPos = Vector3.zero;
+        
+        private void Awake()
+        {
+            // マウスがはみ出さないようにする
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
+        }
 
         private void Update()
         {
             // プレイヤーの位置が設定されていない場合は何もしない
-            if (_playerPos == null || _gravType == null)
+            if (_playerTrans == null || _gravType == null)
                 return;
             
             // プレイヤーの位置と重力の種類を取得
-            var playerPos = _playerPos.Value;
+            var playerPos = _playerTrans.position;
+            var playerPosOffset = playerPos + new Vector3(xOffset, yOffset, 0);
             var gravType = _gravType.Value;
+            var playerTrans = _playerTrans;
             
             // マウスの動きに合わせてカメラを回転させる
             var mouseX = Input.GetAxis("Mouse X");
@@ -53,15 +66,27 @@ namespace Behaviour.Camera
                     GravUtils.GetGravDirectionUnit(gravType),
                     mouseX * Sensitivity * -1
                 );
+
+            Debug.Log(transform.rotation);
         }
         
         /**
          * プレイヤーの位置を設定する
          */
-        public void SetPlayerPosAndGrav(Vector3 playerPos, GravType gravType)
+        public void SetPlayerPosAndGrav(Transform playerTrans, GravType gravType)
         {
-            _playerPos = playerPos;
+            if (_prevPos == Vector3.zero)
+                // 初期位置設定
+                _prevPos = playerTrans.position;
+            
+            // 変位量を計算
+            var deltaPos = playerTrans.position - _prevPos;
+            // カメラの位置を更新
+            transform.position += deltaPos;
+                
+            _playerTrans = playerTrans;
             _gravType = gravType;
+            _prevPos = _playerTrans.position;
         }
 
         /**

@@ -34,7 +34,7 @@ namespace Lib.State.GravAffection
         public bool Change(IGravAffectionState next)
         {
             // 停止してないと呼び出せない
-            if (_affectedBody.velocity.magnitude > 0.1f)
+            if (_affectedBody.linearVelocity.magnitude > 0.1f)
                 return false;
             
             // 無重力状態以外なら実装
@@ -48,12 +48,12 @@ namespace Lib.State.GravAffection
             // 停止までの時間を設定
             var stopTime = 1f;
             // 速度を0にするようtweenを設定
-            LMotion.Create(_affectedBody.velocity, Vector3.zero, stopTime)
+            LMotion.Create(_affectedBody.linearVelocity, Vector3.zero, stopTime)
                 .WithOnComplete(() => { _isEntered = true; })
                 .Bind((velocity) =>
                 {
                     // 速度を設定
-                    _affectedBody.velocity = velocity;
+                    _affectedBody.linearVelocity = velocity;
                 });
         }
 

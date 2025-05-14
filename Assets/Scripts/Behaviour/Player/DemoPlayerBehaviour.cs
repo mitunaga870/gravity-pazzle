@@ -20,8 +20,6 @@ namespace Behaviour.Player
         [SerializeField]
         private VGravBehaviour gravBehaviour;
         
-        [SerializeField]
-        private PlayerCam playerCam;
         
         private Vector3 _prevPos;
         private PlayerGravCtrlContext _playerGravCtrlContext;
@@ -54,24 +52,8 @@ namespace Behaviour.Player
             // 既定を継承しているので、Updateメソッドをオーバーライド
             base.Update();
             
-            // プレイヤーの位置をカメラに設定
-            // ReSharper disable once InvertIf
-            if (_prevPos != transform.position)
-            {
-                var position = transform.position;
-                playerCam.SetPlayerPosAndGrav(position, gravBehaviour.GravType);
-                _prevPos = position;
-            }
-            
             // スペースで影響を受けているならフローティングに変換
-            if (Input.GetKeyDown(KeyCode.Space) && _playerGravCtrlContext.CurrentState.GetCurrentState == GravCtrlState.Normal) {
-                
-                // 変更中モードに遷移
-                _playerGravCtrlContext.SetState(
-                    new PlayerChanging(_playerGravCtrlContext, gravBehaviour, playerCam)
-                    );
-            } 
-            else if (Input.GetMouseButton(0) && _playerGravCtrlContext.CurrentState.GetCurrentState == GravCtrlState.Normal)
+            if (Input.GetMouseButton(0) && _playerGravCtrlContext.CurrentState.GetCurrentState == GravCtrlState.Normal)
             {
                 // カメラの先のオブジェクトを取得
                 var target = playerCam.GetCameraTarget();
@@ -88,6 +70,9 @@ namespace Behaviour.Player
                     new PlayerChanging(_playerGravCtrlContext, targetGravBehaviour, playerCam
                     ));
             }
+            
+            // カメラに位置を通知
+            playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
         }
         
         private void FixedUpdate()
