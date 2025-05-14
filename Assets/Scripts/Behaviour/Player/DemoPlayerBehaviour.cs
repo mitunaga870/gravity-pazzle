@@ -67,7 +67,11 @@ namespace Behaviour.Player
                 
                 // 待機に遷移
                 _playerGravCtrlContext.SetState(
-                    new PlayerChanging(_playerGravCtrlContext, targetGravBehaviour, playerCam
+                    new PlayerChanging(
+                        _playerGravCtrlContext,
+                        gravBehaviour,
+                        targetGravBehaviour,
+                        playerCam
                     ));
             }
             

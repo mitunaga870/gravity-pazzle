@@ -12,17 +12,20 @@ namespace Lib.State.Player.PlayerGravCtrl
 
         public PlayerChanging(
             PlayerGravCtrlContext context,
+            VGravBehaviour playerGravBehaviour,
             VGravBehaviour target,
             PlayerCam playerCam
         ) {
             _target = target;
             _playerCam = playerCam;
             _context = context;
+            _playerGravBehaviour = playerGravBehaviour;
         }
         
         private readonly VGravBehaviour _target; 
         private readonly PlayerCam _playerCam;
         private readonly PlayerGravCtrlContext _context;
+        private readonly VGravBehaviour _playerGravBehaviour;
         
         private bool _isChangeable = false;
 
@@ -56,7 +59,7 @@ namespace Lib.State.Player.PlayerGravCtrl
             // スペース・シフトを優先
             if (Input.GetKey(KeyCode.Space))
             {
-                var gravType = GravUtils.GetUpperGravType(_target.GravType);
+                var gravType = GravUtils.GetUpperGravType(_playerGravBehaviour.GravType);
                 _target.SetGravAffected(gravType);
                 
                 // 待機に遷移
@@ -66,7 +69,7 @@ namespace Lib.State.Player.PlayerGravCtrl
             }
             if (Input.GetKey(KeyCode.LeftShift))
             {
-                var gravType = GravUtils.GetDownGravType(_target.GravType);
+                var gravType = GravUtils.GetDownGravType(_playerGravBehaviour.GravType);
                 _target.SetGravAffected(gravType);
                 
                 // 待機に遷移
@@ -85,7 +88,7 @@ namespace Lib.State.Player.PlayerGravCtrl
                 Input.GetKey(KeyCode.D),
                 camTransform.forward,
                 camTransform.right,
-                _target.GravType
+                _playerGravBehaviour.GravType
             );
             // 0なら破棄
             if (inputVector.sqrMagnitude <= 0)
