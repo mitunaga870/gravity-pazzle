@@ -66,12 +66,6 @@ namespace Behaviour.Camera
                 // 変化量計算
                 var deltaPitch = mouseY - excessPitch;
 
-                Debug.Log( $"deltaPitch: {deltaPitch}, " +
-                          $"unClampedPitch: {unClampedPitch}, " +
-                          $"excessPitch: {excessPitch}, " +
-                          $"pitch: {_pitch}");
-
-
                 // カメラの回転を更新
                 transform.RotateAround(
                     playerPos,

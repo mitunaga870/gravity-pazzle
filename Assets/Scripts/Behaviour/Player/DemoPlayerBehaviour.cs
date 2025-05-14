@@ -83,7 +83,6 @@ namespace Behaviour.Player
         {
             // プレイヤーの重力状態を更新
             _playerGravCtrlContext.OnFixedUpdate();
-            Debug.Log(_playerGravCtrlContext.CurrentState.GetCurrentState);
         }
         
         #endregion
