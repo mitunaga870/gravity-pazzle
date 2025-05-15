@@ -284,8 +284,9 @@ GameObject:
   - component: {fileID: -6977385216704269291}
   - component: {fileID: 888886025213281899}
   - component: {fileID: 7260400156788781305}
+  - component: {fileID: 3520801224400118283}
   m_Layer: 0
-  m_Name: VGravCube
+  m_Name: VGravCube RideOnce
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -343,7 +344,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4084a843b9ef6af45a63b7163f9fbefb, type: 2}
+  - {fileID: 2100000, guid: d1a5903867c8f0a4a8a94c3fe36dad11, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -458,6 +459,26 @@ MonoBehaviour:
   - {fileID: 4096097882690013775}
   - {fileID: 4941379342396850100}
   - {fileID: 3367694943963936415}
+--- !u!114 &3520801224400118283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3683008173657930156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a957ed8fa3a4a158ea977871c45121c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  rideTriggers:
+  - {fileID: 4779284433136968681}
+  - {fileID: 162162526049730417}
+  - {fileID: 645797124771241548}
+  - {fileID: 4096097882690013775}
+  - {fileID: 4941379342396850100}
+  - {fileID: 3367694943963936415}
+  rideTime: 5
 --- !u!1 &5740917661978855857
 GameObject:
   m_ObjectHideFlags: 0

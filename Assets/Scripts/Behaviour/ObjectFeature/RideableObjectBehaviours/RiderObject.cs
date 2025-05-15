@@ -10,6 +10,7 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 
         public GameObject RidingObject
         {
+            get => ridingObject;
             set
             {
                 // 乗っているオブジェクトがnullの場合、乗っていないとみなしそうでなければ乗る

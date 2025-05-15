@@ -27,6 +27,10 @@ namespace Behaviour.ObjectFeature
 
                 rideTrigger.OnRiderExit += (rider =>
                 {
+                    // 乗ってるオブジェクトが自分の時のみ実行
+                    if (rider.RidingObject != gameObject)
+                        return;
+                    
                     rider.RidingObject = null;
                 });
             }
