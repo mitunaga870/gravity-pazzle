@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 32968f0329e3af744898307d1ce23092
+timeCreated: 1435079292
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 40033
+  packageName: MasterCube
+  packageVersion: 1.0
+  assetPath: Assets/MasterCube/Examples/Carboard/Materials/box_d.mat
+  uploadId: 69535

@@ -29,7 +29,7 @@ Transform:
   m_GameObject: {fileID: 815585825042418411}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2.04, y: 1.91, z: 0.58}
+  m_LocalPosition: {x: -2.04, y: 1.91, z: -0.63}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -129,8 +129,8 @@ MonoBehaviour:
     m_Bits: 1
   m_VolumeTrigger: {fileID: 0}
   m_VolumeFrameworkUpdateModeOption: 2
-  m_RenderPostProcessing: 0
-  m_Antialiasing: 0
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 1
   m_AntialiasingQuality: 2
   m_StopNaN: 0
   m_Dithering: 0
@@ -614,7 +614,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6109590538651414967}
-  m_Material: {fileID: 13400000, guid: 2c1a848d3b25ff24d8b9311c4a50ad1f, type: 2}
+  m_Material: {fileID: 13400000, guid: 364669b6cd063bd4984151fe43a7d6c8, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0

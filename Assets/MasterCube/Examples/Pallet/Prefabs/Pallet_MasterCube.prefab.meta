@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: aa0644f1f8131c646916ae431be44cb6
+timeCreated: 1435066099
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 40033
+  packageName: MasterCube
+  packageVersion: 1.0
+  assetPath: Assets/MasterCube/Examples/Pallet/Prefabs/Pallet_MasterCube.prefab
+  uploadId: 69535
