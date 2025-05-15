@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 {
@@ -8,6 +9,7 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         [SerializeField]
         private Rigidbody rb;
 
+        [Obsolete("Obsolete")]
         public GameObject RidingObject
         {
             get => ridingObject;
@@ -31,6 +33,7 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         }
         private GameObject ridingObject;
         private bool isRiding;
+        public bool IsRiding => isRiding;
         
         private Vector3 prevPosition;
         
