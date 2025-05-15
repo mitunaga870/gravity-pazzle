@@ -9,6 +9,7 @@ using Lib.Logic.Gravity;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
 using Lib.State.Player.PlayerGravCtrl;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace Behaviour.Player
@@ -43,18 +44,7 @@ namespace Behaviour.Player
             // スペースで影響を受けているならフローティングに変換
             if (Input.GetMouseButton(0))
             {
-                // カメラの先のオブジェクトを取得
-                var target = playerCam.GetCameraTarget();
-                if (target == null)
-                    return;
-                
-                // クリックしたオブジェクトの可変重力コンポーネントを取得
-                var targetGravBehaviour = target.GetComponent<VGravBehaviour>();
-                if (targetGravBehaviour == null)
-                    return;
-                
-                // ターゲット重力方向にセット
-                targetGravBehaviour.SetGravAffected(_targetGravType);
+                SetGrav();
             }
             
             // 右クリックでターゲットの方向を変更
@@ -110,6 +100,25 @@ namespace Behaviour.Player
             return moveDirection;
         }
         
+        #endregion
+        
+        #region Private Methods
+
+        private void SetGrav()
+        {
+            // カメラの先のオブジェクトを取得
+            var target = playerCam.GetCameraTarget();
+            if (target == null)
+                return;
+            
+            // クリックしたオブジェクトの可変重力コンポーネントを取得
+            var targetGravBehaviour = target.GetComponent<VGravBehaviour>();
+            if (targetGravBehaviour == null)
+                return;
+            
+            // ターゲット重力方向にセット
+            targetGravBehaviour.SetGravAffected(_targetGravType);
+        }
         #endregion
     }
 }
