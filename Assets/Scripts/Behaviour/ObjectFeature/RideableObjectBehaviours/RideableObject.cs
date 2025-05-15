@@ -1,6 +1,8 @@
 ﻿using System;
+using Behaviour.Gravity.Abstract;
 using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Behaviour.Trigger;
+using Lib.Logic.Gravity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -14,6 +16,10 @@ namespace Behaviour.ObjectFeature
     {
         [SerializeField]
         private RideTrigger[] triggers;
+        
+        [FormerlySerializedAs("gravitySurface")]
+        [SerializeField]
+        private AGravBehaviour gravBehaviour;
 
         private void Start()
         {
@@ -33,6 +39,44 @@ namespace Behaviour.ObjectFeature
                     
                     rider.RidingObject = null;
                 });
+            }
+        }
+
+        [Obsolete("Obsolete")]
+        private void OnCollisionEnter(Collision other)
+        {
+            // ライダーコンポーネントがついているオブジェクトに乗った時
+            var rider = other.gameObject.GetComponent<RiderObject>();
+            if (rider == null) return;
+            
+            // 何かに乗ってない時は処理しない
+            if (!rider.IsRiding) return;
+            
+            // リジットボディを取得
+            var rb = other.gameObject.GetComponent<Rigidbody>();
+            if (rb == null) return;
+            
+        
+            // 乗ったオブジェクトの速度を消す
+            if (gravBehaviour == null)
+            {
+                // 重力の影響を受けない場合
+                rb.velocity = Vector3.zero;
+            }
+            else
+            {
+                var velocity = rb.velocity;
+                var gravType = gravBehaviour.GravType;
+                var gravDirection = GravUtils.GetGravDirectionUnit(gravType);
+                
+                var target =
+                    new Vector3(
+                        velocity.x * Mathf.Abs(gravDirection.x),
+                        velocity.y * Mathf.Abs(gravDirection.y),
+                        velocity.z * Mathf.Abs(gravDirection.z)
+                        );
+                
+                rb.velocity = target;
             }
         }
     }
