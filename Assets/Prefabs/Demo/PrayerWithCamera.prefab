@@ -577,6 +577,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2e268cf38b469f88473977562dc55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialGravType: 3
   affectedRigidBody: {fileID: 8188327382149836959}
   focusCamera: {fileID: 4833847793676088430}
 --- !u!54 &8188327382149836959

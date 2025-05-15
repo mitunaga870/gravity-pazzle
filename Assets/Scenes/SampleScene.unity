@@ -292,13 +292,25 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3141893129525396369, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
+      propertyPath: initialGravType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3683008173657930156, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
       propertyPath: m_Name
       value: VGravCube RideOnce
       objectReference: {fileID: 0}
     - target: {fileID: 6055878537783464824, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055878537783464824, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055878537783464824, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 7.31
       objectReference: {fileID: 0}
     - target: {fileID: 6055878537783464824, guid: 7b7bffc3bd9186a4fb4d379c3588e45a, type: 3}
       propertyPath: m_LocalPosition.y
@@ -1423,6 +1435,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5872984070133269302, guid: d74482d72f3ce7a498e4fc7b37ae2c74, type: 3}
+      propertyPath: initialGravType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6943291645183638940, guid: d74482d72f3ce7a498e4fc7b37ae2c74, type: 3}
       propertyPath: m_Name
       value: PrayerWithCamera
@@ -1562,6 +1578,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3141893129525396369, guid: 5c0b4ead0e45aee4fb0d55aba24037d9, type: 3}
+      propertyPath: initialGravType
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 3683008173657930156, guid: 5c0b4ead0e45aee4fb0d55aba24037d9, type: 3}
       propertyPath: m_Name
       value: Cube
