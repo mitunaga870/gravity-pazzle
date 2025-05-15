@@ -27,8 +27,8 @@ namespace Behaviour.Controller
             
             // Shift+Rキーが押されたら、全てのResetableObjectを初期位置に戻す
             if (
-                (Input.GetKeyDown(KeyCode.LeftShift) 
-                 || Input.GetKeyDown(KeyCode.RightShift))
+                (Input.GetKey(KeyCode.LeftShift) 
+                 || Input.GetKey(KeyCode.RightShift))
                  && Input.GetKeyDown(KeyCode.R))
             {
                 // シーン再読み込み
