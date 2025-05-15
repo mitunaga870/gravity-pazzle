@@ -12,6 +12,8 @@ namespace Behaviour.Gravity.Abstract
     public abstract class AGravBehaviour : MonoBehaviour
     {
         [SerializeField]
+        private GravType initialGravType;
+        [SerializeField]
         private Rigidbody affectedRigidBody;
         
         [SerializeField]
@@ -21,6 +23,7 @@ namespace Behaviour.Gravity.Abstract
         protected Rigidbody AffectedRigidBody => affectedRigidBody;
         
         public GravType GravType => GravAffectionContext.CurrentState.GravType;
+        public GravType InitialGravType => initialGravType;
         
         protected GravAffectionContext GravAffectionContext;
         
@@ -28,7 +31,7 @@ namespace Behaviour.Gravity.Abstract
         {
             GravAffectionContext = new GravAffectionContext(
                 new GravAffected(
-                    GravType.YNegative,
+                    initialGravType,
                     affectedRigidBody,
                     focusCamera != null ? focusCamera.transform : null)
                 );

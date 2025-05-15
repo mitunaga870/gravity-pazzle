@@ -1,4 +1,6 @@
 ﻿using System;
+using Behaviour.Gravity;
+using Behaviour.Gravity.Abstract;
 using Lib.Logic;
 using UnityEngine;
 
@@ -42,6 +44,15 @@ namespace Behaviour.ObjectFeature
                         rb.isKinematic = false;
                     });
                 StartCoroutine(delay);
+            }
+            
+            // 重力を戻す
+            var grav = GetComponent<VGravBehaviour>();
+            if (grav != null)
+            {
+                // GravBehaviourがある場合
+                // 重力を初期値に戻す
+                grav.SetGravAffected(grav.InitialGravType);
             }
             
             // 初期位置に戻す
