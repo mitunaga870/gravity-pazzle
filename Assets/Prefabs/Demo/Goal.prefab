@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 9106584823406611583}
   - component: {fileID: 8056384704294599874}
   - component: {fileID: 7979326416905059777}
+  - component: {fileID: 1330484162308880338}
   m_Layer: 0
   m_Name: Trigger
   m_TagString: Untagged
@@ -42,7 +43,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 99973373914128748}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &9106584823406611583
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -121,6 +122,59 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 963680a983d64a52aa765718dea260b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1330484162308880338
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 99973373914128748}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd9432855aed4f4d9d9fff2252da1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  front:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  back:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  right:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  left:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  top:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  bottom:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  offset: {x: 0, y: 0}
+  scale: {x: 1, y: 1}
+  rotation: 0
+  oldScale: {x: 1, y: 1, z: 1}
 --- !u!1 &1209109291737296618
 GameObject:
   m_ObjectHideFlags: 0
@@ -133,6 +187,7 @@ GameObject:
   - component: {fileID: 8518886482030333261}
   - component: {fileID: 8501364657507841091}
   - component: {fileID: 1947247312319861973}
+  - component: {fileID: 8094316945207575404}
   m_Layer: 0
   m_Name: 'wall '
   m_TagString: Untagged
@@ -162,7 +217,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209109291737296618}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &8501364657507841091
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -229,6 +284,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8094316945207575404
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1209109291737296618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd9432855aed4f4d9d9fff2252da1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  front:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  back:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  right:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  left:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  top:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  bottom:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  offset: {x: 0, y: 0}
+  scale: {x: 1, y: 1}
+  rotation: 0
+  oldScale: {x: 8, y: 9, z: 1}
 --- !u!1 &1532898007782395831
 GameObject:
   m_ObjectHideFlags: 0
@@ -277,6 +385,7 @@ GameObject:
   - component: {fileID: 6628574379631943754}
   - component: {fileID: 6878200260690389470}
   - component: {fileID: 5788523836837017714}
+  - component: {fileID: 6213810161197964439}
   m_Layer: 0
   m_Name: wall
   m_TagString: Untagged
@@ -306,7 +415,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3900256226339169908}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &6878200260690389470
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -373,6 +482,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6213810161197964439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3900256226339169908}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd9432855aed4f4d9d9fff2252da1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  front:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  back:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  right:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  left:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  top:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  bottom:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  offset: {x: 0, y: 0}
+  scale: {x: 1, y: 1}
+  rotation: 0
+  oldScale: {x: 9, y: 8, z: 1}
 --- !u!1 &4090494102177066650
 GameObject:
   m_ObjectHideFlags: 0
@@ -385,6 +547,7 @@ GameObject:
   - component: {fileID: 7466208245877359168}
   - component: {fileID: 4361517663736306045}
   - component: {fileID: 8749940805097773922}
+  - component: {fileID: 6591276835482520902}
   m_Layer: 0
   m_Name: 'wall '
   m_TagString: Untagged
@@ -414,7 +577,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4090494102177066650}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &4361517663736306045
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -481,6 +644,59 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &6591276835482520902
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4090494102177066650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd9432855aed4f4d9d9fff2252da1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 0}
+  front:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  back:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  right:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  left:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  top:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  bottom:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  offset: {x: 0, y: 0}
+  scale: {x: 1, y: 1}
+  rotation: 0
+  oldScale: {x: 9, y: 8, z: 1}
 --- !u!1 &5763571174428938822
 GameObject:
   m_ObjectHideFlags: 0
@@ -493,6 +709,7 @@ GameObject:
   - component: {fileID: 3981868951196521146}
   - component: {fileID: 7654599823044400031}
   - component: {fileID: 1312590534603173597}
+  - component: {fileID: 5874736024995277946}
   m_Layer: 0
   m_Name: wall
   m_TagString: Untagged
@@ -522,7 +739,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5763571174428938822}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+  m_Mesh: {fileID: 0}
 --- !u!23 &7654599823044400031
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -589,3 +806,56 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &5874736024995277946
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5763571174428938822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cd9432855aed4f4d9d9fff2252da1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mesh: {fileID: 4300000, guid: cf029f74ab243b24c8f7b7d9ee14fb33, type: 2}
+  front:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  back:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  right:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  left:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  top:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  bottom:
+    side: 0
+    offset: {x: 0, y: 0}
+    scale: {x: 0, y: 0}
+    rotation: 0
+    uvs: []
+  offset: {x: 0, y: 0}
+  scale: {x: 1, y: 1}
+  rotation: 0
+  oldScale: {x: 8, y: 9, z: 1}

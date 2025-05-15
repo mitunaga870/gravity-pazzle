@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ccc9793a354647d4d9f44a16270950fb
+timeCreated: 1435080635
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 40033
+  packageName: MasterCube
+  packageVersion: 1.0
+  assetPath: Assets/MasterCube/Examples/Examples-Scene.unity
+  uploadId: 69535

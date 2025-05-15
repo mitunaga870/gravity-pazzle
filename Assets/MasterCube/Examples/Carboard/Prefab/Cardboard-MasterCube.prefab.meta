@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 4717e0828a75b284da07e06513d34ad4
+timeCreated: 1435079738
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 40033
+  packageName: MasterCube
+  packageVersion: 1.0
+  assetPath: Assets/MasterCube/Examples/Carboard/Prefab/Cardboard-MasterCube.prefab
+  uploadId: 69535

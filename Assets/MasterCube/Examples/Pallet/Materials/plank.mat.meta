@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: ebcd84e64ee75a5488e9c47c87b47256
+timeCreated: 1434670808
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 40033
+  packageName: MasterCube
+  packageVersion: 1.0
+  assetPath: Assets/MasterCube/Examples/Pallet/Materials/plank.mat
+  uploadId: 69535
