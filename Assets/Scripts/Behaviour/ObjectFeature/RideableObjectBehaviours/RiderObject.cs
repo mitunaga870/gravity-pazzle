@@ -42,10 +42,14 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
             
             // 乗っているオブジェクトの位置変異に合わせて移動させる
             var delta = ridingPos - prevPosition;
-            rb.MovePosition(rb.position + delta);
-
             // 直前の位置を更新
             prevPosition = ridingPos;
+            
+            if (delta == Vector3.zero) return;
+            
+            rb.MovePosition(rb.position + delta);
+            Debug.Log($"moveTo: {rb.position  + delta} = {rb.position} + {delta}"); 
+
         }
     }
 }
