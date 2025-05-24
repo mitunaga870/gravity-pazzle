@@ -9,7 +9,6 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         [SerializeField]
         private Rigidbody rb;
 
-        [Obsolete("Obsolete")]
         public GameObject RidingObject
         {
             get => ridingObject;

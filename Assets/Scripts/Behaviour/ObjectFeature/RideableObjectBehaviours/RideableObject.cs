@@ -1,10 +1,13 @@
-﻿using System;
+﻿#region
+
 using Behaviour.Gravity.Abstract;
 using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Behaviour.Trigger;
 using Lib.Logic.Gravity;
 using UnityEngine;
 using UnityEngine.Serialization;
+
+#endregion
 
 namespace Behaviour.ObjectFeature
 {
@@ -42,7 +45,6 @@ namespace Behaviour.ObjectFeature
             }
         }
 
-        [Obsolete("Obsolete")]
         private void OnCollisionEnter(Collision other)
         {
             // ライダーコンポーネントがついているオブジェクトに乗った時
@@ -61,11 +63,11 @@ namespace Behaviour.ObjectFeature
             if (gravBehaviour == null)
             {
                 // 重力の影響を受けない場合
-                rb.velocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
             }
             else
             {
-                var velocity = rb.velocity;
+                var velocity = rb.linearVelocity;
                 var gravType = gravBehaviour.GravType;
                 var gravDirection = GravUtils.GetGravDirectionUnit(gravType);
                 
@@ -75,8 +77,8 @@ namespace Behaviour.ObjectFeature
                         velocity.y * Mathf.Abs(gravDirection.y),
                         velocity.z * Mathf.Abs(gravDirection.z)
                         );
-                
-                rb.velocity = target;
+
+                rb.linearVelocity = target;
             }
         }
     }
