@@ -67,6 +67,7 @@ namespace Behaviour.ObjectFeature
             }
             else
             {
+                // 重力の影響を受ける場合は重力方向のみの速度を残す
                 var velocity = rb.linearVelocity;
                 var gravType = gravBehaviour.GravType;
                 var gravDirection = GravUtils.GetGravDirectionUnit(gravType);
@@ -78,6 +79,7 @@ namespace Behaviour.ObjectFeature
                         velocity.z * Mathf.Abs(gravDirection.z)
                         );
 
+                // 速度を設定
                 rb.linearVelocity = target;
             }
         }
