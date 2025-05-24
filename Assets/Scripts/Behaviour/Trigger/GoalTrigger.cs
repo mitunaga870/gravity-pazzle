@@ -4,6 +4,9 @@ namespace Behaviour.Trigger
 {
     public class GoalTrigger : MonoBehaviour
     {
+        [SerializeField]
+        private GameObject goalText;
+        
         public void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -12,7 +15,9 @@ namespace Behaviour.Trigger
                 Debug.Log("Goal Reached!");
                 
                 // ここでゲームクリアの処理を追加することができます
+                goalText.SetActive(true);
             }
         }
+        
     }
 }
