@@ -11,6 +11,13 @@
       },
       "hash": "b946c3a10848a426a09baa395df5151792d7625e"
     },
+    "com.cqf.urpvolumetricfog": {
+      "version": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "88053c1a52ec57cf2ea0afa30d6e915a1f078686"
+    },
     "com.unity.burst": {
       "version": "1.8.21",
       "depth": 1,
