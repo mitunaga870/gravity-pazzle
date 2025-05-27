@@ -38,6 +38,9 @@ namespace Behaviour.Gravity
         
         #region Public Methods
 
+        /// <summary>
+        ///     無重力状態にする
+        /// </summary>
         public void SetGravFloating()
         {
             if (
