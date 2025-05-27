@@ -33,7 +33,7 @@ namespace Behaviour.Gimmick
         /// <summary>
         ///     静的な重力エリアの重力タイプを変更します。
         /// </summary>
-        /// <param name="newGravType">次にせってする重力を設定する</param>
+        /// <param name="newGravType">次に設定する重力タイプを指定します</param>
         /// <returns></returns>
         public bool ChangeGravType(GravType newGravType)
         {
