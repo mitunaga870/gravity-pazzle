@@ -1,9 +1,16 @@
-﻿using Behaviour.Trigger;
+﻿#region
+
+using Behaviour.Trigger;
 using Lib.Logic;
 using UnityEngine;
 
+#endregion
+
 namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 {
+    /// <summary>
+    ///     一回だけ乗れるオブジェクトのクラス
+    /// </summary>
     public class RideOnce : MonoBehaviour
     {
         [SerializeField]

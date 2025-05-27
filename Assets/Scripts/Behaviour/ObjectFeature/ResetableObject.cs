@@ -1,8 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using Behaviour.Gravity;
-using Behaviour.Gravity.Abstract;
 using Lib.Logic;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.ObjectFeature
 {
@@ -17,7 +20,10 @@ namespace Behaviour.ObjectFeature
             // 初期位置を覚える
             _initialPosition = transform.position;
         }
-        
+
+        /// <summary>
+        ///     位置をリセットする
+        /// </summary>
         [Obsolete("Obsolete")]
         public void ResetPosition()
         {

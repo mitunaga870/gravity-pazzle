@@ -1,7 +1,10 @@
-using Behaviour.Player.Abstract;
+#region
+
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Camera
 {
@@ -85,10 +88,12 @@ namespace Behaviour.Camera
                 );
             }
         }
-        
-        /**
-         * プレイヤーの位置を設定する
-         */
+
+        /// <summary>
+        ///     プレイヤーの位置と重力方向を指定する
+        /// </summary>
+        /// <param name="playerTrans"></param>
+        /// <param name="gravType"></param>
         public void SetPlayerPosAndGrav(Transform playerTrans, GravType gravType)
         {
             if (_prevPos == Vector3.zero)
