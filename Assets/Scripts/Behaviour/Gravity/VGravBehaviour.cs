@@ -58,7 +58,7 @@ namespace Behaviour.Gravity
         /// <summary>
         ///     重力を設定方向にする
         /// </summary>
-        /// <param name="gravType">指定する重力を指定していする</param>
+        /// <param name="gravType">適用する重力タイプを設定します</param>
         /// <param name="forceChange">速度があるときに強制的に変更するかどうか</param>
         public void SetGravAffected(GravType gravType, bool forceChange = false)
         {
