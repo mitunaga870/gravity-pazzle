@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
 using UnityEngine;
+
+#endregion
 
 namespace Lib.State.GravAffection
 {
@@ -31,7 +35,7 @@ namespace Lib.State.GravAffection
         public GravAffectionState GetCurrentState => GravAffectionState.Floating;
         public GravType GravType => _gravType;
 
-        public bool Change(IGravAffectionState next)
+        public bool Change(IGravAffectionState next, bool forceChange = false)
         {
             // 停止してないと呼び出せない
             if (_affectedBody.linearVelocity.magnitude > 0.1f)
