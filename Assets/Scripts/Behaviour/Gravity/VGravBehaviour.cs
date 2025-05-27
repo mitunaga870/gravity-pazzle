@@ -1,8 +1,11 @@
-﻿using Behaviour.Gravity.Abstract;
-using JetBrains.Annotations;
+﻿#region
+
+using Behaviour.Gravity.Abstract;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Gravity
 {
@@ -48,8 +51,13 @@ namespace Behaviour.Gravity
             )))
                 Debug.LogError("Failed to set GravFloating state.");
         }
-        
-        public void SetGravAffected(GravType gravType)
+
+        /// <summary>
+        ///     重力を設定方向にする
+        /// </summary>
+        /// <param name="gravType">指定する重力を指定していする</param>
+        /// <param name="forceChange">速度があるときに強制的に変更するかどうか</param>
+        public void SetGravAffected(GravType gravType, bool forceChange = false)
         {
             if (
                 !GravAffectionContext.
@@ -57,8 +65,9 @@ namespace Behaviour.Gravity
                         new GravAffected(
                             gravType, 
                             AffectedRigidBody,
-                            _isFocusCameraNotNull ? focusCamera!.transform : null
-            )))
+                            _isFocusCameraNotNull ? focusCamera!.transform : null),
+                        forceChange
+                    ))
                 Debug.Log("Failed to set GravAffected state.");
         }
         

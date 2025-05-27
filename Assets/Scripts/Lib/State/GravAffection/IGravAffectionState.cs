@@ -1,6 +1,8 @@
-﻿using Behaviour.Gravity.Abstract;
+﻿#region
+
 using Lib.State.Interface.Gravity;
-using UnityEngine;
+
+#endregion
 
 namespace Lib.State.GravAffection
 {
@@ -8,8 +10,8 @@ namespace Lib.State.GravAffection
     {
         GravAffectionState GetCurrentState { get; }
         GravType GravType { get; }
-        
-        bool Change(IGravAffectionState next);
+
+        bool Change(IGravAffectionState next, bool forceChange = false);
         
         void OnEnter(IGravAffectionState prev = null);
         void OnExit();
