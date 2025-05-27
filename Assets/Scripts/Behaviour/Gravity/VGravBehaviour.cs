@@ -1,8 +1,11 @@
-﻿using Behaviour.Gravity.Abstract;
-using JetBrains.Annotations;
+﻿#region
+
+using Behaviour.Gravity.Abstract;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Gravity
 {
@@ -48,7 +51,11 @@ namespace Behaviour.Gravity
             )))
                 Debug.LogError("Failed to set GravFloating state.");
         }
-        
+
+        /// <summary>
+        ///     重力タイプを設定する
+        /// </summary>
+        /// <param name="gravType"></param>
         public void SetGravAffected(GravType gravType)
         {
             if (
