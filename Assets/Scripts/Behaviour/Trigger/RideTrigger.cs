@@ -1,8 +1,12 @@
-﻿using System;
+﻿#region
+
+using System;
 using Behaviour.Gravity.Abstract;
 using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Trigger
 {
@@ -42,6 +46,13 @@ namespace Behaviour.Trigger
             // アクション実施
             OnRiderEnter?.Invoke(rider);
         }
+
+        private void OnTriggerStay(Collider other)
+        {
+            // 意図しないExitで置いて行かれることを防ぐ為に乗ってる間Enterを発火
+            OnTriggerEnter(other);
+        }
+        
 
         private void OnTriggerExit(Collider other)
         {

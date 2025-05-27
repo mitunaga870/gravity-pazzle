@@ -50,8 +50,6 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
             if (delta == Vector3.zero) return;
             
             rb.MovePosition(rb.position + delta);
-            Debug.Log($"moveTo: {rb.position  + delta} = {rb.position} + {delta}"); 
-
         }
     }
 }

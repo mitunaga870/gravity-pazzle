@@ -1,7 +1,6 @@
 ﻿#region
 
 using Behaviour.Gravity.Abstract;
-using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Behaviour.Trigger;
 using Lib.Logic.Gravity;
 using UnityEngine;
@@ -9,7 +8,7 @@ using UnityEngine.Serialization;
 
 #endregion
 
-namespace Behaviour.ObjectFeature
+namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 {
     /// <summary>
     /// 乗れるオブジェクト用クラス
@@ -31,7 +30,14 @@ namespace Behaviour.ObjectFeature
             {
                 rideTrigger.OnRiderEnter += (rider =>
                 {
+                    // 自身に既に乗ってる時は処理しない
+                    if (rider.RidingObject == gameObject)
+                        return;
+
+                    // 自身を搭乗オブジェクトに設定
                     rider.RidingObject = gameObject;
+
+                    Debug.Log($"Rider {rider.name} ride on {gameObject.name}");
                 });
 
                 rideTrigger.OnRiderExit += (rider =>
@@ -39,8 +45,11 @@ namespace Behaviour.ObjectFeature
                     // 乗ってるオブジェクトが自分の時のみ実行
                     if (rider.RidingObject != gameObject)
                         return;
-                    
+
+                    // 自身から降りた時は乗ってるオブジェクトをnullにする
                     rider.RidingObject = null;
+
+                    Debug.Log($"Rider {rider.name} ride off {gameObject.name}");
                 });
             }
         }
