@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "com.annulusgames.lit-motion": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion",
+    "com.annulusgames.lit-motion.animation": "https://github.com/annulusgames/LitMotion.git?path=src/LitMotion/Assets/LitMotion.Animation",
+    "com.cqf.urpvolumetricfog": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
     "com.unity.collab-proxy": "2.7.1",
     "com.unity.feature.development": "1.0.2",
     "com.unity.multiplayer.center": "1.0.0",
