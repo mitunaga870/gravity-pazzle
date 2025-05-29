@@ -1,10 +1,13 @@
-﻿using Behaviour.Gravity.Abstract;
-using Lib.Logic;
+﻿#region
+
+using System;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
 using LitMotion.Extensions;
 using UnityEngine;
+
+#endregion
 
 namespace Lib.State.GravAffection
 {
@@ -34,11 +37,15 @@ namespace Lib.State.GravAffection
         public GravType GravType => _gravType;
         private readonly bool _hasCamera;
 
+        [Obsolete("Obsolete")]
         public bool Change(IGravAffectionState next)
         {
-            if (next == null)
+            // 速度がゼロでない場合は変更不可
+            if (_affectedBody != null && _affectedBody.velocity.sqrMagnitude > 0.01f)
                 return false;
             
+            if (next == null)
+                return false;
             
             return true;
         }
