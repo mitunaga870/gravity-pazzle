@@ -1,12 +1,14 @@
-﻿using System;
+﻿#region
+
 using Behaviour.Gravity.Abstract;
-using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Behaviour.Trigger;
 using Lib.Logic.Gravity;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Behaviour.ObjectFeature
+#endregion
+
+namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 {
     /// <summary>
     /// 乗れるオブジェクト用クラス
@@ -28,7 +30,14 @@ namespace Behaviour.ObjectFeature
             {
                 rideTrigger.OnRiderEnter += (rider =>
                 {
+                    // 自身に既に乗ってる時は処理しない
+                    if (rider.RidingObject == gameObject)
+                        return;
+
+                    // 自身を搭乗オブジェクトに設定
                     rider.RidingObject = gameObject;
+
+                    Debug.Log($"Rider {rider.name} ride on {gameObject.name}");
                 });
 
                 rideTrigger.OnRiderExit += (rider =>
@@ -36,13 +45,15 @@ namespace Behaviour.ObjectFeature
                     // 乗ってるオブジェクトが自分の時のみ実行
                     if (rider.RidingObject != gameObject)
                         return;
-                    
+
+                    // 自身から降りた時は乗ってるオブジェクトをnullにする
                     rider.RidingObject = null;
+
+                    Debug.Log($"Rider {rider.name} ride off {gameObject.name}");
                 });
             }
         }
 
-        [Obsolete("Obsolete")]
         private void OnCollisionEnter(Collision other)
         {
             // ライダーコンポーネントがついているオブジェクトに乗った時
@@ -61,11 +72,12 @@ namespace Behaviour.ObjectFeature
             if (gravBehaviour == null)
             {
                 // 重力の影響を受けない場合
-                rb.velocity = Vector3.zero;
+                rb.linearVelocity = Vector3.zero;
             }
             else
             {
-                var velocity = rb.velocity;
+                // 重力の影響を受ける場合は重力方向のみの速度を残す
+                var velocity = rb.linearVelocity;
                 var gravType = gravBehaviour.GravType;
                 var gravDirection = GravUtils.GetGravDirectionUnit(gravType);
                 
@@ -75,8 +87,9 @@ namespace Behaviour.ObjectFeature
                         velocity.y * Mathf.Abs(gravDirection.y),
                         velocity.z * Mathf.Abs(gravDirection.z)
                         );
-                
-                rb.velocity = target;
+
+                // 速度を設定
+                rb.linearVelocity = target;
             }
         }
     }
