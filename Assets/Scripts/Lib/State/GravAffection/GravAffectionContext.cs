@@ -1,7 +1,14 @@
-﻿using UnityEngine;
+﻿#region
+
+using UnityEngine;
+
+#endregion
 
 namespace Lib.State.GravAffection
 {
+    /// <summary>
+    ///     重力の影響ステートを管理するクラス
+    /// </summary>
     public class GravAffectionContext
     {
         IGravAffectionState _prevState;
@@ -19,9 +26,14 @@ namespace Lib.State.GravAffection
             CurrentState?.OnEnter();
         }
 
-        public bool SetState(IGravAffectionState next)
+        /// <summary>
+        ///     次の重力状態を設定します。
+        /// </summary>
+        /// <param name="next"></param>
+        /// <returns> できたかどうかをboolで </returns>
+        public bool SetState(IGravAffectionState next, bool forceChange = false)
         {
-            if(!CurrentState.Change(next))
+            if (!CurrentState.Change(next, forceChange))
                 return false;
             
             //　状態更新

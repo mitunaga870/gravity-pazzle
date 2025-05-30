@@ -1,5 +1,9 @@
-﻿using System;
+﻿#region
+
+using System;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 {
@@ -9,6 +13,11 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         [SerializeField]
         private Rigidbody rb;
 
+        /// <summary>
+        ///     乗っているオブジェクトを指定する
+        ///     降りるときにはnullを指定する
+        /// </summary>
+        [Obsolete("Obsolete")]
         public GameObject RidingObject
         {
             get => ridingObject;

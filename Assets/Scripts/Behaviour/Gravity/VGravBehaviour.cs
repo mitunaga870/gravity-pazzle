@@ -38,6 +38,9 @@ namespace Behaviour.Gravity
         
         #region Public Methods
 
+        /// <summary>
+        ///     無重力状態にする
+        /// </summary>
         public void SetGravFloating()
         {
             if (
@@ -53,10 +56,11 @@ namespace Behaviour.Gravity
         }
 
         /// <summary>
-        ///     重力タイプを設定する
+        ///     重力を設定方向にする
         /// </summary>
-        /// <param name="gravType"></param>
-        public void SetGravAffected(GravType gravType)
+        /// <param name="gravType">適用する重力タイプを設定します</param>
+        /// <param name="forceChange">速度があるときに強制的に変更するかどうか</param>
+        public void SetGravAffected(GravType gravType, bool forceChange = false)
         {
             if (
                 !GravAffectionContext.
@@ -64,8 +68,9 @@ namespace Behaviour.Gravity
                         new GravAffected(
                             gravType, 
                             AffectedRigidBody,
-                            _isFocusCameraNotNull ? focusCamera!.transform : null
-            )))
+                            _isFocusCameraNotNull ? focusCamera!.transform : null),
+                        forceChange
+                    ))
                 Debug.Log("Failed to set GravAffected state.");
         }
         
