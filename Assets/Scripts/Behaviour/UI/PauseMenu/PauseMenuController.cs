@@ -35,6 +35,8 @@ namespace Behaviour.UI.PauseMenu
 
             // カーソルを表示し、ゲームの入力を無効にする
             Cursor.lockState = CursorLockMode.None;
+            // カーソルを表示する
+            Cursor.visible = true;
         }
 
         /// <summary>
@@ -46,6 +48,8 @@ namespace Behaviour.UI.PauseMenu
 
             // カーソルをロックし、ゲームの入力を有効にする
             Cursor.lockState = CursorLockMode.Locked;
+            // カーソルを非表示にする
+            Cursor.visible = false;
         }
     }
 }
