@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 1b1113dcbe613f34baead09ffbf847ed
+timeCreated: 1532691955
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 25800000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Demo/Scenes/Demo/LightingData.asset
+  uploadId: 257981

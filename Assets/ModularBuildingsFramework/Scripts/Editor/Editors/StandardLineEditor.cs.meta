@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: b8a78a8d4f692c34e84fb50807690d06
+timeCreated: 1529675779
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Editor/Editors/StandardLineEditor.cs
+  uploadId: 257981

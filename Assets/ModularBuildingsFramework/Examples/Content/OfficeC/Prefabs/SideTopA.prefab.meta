@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 458628f04c8d81d4282d08da9fee7c79
+timeCreated: 1529997015
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/OfficeC/Prefabs/SideTopA.prefab
+  uploadId: 257981

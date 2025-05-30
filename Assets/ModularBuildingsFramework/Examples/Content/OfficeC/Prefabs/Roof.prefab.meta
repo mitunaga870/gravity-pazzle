@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 65810262498b5154ba0757cb383b61c2
+timeCreated: 1529997979
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/OfficeC/Prefabs/Roof.prefab
+  uploadId: 257981

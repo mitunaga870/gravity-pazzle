@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 367773cb7684d8c489278730dae67afc
+timeCreated: 1529919233
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/IndustrialA/Prefabs/PlaneRoof.prefab
+  uploadId: 257981

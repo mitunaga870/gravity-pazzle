@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c8ff46e5cb25e2d408969bdd02a83542
+timeCreated: 1529997121
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Builders/OfficeC/Columns/FacadeA.asset
+  uploadId: 257981

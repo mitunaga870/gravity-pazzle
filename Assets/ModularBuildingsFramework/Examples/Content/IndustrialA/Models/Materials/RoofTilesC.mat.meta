@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 012d163c8ce5a794ab94d3489523a014
+timeCreated: 1529915743
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/IndustrialA/Models/Materials/RoofTilesC.mat
+  uploadId: 257981

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: abb4812d11c09044da9d99ff651b60ed
+timeCreated: 1530020349
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Builders/ResidentalA/Elements/FacadeRoofA.asset
+  uploadId: 257981

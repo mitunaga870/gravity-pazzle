@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: bd506f8eeb2c84649a673c16e44aeb1c
+timeCreated: 1529579670
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Columns/Standard/ColumnGenerationSettings.cs
+  uploadId: 257981

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 813e65cf01306ec46b2c3bb9ee20dcde
+timeCreated: 1529997693
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Builders/OfficeC/Lines/SideLine.asset
+  uploadId: 257981

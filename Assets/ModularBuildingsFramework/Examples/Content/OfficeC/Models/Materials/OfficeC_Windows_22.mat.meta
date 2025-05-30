@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 9664949670939b9418e8c3d27e8ddbe8
+timeCreated: 1529996569
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 2100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/OfficeC/Models/Materials/OfficeC_Windows_22.mat
+  uploadId: 257981

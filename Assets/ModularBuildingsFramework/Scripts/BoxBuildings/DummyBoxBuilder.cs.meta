@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 1dd955733ed7bf441b87b33c95ad1f21
+timeCreated: 1529920139
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/BoxBuildings/DummyBoxBuilder.cs
+  uploadId: 257981

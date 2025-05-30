@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: d6c63c16d06f41e4b91a4038a666c3f2
+timeCreated: 1530098167
+licenseType: Store
+DefaultImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Demo/Scenes/Demo.unity
+  uploadId: 257981

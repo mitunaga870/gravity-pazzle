@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 506f55d7252f2c24684fe10521a686df
+timeCreated: 1530020172
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/ResidentalA/Prefabs/EdgeTopFloorA.prefab
+  uploadId: 257981

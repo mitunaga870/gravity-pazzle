@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 991525432f5f4a5488d50deb47752e40
+timeCreated: 1529996967
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/OfficeC/Prefabs/FacadeRepeatA.prefab
+  uploadId: 257981

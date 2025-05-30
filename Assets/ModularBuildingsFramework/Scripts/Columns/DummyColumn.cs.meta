@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: dc6fa0d4d4d209c4e981e2eb6c2cc899
+timeCreated: 1529919415
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Columns/DummyColumn.cs
+  uploadId: 257981

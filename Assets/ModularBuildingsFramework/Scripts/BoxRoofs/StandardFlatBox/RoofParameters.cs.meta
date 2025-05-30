@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: e09bdb828cf750749a5a950e1e22d50e
+timeCreated: 1529908877
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/BoxRoofs/StandardFlatBox/RoofParameters.cs
+  uploadId: 257981

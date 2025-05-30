@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 62cf72cb377379e4f8d2412a9ba7c000
+timeCreated: 1529998431
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Decorators/MaterialRandomizerItem.cs
+  uploadId: 257981

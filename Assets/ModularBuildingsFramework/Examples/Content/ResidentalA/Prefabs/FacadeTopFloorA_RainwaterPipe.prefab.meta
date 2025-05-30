@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 522e76da288a9994b8c850fd6c8cad81
+timeCreated: 1530020883
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/ResidentalA/Prefabs/FacadeTopFloorA_RainwaterPipe.prefab
+  uploadId: 257981

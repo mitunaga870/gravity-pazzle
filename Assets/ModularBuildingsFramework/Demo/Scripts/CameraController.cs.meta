@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 3700b2897b6993a4684443fae2ce75b4
+timeCreated: 1530170436
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Demo/Scripts/CameraController.cs
+  uploadId: 257981

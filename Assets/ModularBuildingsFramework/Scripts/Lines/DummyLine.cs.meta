@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 8d5ee0f43bdbc514b9fe4d63c9893dab
+timeCreated: 1529920013
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Lines/DummyLine.cs
+  uploadId: 257981

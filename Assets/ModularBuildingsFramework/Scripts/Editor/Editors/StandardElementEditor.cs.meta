@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 4488e3d48a6b1a942b173d639accf3de
+timeCreated: 1529672042
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Editor/Editors/StandardElementEditor.cs
+  uploadId: 257981

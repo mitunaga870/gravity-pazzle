@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 0a1b2e57268f1c34a955e4df2ecce639
+timeCreated: 1529917758
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/IndustrialA/Prefabs/EdgeSecondFloorA.prefab
+  uploadId: 257981

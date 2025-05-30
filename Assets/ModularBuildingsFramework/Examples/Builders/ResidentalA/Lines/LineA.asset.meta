@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: 44eb18ded67d1754f829291cd99ce2c2
+timeCreated: 1530021547
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 11400000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Builders/ResidentalA/Lines/LineA.asset
+  uploadId: 257981

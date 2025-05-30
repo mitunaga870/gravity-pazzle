@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: a742df2f0b9380c488170ec683982394
+timeCreated: 1529579749
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Editor/Windows/ColumnBuilderWindow.cs
+  uploadId: 257981

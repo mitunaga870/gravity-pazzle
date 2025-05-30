@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: d26a68f1b6e22e64fb5fded206f2cc60
+timeCreated: 1529584209
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Lines/Standard/LineGenerationSettings.cs
+  uploadId: 257981

@@ -1,0 +1,16 @@
+fileFormatVersion: 2
+guid: c5562ddc962b4c64eb132458daabc685
+timeCreated: 1530020883
+licenseType: Store
+NativeFormatImporter:
+  mainObjectFileID: 100100000
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Examples/Content/ResidentalA/Prefabs/FacadeTopFloorA.prefab
+  uploadId: 257981

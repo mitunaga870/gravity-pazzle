@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 7983076641673ea4c8658311da630135
+timeCreated: 1529584225
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Lines/Standard/LineItemsCollection.cs
+  uploadId: 257981

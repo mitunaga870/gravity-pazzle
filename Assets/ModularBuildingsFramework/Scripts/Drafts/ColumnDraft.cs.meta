@@ -1,0 +1,19 @@
+fileFormatVersion: 2
+guid: 77123c2c190920749a9c0dfee9530f54
+timeCreated: 1529579637
+licenseType: Store
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 123671
+  packageName: Modular Buildings Framework
+  packageVersion: 1.0
+  assetPath: Assets/ModularBuildingsFramework/Scripts/Drafts/ColumnDraft.cs
+  uploadId: 257981
