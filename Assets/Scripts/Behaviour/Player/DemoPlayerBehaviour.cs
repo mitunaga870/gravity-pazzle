@@ -1,25 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using Behaviour.Camera;
+﻿#region
+
 using Behaviour.Gravity;
+using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Behaviour.UI;
-using Lib.Logic;
 using Lib.Logic.Gravity;
-using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
-using Lib.State.Player.PlayerGravCtrl;
-using Unity.VisualScripting;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Player
 {
+    /// <summary>
+    ///     デモプレイヤー用の挙動クラス
+    ///     プレイヤー移動とカメラへのプレイヤー位置の通知を行う
+    /// </summary>
     public class DemoPlayerBehaviour : APlayerBehaviour
     {
         private const float Speed = 5f;
 
         [SerializeField]
-        private VGravBehaviour gravBehaviour;
+        private AGravBehaviour gravBehaviour;
         [SerializeField]
         private DirectionUIWrapper directionUIWrapper;
         
