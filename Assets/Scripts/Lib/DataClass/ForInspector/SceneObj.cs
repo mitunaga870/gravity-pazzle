@@ -10,6 +10,10 @@ using UnityEditor;
 
 namespace Lib.DataClass.ForInspector
 {
+    /// <summary>
+    ///     これをシリアライズフィールドに指定すると、Unityのインスペクターでシーンを選択できるようになります。<br />
+    ///     引用：https://baba-s.hatenablog.com/entry/2017/11/14/110000
+    /// </summary>
     [Serializable]
     public class SceneObj
     {
