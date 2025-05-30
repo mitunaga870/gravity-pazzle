@@ -11,6 +11,9 @@ using UnityEngine;
 
 namespace Lib.State.GravAffection
 {
+    /// <summary>
+    ///     重力の状態を受けているステート
+    /// </summary>
     public class GravAffected: IGravAffectionState
     {
         public GravAffected(
@@ -38,10 +41,12 @@ namespace Lib.State.GravAffection
         private readonly bool _hasCamera;
 
         [Obsolete("Obsolete")]
-        public bool Change(IGravAffectionState next)
+        public bool Change(IGravAffectionState next, bool forceChange = false) 
         {
             // 速度がゼロでない場合は変更不可
-            if (_affectedBody != null && _affectedBody.velocity.sqrMagnitude > 0.01f)
+            if (_affectedBody == null &&
+                (_affectedBody.velocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
+               )
                 return false;
             
             if (next == null)

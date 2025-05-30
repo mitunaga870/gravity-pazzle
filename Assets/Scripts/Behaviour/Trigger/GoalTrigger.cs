@@ -1,4 +1,8 @@
-﻿using UnityEngine;
+﻿#region
+
+using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Trigger
 {
@@ -6,7 +10,11 @@ namespace Behaviour.Trigger
     {
         [SerializeField]
         private GameObject goalText;
-        
+
+        /// <summary>
+        ///     ゴールに到達したときの処理
+        /// </summary>
+        /// <param name="other"></param>
         public void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
@@ -18,6 +26,5 @@ namespace Behaviour.Trigger
                 goalText.SetActive(true);
             }
         }
-        
     }
 }
