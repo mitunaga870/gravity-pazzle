@@ -14838,6 +14838,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: SD_unitychan_humanoid
       objectReference: {fileID: 0}
+    - target: {fileID: 100264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
+      propertyPath: m_TagString
+      value: Player
+      objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.5
