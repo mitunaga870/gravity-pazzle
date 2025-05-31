@@ -4476,6 +4476,10 @@ PrefabInstance:
       propertyPath: _random
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 11400088, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
+      propertyPath: isGUI
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -13920,7 +13924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c39598263154b93a64c35e01ceb7435, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerCam: {fileID: 0}
+  playerCam: {fileID: 1706628297}
 --- !u!43 &1445296074
 Mesh:
   m_ObjectHideFlags: 0
@@ -17503,7 +17507,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 1872627740}
   playerCam: {fileID: 1706628297}
   gravBehaviour: {fileID: 1872627728}
-  directionUIWrapper: {fileID: 0}
+  directionUIWrapper: {fileID: 127654331}
 --- !u!114 &1872627730
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1181,7 +1181,7 @@
     "m_ObjectId": "806d269aab8d44cab7ea1e9ce1619b94",
     "m_Title": "Gradient Animation",
     "m_Position": {
-        "x": -1653.0001220703125,
+        "x": -1653.0,
         "y": -82.0
     }
 }
@@ -2029,8 +2029,8 @@
     "m_ObjectId": "fe21d0bbad7046f1bdbd2f302be06482",
     "m_Title": "Darken by Depth",
     "m_Position": {
-        "x": -2025.000244140625,
-        "y": -525.0000610351563
+        "x": -2025.0,
+        "y": -524.9999389648438
     }
 }
 
