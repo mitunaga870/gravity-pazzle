@@ -14856,7 +14856,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.241
+      value: 0.278
       objectReference: {fileID: 0}
     - target: {fileID: 400264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
       propertyPath: m_LocalPosition.z
@@ -14929,9 +14929,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 100264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2129726180}
-    - targetCorrespondingSourceObject: {fileID: 100264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2129726179}
     - targetCorrespondingSourceObject: {fileID: 100264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2129726192}
@@ -16485,21 +16482,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 400264, guid: 13a16f60da4245c45a865b2136ba272c, type: 3}
   m_PrefabInstance: {fileID: 1854296630}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &2129726179
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2129726177}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3e2e268cf38b469f88473977562dc55a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  initialGravType: 3
-  affectedRigidBody: {fileID: 2129726184}
-  focusCamera: {fileID: 1993926672}
 --- !u!114 &2129726180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16515,7 +16497,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: 2129726184}
   playerAnimator: {fileID: 2129726191}
   playerCam: {fileID: 1932570965}
-  gravBehaviour: {fileID: 2129726179}
+  gravBehaviour: {fileID: 2129726192}
   directionUIWrapper: {fileID: 1658263504}
 --- !u!114 &2129726181
 MonoBehaviour:
