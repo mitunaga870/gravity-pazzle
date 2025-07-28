@@ -31,6 +31,12 @@ namespace Behaviour.UI
         // スクリーンセーバーが表示されているかどうか
         private bool _isScreenSaverActive;
 
+        // スクリーンセーバーのオブジェクトの動画プレイヤー
+        private VideoPlayer _videoPlayer;
+
+        // スクリーンセーバーのオブジェクトが動画プレイヤーを持っているかどうか
+        private bool _hasVideoPlayer;
+
         #endregion
 
         #region Unity Methods
@@ -39,6 +45,13 @@ namespace Behaviour.UI
         {
             // スクリーンセーバーのオブジェクトが設定されていない場合はエラーを出す
             if (screenSaverObj == null) Debug.LogError("ScreenSaver object is not assigned.");
+
+            // ビデオプレイヤーが設定されている場合は取得
+            if (screenSaverObj.TryGetComponent<VideoPlayer>(out var videoPlayer))
+            {
+                _videoPlayer = videoPlayer; // ビデオプレイヤーを保存
+                _hasVideoPlayer = true; // スクリーンセーバーオブジェクトが動画プレイヤーを持っている
+            }
 
             // 初期化
             _idleTime = 0f; // 放置時間を初期化
@@ -74,10 +87,10 @@ namespace Behaviour.UI
             if (_isScreenSaverActive) return; // 既に表示されている場合は何もしない
 
             // スクリーンセーバーが動画の場合は０秒にシーク
-            if (screenSaverObj.TryGetComponent<VideoPlayer>(out var videoPlayer))
+            if (_hasVideoPlayer && _videoPlayer != null)
             {
-                videoPlayer.time = 0; // 動画の再生位置を0秒に設定
-                videoPlayer.Play(); // 動画を再生
+                _videoPlayer.time = 0; // 動画の再生位置を0秒に設定
+                _videoPlayer.Play(); // 動画を再生
             }
 
             // スクリーンセーバーのオブジェクトを表示
@@ -98,7 +111,8 @@ namespace Behaviour.UI
             screenSaverObj.SetActive(false);
 
             // 動画プレイヤーがある場合は停止
-            if (screenSaverObj.TryGetComponent<VideoPlayer>(out var videoPlayer)) videoPlayer.Stop(); // 動画を停止
+            if (_hasVideoPlayer && _videoPlayer != null)
+                _videoPlayer.Stop(); // 動画の再生を停止
 
             _isScreenSaverActive = false; // スクリーンセーバーが非表示の状態に更新
         }
