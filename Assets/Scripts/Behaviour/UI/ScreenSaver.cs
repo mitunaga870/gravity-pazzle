@@ -48,7 +48,7 @@ namespace Behaviour.UI
         private void Update()
         {
             // マウスの動きやキー入力を検出
-            if (Input.anyKey || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            if (Input.inputString.Length > 0 || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
             {
                 _idleTime = 0f; // 放置時間をリセット
                 HideScreenSaver(); // スクリーンセーバーを非表示にする
