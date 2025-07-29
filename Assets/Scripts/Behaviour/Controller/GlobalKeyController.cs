@@ -17,7 +17,7 @@ namespace Behaviour.Controller
     {
         private ResetableObject[] _resetableObjects;
 
-        // チュートリアル用の常態
+        // チュートリアル用の状態
         // リセットが呼ばれた
         public bool IsResetCalled { get; private set; }
 
