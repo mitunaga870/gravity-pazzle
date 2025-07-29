@@ -85,7 +85,7 @@ namespace Behaviour.UI
         }
 
         /**
-         * チュートリアルの常態遷移
+         * チュートリアルの状態遷移
          */
         private void Update()
         {
