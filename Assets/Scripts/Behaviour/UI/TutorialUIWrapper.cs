@@ -137,7 +137,7 @@ namespace Behaviour.UI
             )
                 _uiDisplayTimer += Time.deltaTime;
 
-            // 指定時間経過したら次の常態へ遷移
+            // 指定時間経過したら次の状態へ遷移
             if (!(_uiDisplayTimer > uiDisplayTime)) return;
             _uiDisplayTimer = 0f; // タイマーをリセット
             _currentState++;
