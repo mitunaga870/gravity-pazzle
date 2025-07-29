@@ -88,7 +88,7 @@ namespace Behaviour.Camera
                     deltaPitch
                 );
 
-                // チュートリアル用の常態を更新
+                // チュートリアル用の状態を更新
                 IsMoved = true;
             }
 
