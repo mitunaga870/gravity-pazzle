@@ -30,7 +30,7 @@ namespace Behaviour.Camera
 
         #region Public Fields
 
-        // チュートリアル用の常態フィールド
+        // チュートリアル用の状態フィールド
         // カメラが動かされたことがあるか
         public bool IsMoved { get; private set; }
 
