@@ -27,7 +27,7 @@ namespace Behaviour.Player.Abstract
 
         #region Public Properties
 
-        // チュートリアル用の常態プロパティ
+        // チュートリアル用の状態プロパティ
         // プレイヤーが移動したかどうか
         public bool IsMoved { get; private set; }
 
