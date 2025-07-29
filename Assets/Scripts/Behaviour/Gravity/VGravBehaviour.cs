@@ -18,6 +18,10 @@ namespace Behaviour.Gravity
         private bool _isFocusCameraNotNull;
         
         public IGravAffectionState CurrentGravState => GravAffectionContext.CurrentState;
+
+        // チュートリアル用の常態コード
+        // 重力を変えられたか
+        public bool IsGravChanged { get; private set; }
         
         # region Unity Methods
 
@@ -72,6 +76,8 @@ namespace Behaviour.Gravity
                         forceChange
                     ))
                 Debug.Log("Failed to set GravAffected state.");
+            else
+                IsGravChanged = true;
         }
         
         #endregion
