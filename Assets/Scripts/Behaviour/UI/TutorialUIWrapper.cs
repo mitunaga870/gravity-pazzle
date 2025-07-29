@@ -124,7 +124,7 @@ namespace Behaviour.UI
                     break;
             }
 
-            // チュートリアル常態に応じて条件を満たしている時間を計測
+            // チュートリアル状態に応じて条件を満たしている時間を計測
             if (
                 (_currentState == TutorialState.MoveAndCam &&
                  demoPlayerBehaviour.IsMoved && playerCam.IsMoved) ||
