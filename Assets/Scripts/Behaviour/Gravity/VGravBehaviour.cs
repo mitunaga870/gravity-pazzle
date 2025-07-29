@@ -19,7 +19,7 @@ namespace Behaviour.Gravity
         
         public IGravAffectionState CurrentGravState => GravAffectionContext.CurrentState;
 
-        // チュートリアル用の常態コード
+        // チュートリアル用の状態コード
         // 重力を変えられたか
         public bool IsGravChanged { get; private set; }
         
