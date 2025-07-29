@@ -1,6 +1,9 @@
-﻿using Behaviour.Camera;
+﻿#region
+
+using Behaviour.Camera;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+#endregion
 
 namespace Behaviour.Player.Abstract
 {
@@ -10,6 +13,7 @@ namespace Behaviour.Player.Abstract
     /// </summary>
     public abstract class APlayerBehaviour : MonoBehaviour
     {
+        #region SerializeField
         [SerializeField]
         private Rigidbody playerRigidBody;
         
@@ -19,11 +23,25 @@ namespace Behaviour.Player.Abstract
         [SerializeField]
         protected PlayerCam playerCam;
 
+        #endregion
+
+        #region Public Properties
+
+        // チュートリアル用の常態プロパティ
+        // プレイヤーが移動したかどうか
+        public bool IsMoved { get; private set; }
+
+        #endregion
+
+        #region Unity Methods
         protected void Update()
         {
             // プレイヤーの移動
             var moveDirection = GetMoveDirection(Time.deltaTime);
             playerRigidBody.MovePosition(playerRigidBody.position + moveDirection);
+
+            // 移動したかどうかを更新
+            IsMoved = IsMoved || moveDirection != Vector3.zero;
             
             // 速度があれば、移動方向を向く
             if (moveDirection != Vector3.zero)
@@ -42,6 +60,8 @@ namespace Behaviour.Player.Abstract
                 playerAnimator.SetBool("Idle", true);
             }
         }
+
+        #endregion
 
         /**
          * 移動ベクトルを取得する
