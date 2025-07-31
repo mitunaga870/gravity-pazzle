@@ -1,5 +1,6 @@
 #region
 
+#nullable enable
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
@@ -13,17 +14,29 @@ namespace Behaviour.Camera
      */
     public class PlayerCam : MonoBehaviour
     {
+        #region Private Fields 
         private const float Threshold = 0.01f;
         private const float Sensitivity = 5f;
         private const float MaxPitch = 85f;
-        
-        private Transform? _playerTrans = null;
-        private GravType? _gravType = null;
+
+        private Transform? _playerTrans;
+        private GravType? _gravType;
         
         private Vector3 _prevPos = Vector3.zero;
-        
-        private float _pitch = 0f;
-        
+
+        private float _pitch;
+
+        #endregion
+
+        #region Public Fields
+
+        // チュートリアル用の状態フィールド
+        // カメラが動かされたことがあるか
+        public bool IsMoved { get; private set; }
+
+        #endregion
+
+        #region Unity Methods
         private void Awake()
         {
             // マウスがはみ出さないようにする
@@ -40,7 +53,6 @@ namespace Behaviour.Camera
             // プレイヤーの位置と重力の種類を取得
             var playerPos = _playerTrans.position;
             var gravType = _gravType.Value;
-            var playerTrans = _playerTrans;
             
             // マウスの動きに合わせてカメラを回転させる
             var mouseX = Mathf.Clamp(
@@ -75,6 +87,9 @@ namespace Behaviour.Camera
                     rotatedAxis,
                     deltaPitch
                 );
+
+                // チュートリアル用の状態を更新
+                IsMoved = true;
             }
 
             if (Mathf.Abs(mouseX) > Threshold)
@@ -89,6 +104,9 @@ namespace Behaviour.Camera
             }
         }
 
+        #endregion
+
+        #region Public Methods
         /// <summary>
         ///     プレイヤーの位置と重力方向を指定する
         /// </summary>
@@ -113,7 +131,7 @@ namespace Behaviour.Camera
         /**
          * カメラの先のオブジェクトを取得する
          */
-        public GameObject GetCameraTarget()
+        public GameObject? GetCameraTarget()
         {
             var camTransform = this.transform;
             var originalPos = camTransform.position;
@@ -126,5 +144,7 @@ namespace Behaviour.Camera
                 // ヒットしなかった場合はnullを返す
                 null;
         }
+
+        #endregion
     }
 }
