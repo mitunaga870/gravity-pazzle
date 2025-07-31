@@ -46,6 +46,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   demoPlayMin: 5
   stage1Name:
-    m_SceneName: testStage
+    m_SceneName: SurveytestStage
   stage2Name:
-    m_SceneName: DemoStage2
+    m_SceneName: SurveyDemoStage2
+  surveySceneName:
+    m_SceneName: SurveyEnd
