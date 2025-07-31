@@ -25,8 +25,8 @@ namespace Behaviour.UI
 
         #region Private Fields
 
-        // 放置時間
-        private float _idleTime;
+        // 放置時間　最初はスクリーンセーバーを表示するために最大値
+        private float _idleTime = float.MaxValue;
 
         // スクリーンセーバーが表示されているかどうか
         private bool _isScreenSaverActive;
@@ -68,10 +68,9 @@ namespace Behaviour.UI
             }
             else
             {
-                _idleTime += Time.deltaTime; // 放置時間を更新
-
-                // スクリーンセーバーの時間を超えたら表示
+                // 放置時間がスクリーンセーバーの時間を超えた場合はスクリーンセーバーを表示
                 if (_idleTime >= screenSaverTime) ShowScreenSaver();
+                else _idleTime += Time.deltaTime; // 放置時間を更新
             }
         }
 
