@@ -11,7 +11,7 @@ namespace Behaviour.Trigger
     public class GoalTrigger : MonoBehaviour
     {
         // ゴールに淘汰すしたときのコールバック処理
-        private readonly List<Action> onGloal = new();
+        private readonly List<Action> onGoal = new();
 
         // ゴール時に表示するテキストオブジェクト
         [SerializeField]
