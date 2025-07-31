@@ -33,7 +33,7 @@ namespace Behaviour.Trigger
             goalText.SetActive(true);
 
             // ゴールに到達したときのコールバックを実行
-            foreach (var action in onGloal)
+            foreach (var action in onGoal)
                 action?.Invoke();
         }
 
