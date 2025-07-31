@@ -54,7 +54,6 @@ namespace Behaviour.UI
             }
 
             // 初期化
-            _idleTime = 0f; // 放置時間を初期化
             HideScreenSaver(true); // スクリーンセーバーを非表示にする
         }
 
