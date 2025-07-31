@@ -102,13 +102,16 @@ namespace Behaviour.Controller
             // デモ終了フラグを立てる
             _endDemo = true;
 
-            Debug.Log("end demo go to:" + surveySceneName.SceneName);
-            
             // 数秒待ってからアンケートへ遷移
             var waitCoroutine =
                 GeneralUtils.DelayCoroutine(2f, () =>
                     SceneManager.LoadScene(surveySceneName.SceneName));
             StartCoroutine(waitCoroutine);
+
+            // 値を初期化
+            _playTime = 0f;
+            _stage1Clear = false;
+            _stage2Clear = false;
         }
 
         /**
