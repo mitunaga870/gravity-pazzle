@@ -22,7 +22,13 @@ namespace Behaviour.UI.General
         /// </summary>
         public void OnPointerEnter(PointerEventData eventData)
         {
-            foreach (var target in targets) target.SetActive(true);
+            foreach (var target in targets)
+            {
+                if (target != null)
+                {
+                    target.SetActive(true);
+                }
+            }
         }
 
         /// <summary>
