@@ -94,9 +94,9 @@ namespace Behaviour.Controller
 
         #region Private Methods
 
-        /**
-         * デモ終了処理
-         */
+        /// <summary>
+        /// デモ終了処理
+        /// </summary>
         private void EndDemo()
         {
             // 既にデモが終了している場合は何もしない
