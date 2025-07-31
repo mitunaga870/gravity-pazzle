@@ -43,6 +43,7 @@ namespace Behaviour.Trigger
         public void AddOnGoal(Action action)
         {
             if (action == null) return;
+            
             onGloal.Add(action);
         }
     }
