@@ -44,7 +44,7 @@ namespace Behaviour.Trigger
         {
             if (action == null) return;
             
-            onGloal.Add(action);
+            onGoal.Add(action);
         }
     }
 }
