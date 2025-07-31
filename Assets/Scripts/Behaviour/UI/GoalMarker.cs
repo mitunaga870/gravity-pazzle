@@ -45,7 +45,7 @@ namespace Behaviour.UI
                 _distanceText = _distanceTextObject.GetComponent<TextMeshProUGUI>();
         }
 
-        private int _updateFrameInterval = 5; // 5フレームごとに更新
+        private int _updateFrameInterval = 1; // 更新するフレーム間隔
         private int _frameCounter = 0;        // 更新間引き用のフレームカウンター
 
         private void Update()

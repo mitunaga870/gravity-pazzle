@@ -16367,6 +16367,10 @@ PrefabInstance:
       propertyPath: _playerCamera
       value: 
       objectReference: {fileID: 665133468}
+    - target: {fileID: 2471014520698074670, guid: 29a412fa7b605d44d9e8ab5356b88c13, type: 3}
+      propertyPath: _screenEdgeBuffer
+      value: 20
+      objectReference: {fileID: 0}
     - target: {fileID: 4538968213172047522, guid: 29a412fa7b605d44d9e8ab5356b88c13, type: 3}
       propertyPath: m_Name
       value: GoalMarkerPanel
