@@ -45,11 +45,20 @@ namespace Behaviour.UI
                 _distanceText = _distanceTextObject.GetComponent<TextMeshProUGUI>();
         }
 
+        private int _updateFrameInterval = 5; // Update every 5 frames
+        private int _frameCounter = 0;        // Frame counter for throttling updates
+
         private void Update()
         {
             if (_target == null || _playerCamera == null || _canvasRect == null)
                 return;
 
+            // Skip updates until the frame interval is reached
+            _frameCounter++;
+            if (_frameCounter < _updateFrameInterval)
+                return;
+
+            _frameCounter = 0; // Reset the counter
             // ワールド→ビューポート
             Vector3 vpPos = _playerCamera.WorldToViewportPoint(_target.position);
             // カメラ→ゴール方向ベクトル
