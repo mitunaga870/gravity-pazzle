@@ -23,6 +23,9 @@ namespace Behaviour.Controller
         // ステージ２のクリアフラグ
         private bool _stage2Clear;
 
+        // end demoのフラグ
+        private bool _endDemo;
+
         #endregion
 
         #region Serialized Fields
@@ -47,6 +50,16 @@ namespace Behaviour.Controller
 
         private void Start()
         {
+            // 存在確認
+            var existingController =
+                FindObjectsByType<DemoSurveyController>(FindObjectsSortMode.None);
+            if (existingController.Length > 1)
+            {
+                // 既に存在する場合はこのオブジェクトを破棄
+                Destroy(gameObject);
+                return;
+            }
+            
             // 初期化
             _playTime = 0f;
             _stage1Clear = false;
@@ -84,6 +97,13 @@ namespace Behaviour.Controller
          */
         private void EndDemo()
         {
+            // 既にデモが終了している場合は何もしない
+            if (_endDemo) return;
+            // デモ終了フラグを立てる
+            _endDemo = true;
+
+            Debug.Log("end demo go to:" + surveySceneName.SceneName);
+            
             // 数秒待ってからアンケートへ遷移
             var waitCoroutine =
                 GeneralUtils.DelayCoroutine(2f, () =>
