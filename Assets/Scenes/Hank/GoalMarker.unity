@@ -16369,7 +16369,7 @@ PrefabInstance:
       objectReference: {fileID: 665133468}
     - target: {fileID: 4538968213172047522, guid: 29a412fa7b605d44d9e8ab5356b88c13, type: 3}
       propertyPath: m_Name
-      value: GaolMarkerPanel
+      value: GoalMarkerPanel
       objectReference: {fileID: 0}
     - target: {fileID: 4705740525921486485, guid: 29a412fa7b605d44d9e8ab5356b88c13, type: 3}
       propertyPath: m_Pivot.x

@@ -28,7 +28,7 @@ namespace Behaviour.UI
         private RectTransform _canvasRect;      
 
         [SerializeField, Range(90f, 180f)]
-        private float _backAngleThreshold = 180f;  // 背面判定に使う角度閾値(°)
+        private float _backAngleThreshold = 120f;  // 背面判定に使う角度閾値(°)
 
         private void Awake()
         {

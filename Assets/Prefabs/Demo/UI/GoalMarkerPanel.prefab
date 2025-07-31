@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 6280235037319543270}
   - component: {fileID: 4119237193287962809}
   m_Layer: 5
-  m_Name: GaolMarkerPanel
+  m_Name: GoalMarkerPanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
