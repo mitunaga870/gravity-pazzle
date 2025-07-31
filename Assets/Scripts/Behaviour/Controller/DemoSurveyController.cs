@@ -78,8 +78,10 @@ namespace Behaviour.Controller
             // プレイ時間の更新
             _playTime += Time.deltaTime;
 
+            const float minToSec = 60f;
+
             // デモプレイ時間を超えたら終了
-            if (_playTime >= demoPlayMin * 60f) EndDemo();
+            if (_playTime >= demoPlayMin * minToSec) EndDemo();
             // else Debug.Log(_playTime + _stage1Clear.ToString() + _stage2Clear);
 
             // ステージクリアの確認
@@ -104,9 +106,11 @@ namespace Behaviour.Controller
             // デモ終了フラグを立てる
             _endDemo = true;
 
+            const float delayForLoad = 2f;
+
             // 数秒待ってからアンケートへ遷移
             var waitCoroutine =
-                GeneralUtils.DelayCoroutine(2f, () =>
+                GeneralUtils.DelayCoroutine(delayForLoad, () =>
                     SceneManager.LoadScene(surveySceneName.SceneName));
             StartCoroutine(waitCoroutine);
 
