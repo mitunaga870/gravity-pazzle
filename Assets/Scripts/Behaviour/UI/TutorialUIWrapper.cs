@@ -149,8 +149,8 @@ namespace Behaviour.UI
     public enum TutorialState
     {
         MoveAndCam = 0,
-        GravChange = 1,
-        TargetGravChange = 2,
+        TargetGravChange = 1,
+        GravChange = 2,
         Reset = 3
     }
 }
