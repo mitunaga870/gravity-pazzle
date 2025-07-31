@@ -116,9 +116,9 @@ namespace Behaviour.Controller
             _stage2Clear = false;
         }
 
-        /**
-         * ステージクリア時の処理
-         */
+        /// <summary>
+        /// ステージクリア時の処理
+        /// </summary>
         private void OnStageClear()
         {
             // シーン名取得
