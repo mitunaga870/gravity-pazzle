@@ -83,9 +83,11 @@ namespace Behaviour.Controller
             // else Debug.Log(_playTime + _stage1Clear.ToString() + _stage2Clear);
 
             // ステージクリアの確認
+#if UNITY_EDITOR
             if (Input.GetKeyDown(KeyCode.C))
                 // デバッグ用にステージクリアを強制的に呼び出す
                 OnStageClear();
+#endif
         }
 
         #endregion
