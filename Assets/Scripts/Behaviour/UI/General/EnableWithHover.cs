@@ -36,7 +36,13 @@ namespace Behaviour.UI.General
         /// </summary>
         public void OnPointerExit(PointerEventData eventData)
         {
-            foreach (var target in targets) target.SetActive(false);
+            foreach (var target in targets)
+            {
+                if (target != null)
+                {
+                    target.SetActive(false);
+                }
+            }
         }
     }
 }
