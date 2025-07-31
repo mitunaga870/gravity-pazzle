@@ -27,6 +27,14 @@ namespace Behaviour.Player
         
         private GravType _targetGravType = GravType.XNegative;
 
+        #region Public Fields
+
+        // チュートリアル用の状態フィールド
+        // ターゲットの重力方向を変更したか
+        public bool IsTargetGravChanged { get; private set; }
+
+        #endregion
+
         #region Unity Methods
         
         private void Start()
@@ -61,6 +69,9 @@ namespace Behaviour.Player
                 
                 // UIに重力方向を通知
                 directionUIWrapper.SetGravType(_targetGravType);
+
+                // ターゲット重力変更済み
+                IsTargetGravChanged = true;
             }
             
             // カメラに位置を通知

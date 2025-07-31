@@ -1,7 +1,11 @@
-﻿using System;
+﻿#region
+
+using System;
 using Behaviour.ObjectFeature;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+#endregion
 
 namespace Behaviour.Controller
 {
@@ -12,6 +16,13 @@ namespace Behaviour.Controller
     public class GlobalKeyController: MonoBehaviour
     {
         private ResetableObject[] _resetableObjects;
+
+        // チュートリアル用の状態
+        // リセットが呼ばれた
+        public bool IsResetCalled { get; private set; }
+
+        // ハードリセットが呼ばれた
+        public bool IsHardResetCalled { get; private set; }
         
         # region Unity Methods
         [Obsolete("Obsolete")]
@@ -33,13 +44,15 @@ namespace Behaviour.Controller
             {
                 // シーン再読み込み
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                IsHardResetCalled = true;
             }
             // Rキーが押されたら、全てのResetableObjectを初期位置に戻す
             else if (Input.GetKeyDown(KeyCode.R))
             {
                 ResetAllObjects();
+                IsResetCalled = true;
             }
-}
+        }
         # endregion
         
         #region Private Methods
