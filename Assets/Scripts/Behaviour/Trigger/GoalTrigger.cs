@@ -37,9 +37,9 @@ namespace Behaviour.Trigger
                 action?.Invoke();
         }
 
-        /**
-         * ゴールに到達したときのコールバックを登録する
-         */
+        /// <summary>
+        ///     ゴールに到達したときのコールバックを登録する
+        /// </summary>
         public void AddOnGoal(Action action)
         {
             if (action == null) return;
