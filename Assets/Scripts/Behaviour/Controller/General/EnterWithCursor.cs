@@ -13,6 +13,8 @@ namespace Behaviour.Controller.General
     {
         private void Start()
         {
+            // ゲーム開始時にカーソルをロックしない
+            Cursor.lockState = CursorLockMode.None;
             // カーソル表示
             Cursor.visible = true;
         }
