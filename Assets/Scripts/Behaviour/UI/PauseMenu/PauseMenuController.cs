@@ -15,7 +15,7 @@ namespace Behaviour.UI.PauseMenu
         [SerializeField]
         private GameObject pauseMenu;
         
-        public bool IsMenuOpened { private set; get; }
+        public bool IsMenuOpened { get; private set; }
 
         private void Update()
         {
