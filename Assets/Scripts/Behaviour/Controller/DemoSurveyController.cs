@@ -26,6 +26,9 @@ namespace Behaviour.Controller
         // end demoのフラグ
         private bool _endDemo;
 
+        // 初期化フラグ
+        private bool _initialized;
+
         #endregion
 
         #region Serialized Fields
@@ -60,21 +63,20 @@ namespace Behaviour.Controller
                 return;
             }
             
-            // 初期化
-            _playTime = 0f;
-            _stage1Clear = false;
-            _stage2Clear = false;
-
             // 破棄させない
             DontDestroyOnLoad(gameObject);
 
             // シーン読み込み時に処理を追加
             SceneManager.sceneLoaded += (scene, mode) => OnSceneLoaded();
+            SceneManager.sceneLoaded += (scene, mode) => Init();
         }
 
 
         private void Update()
         {
+            // 初期化されていなければ終了
+            if (!_initialized) return;
+            
             // プレイ時間の更新
             _playTime += Time.deltaTime;
 
@@ -82,7 +84,6 @@ namespace Behaviour.Controller
 
             // デモプレイ時間を超えたら終了
             if (_playTime >= demoPlayMin * minToSec) EndDemo();
-            // else Debug.Log(_playTime + _stage1Clear.ToString() + _stage2Clear);
 
             // ステージクリアの確認
 #if UNITY_EDITOR
@@ -114,10 +115,8 @@ namespace Behaviour.Controller
                     SceneManager.LoadScene(surveySceneName.SceneName));
             StartCoroutine(waitCoroutine);
 
-            // 値を初期化
-            _playTime = 0f;
-            _stage1Clear = false;
-            _stage2Clear = false;
+            // 初期化フラグを元に戻す
+            _initialized = false;
         }
 
         /// <summary>
@@ -149,6 +148,26 @@ namespace Behaviour.Controller
             // ゴールが無ければリターン
             if (goal != null)
                 goal.AddOnGoal(OnStageClear); // ステージクリア時の処理を登録
+        }
+
+        private void Init()
+        {
+            // 既に初期化されている場合は何もしない
+            if (_initialized) return;
+
+            // シーンがステージかどうかを確認
+            var sceneName = SceneManager.GetActiveScene().name;
+            if (sceneName != stage1Name.SceneName && sceneName != stage2Name.SceneName)
+                return; // ステージ以外のシーンでは初期化しない
+
+            // 初期化フラグを立てる
+            _initialized = true;
+
+            // 値を初期化
+            _playTime = 0f;
+            _stage1Clear = false;
+            _stage2Clear = false;
+            _endDemo = false;
         }
 
         #endregion
