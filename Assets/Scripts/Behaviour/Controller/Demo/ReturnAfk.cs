@@ -32,8 +32,23 @@ namespace Behaviour.Controller.Demo
             else
                 _afkTime += Time.deltaTime; // 入力がなかった場合はAFK時間を更新
 
-            // AFK時間が閾値を超えたら指定シーンに戻る
-            if (_afkTime >= afkThreshold) SceneManager.LoadScene(returnScene);
+            // AFK時間が閾値を超えたら初期に戻す
+            if (_afkTime >= afkThreshold) Reset();
+        }
+
+        private void Reset()
+        {
+            // 初期化
+            _afkTime = 0f;
+
+            // アンケート制御があればそれもリセット
+            var surveyController = FindFirstObjectByType<DemoSurveyController>();
+            if (surveyController != null)
+                surveyController.ResetDemo();
+
+
+            // シーンに遷移
+            SceneManager.LoadScene(returnScene);
         }
     }
 }
