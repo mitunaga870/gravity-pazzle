@@ -171,5 +171,18 @@ namespace Behaviour.Controller
         }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        ///     デモの初期化状態をリセットする
+        /// </summary>
+        public void ResetDemo()
+        {
+            // 初期化フラグを元に戻す
+            _initialized = false;
+        }
+
+        #endregion
     }
 }
