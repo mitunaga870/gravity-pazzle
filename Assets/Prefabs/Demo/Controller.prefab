@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8551918628968382709}
   - component: {fileID: 1716625557044137296}
+  - component: {fileID: -3280043090863565490}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -44,3 +45,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbd895b42d94e37b86ea98e66d496b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-3280043090863565490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254733339695932710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a4835ffd8d088ae4288719ad786b9e41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  returnScene:
+    m_SceneName: DemoTitle
+  afkThreshold: 30
