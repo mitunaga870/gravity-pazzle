@@ -29,6 +29,8 @@ namespace Lib.DataClass.ForInspector
         {
             return new SceneObj { m_SceneName = sceneName };
         }
+
+        public string SceneName => m_SceneName;
     }
 
 #if UNITY_EDITOR
