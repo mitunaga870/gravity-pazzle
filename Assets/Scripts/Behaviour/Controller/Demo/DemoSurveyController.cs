@@ -135,8 +135,8 @@ namespace Behaviour.Controller
             if (sceneName == stage2Name.SceneName && !_stage2Clear)
                 _stage2Clear = true;
 
-            // 両方のステージがクリアされたらデモ終了
-            if (_stage1Clear && _stage2Clear)
+            // どちらかがクリアされたら終了処理
+            if (_stage1Clear || _stage2Clear)
                 EndDemo();
         }
 
