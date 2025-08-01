@@ -4,6 +4,7 @@ using Behaviour.Camera;
 using Behaviour.Controller;
 using Behaviour.Gravity;
 using Behaviour.Player;
+using Behaviour.UI.PauseMenu;
 using UnityEngine;
 
 #endregion
@@ -26,6 +27,9 @@ namespace Behaviour.UI
 
         [SerializeField]
         private GlobalKeyController globalKeyController;
+        
+        [SerializeField]
+        private PauseMenuController pauseMenuController;
 
         [Header("UIの表示対象")]
         [SerializeField]
@@ -39,6 +43,9 @@ namespace Behaviour.UI
 
         [SerializeField]
         private GameObject resetUI;
+        
+        [SerializeField]
+        private GameObject menuUI;
 
         [Header("その他")]
         [SerializeField]
@@ -63,10 +70,12 @@ namespace Behaviour.UI
                 playerCam == null ||
                 vGravBehaviour == null ||
                 globalKeyController == null ||
+                pauseMenuController == null ||
                 moveAndCamUI == null ||
                 gravChangeUI == null ||
                 targetGravChangeUI == null ||
-                resetUI == null
+                resetUI == null ||
+                menuUI == null
             )
             {
                 Debug.LogError("One or more serialized fields are not assigned.");
@@ -77,6 +86,7 @@ namespace Behaviour.UI
             gravChangeUI.SetActive(false);
             targetGravChangeUI.SetActive(false);
             resetUI.SetActive(false);
+            menuUI.SetActive(false);
             // 移動とカメラのUIを表示
             moveAndCamUI.SetActive(true);
 
@@ -97,30 +107,42 @@ namespace Behaviour.UI
                     gravChangeUI.SetActive(false);
                     targetGravChangeUI.SetActive(false);
                     resetUI.SetActive(false);
+                    menuUI.SetActive(false);
                     break;
                 case TutorialState.GravChange:
                     moveAndCamUI.SetActive(false);
                     gravChangeUI.SetActive(true);
                     targetGravChangeUI.SetActive(false);
                     resetUI.SetActive(false);
+                    menuUI.SetActive(false);
                     break;
                 case TutorialState.TargetGravChange:
                     moveAndCamUI.SetActive(false);
                     gravChangeUI.SetActive(false);
                     targetGravChangeUI.SetActive(true);
                     resetUI.SetActive(false);
+                    menuUI.SetActive(false);
                     break;
                 case TutorialState.Reset:
                     moveAndCamUI.SetActive(false);
                     gravChangeUI.SetActive(false);
                     targetGravChangeUI.SetActive(false);
                     resetUI.SetActive(true);
+                    menuUI.SetActive(false);
+                    break;
+                case TutorialState.Menu:
+                    moveAndCamUI.SetActive(false);
+                    gravChangeUI.SetActive(false);
+                    targetGravChangeUI.SetActive(false);
+                    resetUI.SetActive(false);
+                    menuUI.SetActive(true);
                     break;
                 default:
                     moveAndCamUI.SetActive(false);
                     gravChangeUI.SetActive(false);
                     targetGravChangeUI.SetActive(false);
                     resetUI.SetActive(false);
+                    menuUI.SetActive(false);
                     break;
             }
 
@@ -133,7 +155,9 @@ namespace Behaviour.UI
                 (_currentState == TutorialState.TargetGravChange &&
                  demoPlayerBehaviour.IsTargetGravChanged) ||
                 (_currentState == TutorialState.Reset &&
-                 globalKeyController.IsResetCalled)
+                 globalKeyController.IsResetCalled) ||
+                (_currentState == TutorialState.Menu &&
+                 pauseMenuController.IsMenuOpened)
             )
                 _uiDisplayTimer += Time.deltaTime;
 
@@ -151,6 +175,7 @@ namespace Behaviour.UI
         MoveAndCam = 0,
         TargetGravChange = 1,
         GravChange = 2,
-        Reset = 3
+        Reset = 3,
+        Menu = 4,
     }
 }
