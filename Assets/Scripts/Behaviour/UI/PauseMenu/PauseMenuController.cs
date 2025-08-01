@@ -14,6 +14,8 @@ namespace Behaviour.UI.PauseMenu
     {
         [SerializeField]
         private GameObject pauseMenu;
+        
+        public bool IsMenuOpened { get; private set; }
 
         private void Update()
         {
@@ -37,6 +39,9 @@ namespace Behaviour.UI.PauseMenu
             Cursor.lockState = CursorLockMode.None;
             // カーソルを表示する
             Cursor.visible = true;
+            
+            // 開いたフラグを立てる
+            IsMenuOpened = true;
         }
 
         /// <summary>
