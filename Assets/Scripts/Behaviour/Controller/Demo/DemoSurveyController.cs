@@ -175,7 +175,7 @@ namespace Behaviour.Controller
         #region Public Methods
 
         /// <summary>
-        ///     非初期化状態に戻す
+        ///     デモの初期化状態をリセットする
         /// </summary>
         public void ResetDemo()
         {
