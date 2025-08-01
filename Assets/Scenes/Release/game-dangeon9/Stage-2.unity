@@ -14645,6 +14645,10 @@ PrefabInstance:
       propertyPath: globalKeyController
       value: 
       objectReference: {fileID: 529508301}
+    - target: {fileID: 8930505866714894015, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: pauseMenuController
+      value: 
+      objectReference: {fileID: 1869805452}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -17531,6 +17535,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+--- !u!114 &1869805452 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+  m_PrefabInstance: {fileID: 1869805451}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 302b4219871c47bb98f673cc1ee35b52, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1871474556
 PrefabInstance:
   m_ObjectHideFlags: 0
