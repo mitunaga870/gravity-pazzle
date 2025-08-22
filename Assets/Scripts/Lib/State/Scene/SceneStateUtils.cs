@@ -12,6 +12,7 @@
             return state switch
             {
                 SceneState.InGame => new InGame(),
+                SceneState.Pause => new Pause(),
                 _ => null
             };
         }

@@ -1,5 +1,7 @@
 ﻿#region
 
+using Behaviour.Controller.General;
+using Lib.State.Scene;
 using UnityEngine;
 
 #endregion
@@ -14,8 +16,25 @@ namespace Behaviour.UI.PauseMenu
     {
         [SerializeField]
         private GameObject pauseMenu;
+
+        [SerializeField]
+        private InputController Input;
+
+        [SerializeField]
+        private SceneStateController sceneStateController;
         
         public bool IsMenuOpened { get; private set; }
+
+        private void Start()
+        {
+            // SerializeFieldが設定されていない場合はエラーを出す
+            if (pauseMenu == null)
+                Debug.LogError("PauseMenu is not assigned in the inspector.");
+            if (Input == null)
+                Debug.LogError("InputController is not assigned in the inspector.");
+            if (sceneStateController == null)
+                Debug.LogError("SceneStateController is not assigned in the inspector.");
+        }
 
         private void Update()
         {
@@ -42,6 +61,9 @@ namespace Behaviour.UI.PauseMenu
             
             // 開いたフラグを立てる
             IsMenuOpened = true;
+
+            // ゲーム状態をポーズに変更
+            sceneStateController.ChangeSceneState(SceneState.Pause);
         }
 
         /// <summary>
@@ -55,6 +77,9 @@ namespace Behaviour.UI.PauseMenu
             Cursor.lockState = CursorLockMode.Locked;
             // カーソルを非表示にする
             Cursor.visible = false;
+
+            // 員ゲーム状態を通常に戻す
+            sceneStateController.ChangeSceneState(SceneState.InGame);
         }
     }
 }

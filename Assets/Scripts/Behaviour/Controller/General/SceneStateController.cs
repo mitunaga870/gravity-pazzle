@@ -30,5 +30,20 @@ namespace Behaviour.Controller.General
         }
 
         #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        ///     *     シーン状態を変更する。
+        /// </summary>
+        /// <param name="next">次の状態</param>
+        /// <param name="forceChange">強制的に変更するかどうか</param>
+        public void ChangeSceneState(SceneState next, bool forceChange = false)
+        {
+            // 状態を変更する
+            Context.Change(SceneStateUtils.GenerateState(next), forceChange);
+        }
+
+        #endregion
     }
 }

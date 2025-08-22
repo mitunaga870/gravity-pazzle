@@ -28,7 +28,7 @@
         /// <returns>変更が成功したか</returns>
         public bool Change(ISceneState next, bool forceChange = false)
         {
-            if (CurrentState != null && !CurrentState.Change(next, forceChange)) return false;
+            if (CurrentState != null && !CurrentState.Changeable(next, forceChange)) return false;
 
             CurrentState?.OnExit();
             CurrentState = next;
