@@ -1,8 +1,8 @@
 ﻿namespace Lib.State.Scene
 {
-    public class InGame : ISceneState
+    public class Pause : ISceneState
     {
-        public SceneState StateName => SceneState.InGame;
+        public SceneState StateName => SceneState.Pause;
 
         public bool Changeable(ISceneState next, bool forceChange = false)
         {

@@ -6,6 +6,7 @@ using Behaviour.Player.Abstract;
 using Behaviour.UI;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
+using Lib.State.Scene;
 using UnityEngine;
 
 #endregion
@@ -40,10 +41,7 @@ namespace Behaviour.Player
         private void Start()
         {
             if (gravBehaviour == null)
-            {
                 Debug.LogError("GravBehaviour is not assigned.");
-                return;
-            }
         }
         
         private new void Update()
@@ -52,13 +50,13 @@ namespace Behaviour.Player
             base.Update();
             
             // スペースで影響を受けているならフローティングに変換
-            if (Input.GetMouseButton(0))
+            if (Input.GetMouseButton(0, SceneState.InGame))
             {
                 SetGrav();
             }
             
             // 右クリックでターゲットの方向を変更
-            if (Input.GetMouseButton(1))
+            if (Input.GetMouseButton(1, SceneState.InGame))
             {
                 // カメラの向いている方向を取得
                 var camTransform = playerCam.transform;
@@ -85,10 +83,10 @@ namespace Behaviour.Player
         protected override Vector3 GetMoveDirection(float deltaTime)
         {
             // WASDキーの入力を取得
-            var xInput = Input.GetKey(KeyCode.W);
-            var zInput = Input.GetKey(KeyCode.S);
-            var yInput = Input.GetKey(KeyCode.A);
-            var wInput = Input.GetKey(KeyCode.D);
+            var xInput = Input.GetKey(KeyCode.W, SceneState.InGame);
+            var zInput = Input.GetKey(KeyCode.S, SceneState.InGame);
+            var yInput = Input.GetKey(KeyCode.A, SceneState.InGame);
+            var wInput = Input.GetKey(KeyCode.D, SceneState.InGame);
             
             // 負荷軽減のため、入力がない場合は移動しない
             if (!xInput && !zInput && !yInput && !wInput)

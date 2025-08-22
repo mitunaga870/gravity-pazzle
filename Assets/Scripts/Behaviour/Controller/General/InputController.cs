@@ -16,48 +16,158 @@ namespace Behaviour.Controller.General
     [RequireComponent(typeof(SceneStateController))]
     public class InputController : MonoBehaviour
     {
+        [SerializeField]
+        private SceneStateController sceneStateController;
+
+        private SceneStateContext StateContext => sceneStateController.Context;
+
+        #region GetKey
+
         /// <summary>
-        ///     キー入力を取得する。
+        ///     キー入力状態を取得する
         /// </summary>
         /// <param name="key">チェックするキー</param>
-        /// <param name="targets">入力を許す状態配列</param>
-        /// <param name="context">状態コンテキスト</param>
         /// <returns>キーが押されているかどうか</returns>
-        public bool GetKey(KeyCode key, IEnumerable<ISceneState> targets, SceneStateContext context)
+        public bool GetKey(KeyCode key)
         {
-            // 現在の状態が許可された状態のいずれかであるかをチェック
-            // ReSharper disable once ConvertIfStatementToReturnStatement
-            if (!CheckState(targets, context)) return false;
-
             // キー入力をチェック
             return Input.GetKey(key);
         }
 
         /// <summary>
+        ///     キー入力状態を取得する
+        /// </summary>
+        /// <param name="key">チェックするキー</param>
+        /// <param name="target">入力を許す状態</param>
+        /// <returns>キーが押されているかどうか</returns>
+        public bool GetKey(KeyCode key, SceneState target)
+        {
+            // 現在の状態が許可された状態であるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(new[] { target })) return false;
+
+            // キー入力をチェック
+            return Input.GetKey(key);
+        }
+        
+        /// <summary>
         ///     キー入力を取得する。
         /// </summary>
         /// <param name="key">チェックするキー</param>
         /// <param name="targets">入力を許す状態配列</param>
-        /// <param name="context">状態コンテキスト</param>
-        /// <returns>キーが押された瞬間かどうか</returns>
-        public bool GetKeyDown(KeyCode key, IEnumerable<ISceneState> targets, SceneStateContext context)
+        /// <returns>キーが押されているかどうか</returns>
+        public bool GetKey(KeyCode key, IEnumerable<SceneState> targets)
         {
             // 現在の状態が許可された状態のいずれかであるかをチェック
             // ReSharper disable once ConvertIfStatementToReturnStatement
-            if (!CheckState(targets, context)) return false;
+            if (!CheckState(targets)) return false;
+
+            // キー入力をチェック
+            return Input.GetKey(key);
+        }
+
+        #endregion
+
+        #region GetKeyDown
+
+        /// <summary>
+        ///     キー入力状態を取得する
+        /// </summary>
+        /// <param name="key">チェックするキー</param>
+        /// <returns>キーが押された瞬間かどうか</returns>
+        public bool GetKeyDown(KeyCode key)
+        {
+            // キー入力をチェック
+            return Input.GetKeyDown(key);
+        }
+
+        /// <summary>
+        ///     キー入力状態を取得する
+        /// </summary>
+        /// <param name="key">チェックするキー</param>
+        /// <param name="target">入力を許す状態</param>
+        /// <returns>キーが押された瞬間かどうか</returns>
+        public bool GetKeyDown(KeyCode key, SceneState target)
+        {
+            // 現在の状態が許可された状態であるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(new[] { target })) return false;
 
             // キー入力をチェック
             return Input.GetKeyDown(key);
         }
 
-        private bool CheckState(IEnumerable<ISceneState> targets, SceneStateContext context)
+        /// <summary>
+        ///     キー入力を取得する。
+        /// </summary>
+        /// <param name="key">チェックするキー</param>
+        /// <param name="targets">入力を許す状態配列</param>
+        /// <returns>キーが押された瞬間かどうか</returns>
+        public bool GetKeyDown(KeyCode key, IEnumerable<SceneState> targets)
         {
-            // 現在の状態がnullの場合は、全ての状態で許可する
-            if (context?.CurrentState == null) return true;
+            // 現在の状態が許可された状態のいずれかであるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(targets)) return false;
 
+            // キー入力をチェック
+            return Input.GetKeyDown(key);
+        }
+
+        #endregion
+
+        #region GetMouseButton
+
+        /// <summary>
+        ///     マウスボタン入力を取得する。
+        /// </summary>
+        /// <param name="button">チェックするマウスボタン</param>
+        /// <returns>マウスボタンが押されているかどうか</returns>
+        public bool GetMouseButton(int button)
+        {
+            // マウスボタン入力をチェック
+            return Input.GetMouseButton(button);
+        }
+
+        /// <summary>
+        ///     マウスボタン入力を取得する。
+        /// </summary>
+        /// <param name="button">チェックするマウスボタン</param>
+        /// <param name="target">入力を許す状態</param>
+        /// <returns>マウスボタンが押されているかどうか</returns>
+        public bool GetMouseButton(int button, SceneState target)
+        {
+            // 現在の状態が許可された状態のいずれかであるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(new[] { target })) return false;
+
+            // マウスボタン入力をチェック
+            return Input.GetMouseButton(button);
+        }
+
+        /// <summary>
+        ///     マウスボタン入力を取得する。
+        /// </summary>
+        /// <param name="button">チェックするマウスボタン</param>
+        /// <param name="targets">入力を許す状態配列</param>
+        /// <returns>マウスボタンが押されているかどうか</returns>
+        public bool GetMouseButton(int button, IEnumerable<SceneState> targets)
+        {
+            // 現在の状態が許可された状態のいずれかであるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(targets)) return false;
+
+            // マウスボタン入力をチェック
+            return Input.GetMouseButton(button);
+        }
+
+        #endregion
+
+        private bool CheckState(IEnumerable<SceneState> targets)
+        {
+            Debug.Log(StateContext.CurrentState);
             // 現在の状態が許可された状態のいずれかであるかをチェック
             foreach (var target in targets)
-                if (context.CurrentState.GetType() == target.GetType())
+                if (StateContext.CurrentState.StateName == target)
                     return true;
 
             return false;

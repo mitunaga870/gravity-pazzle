@@ -11,12 +11,12 @@
         SceneState StateName { get; }
 
         /// <summary>
-        ///     状態を変更する
+        ///   状態を変更できるかどうかをチェックする
         /// </summary>
         /// <param name="next">次の状態</param>
         /// <param name="forceChange">強制的に変更するか</param>
         /// <returns>変更が成功したか</returns>
-        bool Change(ISceneState next, bool forceChange = false);
+        bool Changeable(ISceneState next, bool forceChange = false);
 
         /// <summary>
         ///     状態に入るときの処理
@@ -31,6 +31,7 @@
 
     public enum SceneState
     {
-        InGame
+        InGame,
+        Pause
     }
 }
