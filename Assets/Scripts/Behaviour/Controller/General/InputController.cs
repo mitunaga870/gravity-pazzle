@@ -211,7 +211,6 @@ namespace Behaviour.Controller.General
 
         private bool CheckState(IEnumerable<SceneState> targets)
         {
-            Debug.Log(StateContext.CurrentState);
             // 現在の状態が許可された状態のいずれかであるかをチェック
             foreach (var target in targets)
                 if (StateContext.CurrentState.StateName == target)
