@@ -1,8 +1,10 @@
 #region
 
 #nullable enable
+using Behaviour.Controller.General;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
+using Lib.State.Scene;
 using UnityEngine;
 
 #endregion
@@ -14,6 +16,12 @@ namespace Behaviour.Camera
      */
     public class PlayerCam : MonoBehaviour
     {
+        #region Serialized Fields
+
+        [SerializeField]
+        private InputController Input;
+
+        #endregion
         #region Private Fields 
         private const float Threshold = 0.01f;
         private const float Sensitivity = 5f;
@@ -56,12 +64,12 @@ namespace Behaviour.Camera
             
             // マウスの動きに合わせてカメラを回転させる
             var mouseX = Mathf.Clamp(
-                Input.GetAxis("Mouse X") * Sensitivity * -1,
+                Input.GetAxis("Mouse X", SceneState.InGame) * Sensitivity * -1,
                 MaxPitch*-1,
                 MaxPitch
                 );
             var mouseY = Mathf.Clamp(
-                Input.GetAxis("Mouse Y") * Sensitivity * -1,
+                Input.GetAxis("Mouse Y", SceneState.InGame) * Sensitivity * -1,
                 MaxPitch*-1,
                 MaxPitch
                 );
