@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using Behaviour.Controller.General;
 using Behaviour.ObjectFeature;
+using Lib.State.Scene;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -10,10 +12,10 @@ using UnityEngine.SceneManagement;
 namespace Behaviour.Controller
 {
     /// <summary>
-    /// グローバルなキー操作を管理するクラス
+    /// グローバルなイベントを管理するクラス
     /// Rを押すと、全てのオブジェクトを初期位置に戻す
     /// </summary>
-    public class GlobalKeyController: MonoBehaviour
+    public class GlobalEventController : MonoBehaviour
     {
         private ResetableObject[] _resetableObjects;
 
@@ -23,6 +25,10 @@ namespace Behaviour.Controller
 
         // ハードリセットが呼ばれた
         public bool IsHardResetCalled { get; private set; }
+
+        [SerializeField]
+        // ReSharper disable once InconsistentNaming
+        private InputController Input;
         
         # region Unity Methods
         [Obsolete("Obsolete")]
@@ -38,16 +44,16 @@ namespace Behaviour.Controller
             
             // Shift+Rキーが押されたら、全てのResetableObjectを初期位置に戻す
             if (
-                (Input.GetKey(KeyCode.LeftShift) 
-                 || Input.GetKey(KeyCode.RightShift))
-                 && Input.GetKeyDown(KeyCode.R))
+                (Input.GetKey(KeyCode.LeftShift, SceneState.InGame)
+                 || Input.GetKey(KeyCode.RightShift, SceneState.InGame))
+                && Input.GetKeyDown(KeyCode.R, SceneState.InGame))
             {
                 // シーン再読み込み
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 IsHardResetCalled = true;
             }
             // Rキーが押されたら、全てのResetableObjectを初期位置に戻す
-            else if (Input.GetKeyDown(KeyCode.R))
+            else if (Input.GetKeyDown(KeyCode.R, SceneState.InGame))
             {
                 ResetAllObjects();
                 IsResetCalled = true;

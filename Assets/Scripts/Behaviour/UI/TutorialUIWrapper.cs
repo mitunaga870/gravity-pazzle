@@ -6,6 +6,7 @@ using Behaviour.Gravity;
 using Behaviour.Player;
 using Behaviour.UI.PauseMenu;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -25,8 +26,9 @@ namespace Behaviour.UI
         [SerializeField]
         private VGravBehaviour vGravBehaviour;
 
+        [FormerlySerializedAs("globalKeyController")]
         [SerializeField]
-        private GlobalKeyController globalKeyController;
+        private GlobalEventController globalEventController;
         
         [SerializeField]
         private PauseMenuController pauseMenuController;
@@ -69,7 +71,7 @@ namespace Behaviour.UI
                 demoPlayerBehaviour == null ||
                 playerCam == null ||
                 vGravBehaviour == null ||
-                globalKeyController == null ||
+                globalEventController == null ||
                 pauseMenuController == null ||
                 moveAndCamUI == null ||
                 gravChangeUI == null ||
@@ -155,7 +157,7 @@ namespace Behaviour.UI
                 (_currentState == TutorialState.TargetGravChange &&
                  demoPlayerBehaviour.IsTargetGravChanged) ||
                 (_currentState == TutorialState.Reset &&
-                 globalKeyController.IsResetCalled) ||
+                 globalEventController.IsResetCalled) ||
                 (_currentState == TutorialState.Menu &&
                  pauseMenuController.IsMenuOpened)
             )
