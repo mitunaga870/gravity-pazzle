@@ -162,6 +162,53 @@ namespace Behaviour.Controller.General
 
         #endregion
 
+        #region GetAxis
+
+        /// <summary>
+        ///     * 入力軸の値を取得する。
+        /// </summary>
+        /// <param name="axisName">チェックする入力軸名</param>
+        /// <returns>入力軸の値</returns>
+        public float GetAxis(string axisName)
+        {
+            // 入力軸の値をチェック
+            return Input.GetAxis(axisName);
+        }
+
+        /// <summary>
+        ///     * 入力軸の値を取得する。
+        /// </summary>
+        /// <param name="axisName">チェックする入力軸名</param>
+        /// <param name="target">入力を許す状態</param>
+        /// <returns>入力軸の値</returns>
+        public float GetAxis(string axisName, SceneState target)
+        {
+            // 現在の状態が許可された状態であるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(new[] { target })) return 0f;
+
+            // 入力軸の値をチェック
+            return Input.GetAxis(axisName);
+        }
+
+        /// <summary>
+        ///     * 入力軸の値を取得する。
+        /// </summary>
+        /// <param name="axisName">チェックする入力軸名</param>
+        /// <param name="targets">入力を許す状態配列</param>
+        /// <returns>入力軸の値</returns>
+        public float GetAxis(string axisName, IEnumerable<SceneState> targets)
+        {
+            // 現在の状態が許可された状態のいずれかであるかをチェック
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (!CheckState(targets)) return 0f;
+
+            // 入力軸の値をチェック
+            return Input.GetAxis(axisName);
+        }
+
+        #endregion
+
         private bool CheckState(IEnumerable<SceneState> targets)
         {
             Debug.Log(StateContext.CurrentState);
