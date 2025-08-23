@@ -19,7 +19,10 @@ namespace Behaviour.Camera
         #region Serialized Fields
 
         [SerializeField]
+        // ReSharper disable once InconsistentNaming
+#pragma warning disable CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
         private InputController Input;
+#pragma warning restore CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
 
         #endregion
         #region Private Fields 
@@ -50,6 +53,13 @@ namespace Behaviour.Camera
             // マウスがはみ出さないようにする
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        private void Start()
+        {
+            // シリアライズフィールド確認
+            if (Input == null)
+                Debug.LogError("InputController is not assigned in PlayerCam.");
         }
 
         private void Update()
