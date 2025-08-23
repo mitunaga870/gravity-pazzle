@@ -78,7 +78,7 @@ namespace Behaviour.UI.PauseMenu
             // カーソルを非表示にする
             Cursor.visible = false;
 
-            // 員ゲーム状態を通常に戻す
+            // ゲーム状態を通常に戻す
             sceneStateController.ChangeSceneState(SceneState.InGame);
         }
     }
