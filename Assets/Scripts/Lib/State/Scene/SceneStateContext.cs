@@ -31,8 +31,9 @@
             if (CurrentState != null && !CurrentState.Changeable(next, forceChange)) return false;
 
             CurrentState?.OnExit();
+            var previous = CurrentState;
             CurrentState = next;
-            CurrentState.OnEnter(CurrentState);
+            CurrentState.OnEnter(previous);
 
             return true;
         }
