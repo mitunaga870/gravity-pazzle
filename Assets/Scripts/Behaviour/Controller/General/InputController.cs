@@ -194,7 +194,7 @@ namespace Behaviour.Controller.General
         }
 
         /// <summary>
-        ///     * 入力軸の値を取得する。
+        ///     入力軸の値を取得する。
         /// </summary>
         /// <param name="axisName">チェックする入力軸名</param>
         /// <param name="targets">入力を許す状態配列</param>
