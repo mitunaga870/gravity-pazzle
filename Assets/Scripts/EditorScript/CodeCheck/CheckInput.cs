@@ -37,11 +37,10 @@ namespace EditorScript.CodeCheck
                 var scriptContent = script.text;
 
                 // Inputを利用または、InputControllerを参照していない場合
-                if (scriptContent.Contains("Input.") && !scriptContent.Contains("InputController Input"))
-                {
-                    Debug.LogWarning($"Inputが利用されています: {scriptPath}");
-                    dontUseInput = false;
-                }
+                if (!scriptContent.Contains("Input.") || scriptContent.Contains("InputController Input")) continue;
+
+                Debug.LogWarning($"Inputが利用されています: {scriptPath}");
+                dontUseInput = false;
             }
 
             // InputControllerを参照していない場合
