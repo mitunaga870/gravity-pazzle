@@ -19,6 +19,8 @@ namespace Behaviour.Controller.General
         [SerializeField]
         private SceneStateController sceneStateController;
 
+        public string InputString => Input.inputString;
+
         private SceneStateContext StateContext => sceneStateController.Context;
 
         #region GetKey

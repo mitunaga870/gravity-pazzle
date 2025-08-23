@@ -3,6 +3,7 @@
 using Behaviour.Camera;
 using Behaviour.Controller.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -24,9 +25,9 @@ namespace Behaviour.Player.Abstract
         [SerializeField]
         protected PlayerCam playerCam;
 
+        [FormerlySerializedAs("Input")]
         [SerializeField]
-        // ReSharper disable once InconsistentNaming 既存のInputの利用を避けるために同じ名前で宣言
-        protected InputController Input;
+        protected InputController input;
 
         #endregion
 
@@ -49,7 +50,7 @@ namespace Behaviour.Player.Abstract
                 Debug.LogError("Player Animator is not assigned.");
             if (playerCam == null)
                 Debug.LogError("Player Camera is not assigned.");
-            if (Input == null)
+            if (input == null)
                 Debug.LogError("InputController is not assigned.");
         }
         

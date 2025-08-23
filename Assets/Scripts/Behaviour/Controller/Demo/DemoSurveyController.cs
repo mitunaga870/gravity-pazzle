@@ -1,5 +1,6 @@
 ﻿#region
 
+using Behaviour.Controller.General;
 using Behaviour.Trigger;
 using Lib.DataClass.ForInspector;
 using Lib.Logic;
@@ -28,6 +29,10 @@ namespace Behaviour.Controller
 
         // 初期化フラグ
         private bool _initialized;
+
+        // 入力取得用
+        // ReSharper disable once InconsistentNaming
+        private InputController Input;
 
         #endregion
 
@@ -148,6 +153,9 @@ namespace Behaviour.Controller
             // ゴールが無ければリターン
             if (goal != null)
                 goal.AddOnGoal(OnStageClear); // ステージクリア時の処理を登録
+
+            // 入力コントローラーを取得
+            Input = FindFirstObjectByType<InputController>();
         }
 
         private void Init()

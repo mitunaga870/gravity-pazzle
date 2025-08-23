@@ -1,8 +1,11 @@
 #region
 
-using Behaviour.Gravity;                   // GravType 定義の名前空間
-using Lib.State.Interface.Gravity;         // GravType enum の名前空間
+using Behaviour.Controller.General;
+using Lib.State.Interface.Gravity;
+using Lib.State.Scene;
 using UnityEngine;
+// GravType 定義の名前空間
+// GravType enum の名前空間
 
 #endregion
 namespace Behaviour.Gimmick
@@ -18,6 +21,9 @@ namespace Behaviour.Gimmick
 
         [SerializeField]
         private GravType _gravType = GravType.YPositive; // スイッチを押したときにセットする重力方向
+
+        [SerializeField]
+        private InputController input;
 
         private bool _playerInRange; // プレイヤーがトリガー内にいるかどうか
 
@@ -50,7 +56,7 @@ namespace Behaviour.Gimmick
         private void Update()
         {
             // 範囲内かつEを押した瞬間
-            if (_playerInRange && Input.GetKeyDown(KeyCode.E))
+            if (_playerInRange && input.GetKeyDown(KeyCode.E, SceneState.InGame))
             {
                 if (_targetGravArea != null)
                 {
