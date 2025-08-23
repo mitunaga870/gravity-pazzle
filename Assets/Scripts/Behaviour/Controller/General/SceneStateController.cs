@@ -34,7 +34,7 @@ namespace Behaviour.Controller.General
         #region Public Methods
 
         /// <summary>
-        ///     *     シーン状態を変更する。
+        ///     シーン状態を変更する。
         /// </summary>
         /// <param name="next">次の状態</param>
         /// <param name="forceChange">強制的に変更するかどうか</param>
