@@ -74,6 +74,16 @@ namespace Behaviour.Player
                 IsTargetGravChanged = true;
             }
             
+            // スペースキーでプレイヤーの重力を設定済み方向に変更
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                var playerVGrav = gravBehaviour as VGravBehaviour;
+                if (playerVGrav != null)
+                {
+                    playerVGrav.SetGravAffected(_targetGravType, true);
+                }
+            }
+            
             // カメラに位置を通知
             playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
         }
