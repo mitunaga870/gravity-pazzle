@@ -11,8 +11,8 @@ GameObject:
   - component: {fileID: 8551918628968382709}
   - component: {fileID: 1716625557044137296}
   - component: {fileID: -3280043090863565490}
-  - component: {fileID: 7365124612016244025}
-  - component: {fileID: 7038569934202643820}
+  - component: {fileID: 8174145790894968829}
+  - component: {fileID: 8394906048519403212}
   m_Layer: 0
   m_Name: Controller
   m_TagString: Untagged
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbd895b42d94e37b86ea98e66d496b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Input: {fileID: 8394906048519403212}
 --- !u!114 &-3280043090863565490
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -62,19 +63,8 @@ MonoBehaviour:
   returnScene:
     m_SceneName: GM9_Title
   afkThreshold: 30
---- !u!114 &7365124612016244025
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2254733339695932710}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c95a3a7c9af34a43b088920f05d1dd6f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &7038569934202643820
+  Input: {fileID: 8394906048519403212}
+--- !u!114 &8174145790894968829
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -86,3 +76,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4a5977d6209240ef87216a560574154c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initialState: 0
+--- !u!114 &8394906048519403212
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254733339695932710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95a3a7c9af34a43b088920f05d1dd6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sceneStateController: {fileID: 8174145790894968829}
