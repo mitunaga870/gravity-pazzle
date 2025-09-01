@@ -1,6 +1,8 @@
 ﻿#region
 
+using Behaviour.Controller.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Video;
 
 #endregion
@@ -20,6 +22,10 @@ namespace Behaviour.UI
 
         [SerializeField]
         private GameObject screenSaverObj; // スクリーンセーバーのオブジェクト
+
+        [FormerlySerializedAs("inputController")]
+        [SerializeField]
+        private InputController input; // 入力コントローラー
 
         #endregion
 
@@ -60,7 +66,7 @@ namespace Behaviour.UI
         private void Update()
         {
             // マウスの動きやキー入力を検出
-            if (Input.inputString.Length > 0 || Input.GetAxis("Mouse X") != 0 || Input.GetAxis("Mouse Y") != 0)
+            if (input.InputString.Length > 0 || input.GetAxis("Mouse X") != 0 || input.GetAxis("Mouse Y") != 0)
             {
                 _idleTime = 0f; // 放置時間をリセット
                 HideScreenSaver(); // スクリーンセーバーを非表示にする

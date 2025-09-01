@@ -1,7 +1,9 @@
 ﻿#region
 
 using Behaviour.Camera;
+using Behaviour.Controller.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 #endregion
 
@@ -11,7 +13,7 @@ namespace Behaviour.Player.Abstract
     /// プレイヤーの挙動を持つオブジェクトの抽象クラス
     /// 実装内容：WASD移動
     /// </summary>
-    public abstract class APlayerBehaviour : MonoBehaviour
+    public abstract class APlayerBehaviour : MonoBehaviour 
     {
         #region SerializeField
         [SerializeField]
@@ -22,6 +24,10 @@ namespace Behaviour.Player.Abstract
         
         [SerializeField]
         protected PlayerCam playerCam;
+
+        [FormerlySerializedAs("Input")]
+        [SerializeField]
+        protected InputController input;
 
         #endregion
 
@@ -34,6 +40,20 @@ namespace Behaviour.Player.Abstract
         #endregion
 
         #region Unity Methods
+
+        private void Start()
+        {
+            // SerializeFieldで設定されているかを確認
+            if (playerRigidBody == null)
+                Debug.LogError("Player Rigidbody is not assigned.");
+            if (playerAnimator == null)
+                Debug.LogError("Player Animator is not assigned.");
+            if (playerCam == null)
+                Debug.LogError("Player Camera is not assigned.");
+            if (input == null)
+                Debug.LogError("InputController is not assigned.");
+        }
+        
         protected void Update()
         {
             // プレイヤーの移動
