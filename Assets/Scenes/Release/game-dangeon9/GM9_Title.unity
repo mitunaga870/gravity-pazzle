@@ -254,6 +254,10 @@ PrefabInstance:
       propertyPath: stage2Name.m_SceneName
       value: Stage-2
       objectReference: {fileID: 0}
+    - target: {fileID: 9147137710680245072, guid: 94926f0cd4ab7bc44be42069b05142af, type: 3}
+      propertyPath: surveySceneName.m_SceneName
+      value: EndCard
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
