@@ -141,7 +141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e2e268cf38b469f88473977562dc55a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  initialGravType: 2
+  initialGravType: 3
   affectedRigidBody: {fileID: 2084413}
   focusCamera: {fileID: 665133468}
 --- !u!114 &2084409
@@ -159,8 +159,10 @@ MonoBehaviour:
   playerRigidBody: {fileID: 2084413}
   playerAnimator: {fileID: 2084420}
   playerCam: {fileID: 665133467}
+  input: {fileID: 0}
   gravBehaviour: {fileID: 2084408}
   directionUIWrapper: {fileID: 1658263504}
+  inputController: {fileID: 1981367539}
 --- !u!114 &2084410
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10052,8 +10054,10 @@ MonoBehaviour:
   playerRigidBody: {fileID: 1218762696}
   playerAnimator: {fileID: 1218762690}
   playerCam: {fileID: 665133467}
+  input: {fileID: 0}
   gravBehaviour: {fileID: 1218762691}
   directionUIWrapper: {fileID: 1658263504}
+  inputController: {fileID: 0}
 --- !u!114 &1218762693
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16343,6 +16347,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2df2426a7c668ab4b89c7e63e07fbc19, type: 3}
+--- !u!114 &1981367539 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8394906048519403212, guid: dc62069e53f74c949b2979a1a976f829, type: 3}
+  m_PrefabInstance: {fileID: 1554939438}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95a3a7c9af34a43b088920f05d1dd6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1998713852
 PrefabInstance:
   m_ObjectHideFlags: 0

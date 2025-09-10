@@ -54,13 +54,13 @@ namespace Behaviour.Player
             
             // スペースで影響を受けているならフローティングに変換
 
-            if (input.GetMouseButton(0, SceneState.InGame))
+            if (inputController.GetMouseButton(0, SceneState.InGame))
             {
                 SetGrav();
             }
             
             // 右クリックでターゲットの方向を変更
-            if (input.GetMouseButton(1, SceneState.InGame))
+            if (inputController.GetMouseButton(1, SceneState.InGame))
             {
                 // カメラの向いている方向を取得
                 var camTransform = playerCam.transform;
@@ -98,10 +98,10 @@ namespace Behaviour.Player
         {
             // WASDキーの入力を取得
 
-            var xInput = input.GetKey(KeyCode.W, SceneState.InGame);
-            var zInput = input.GetKey(KeyCode.S, SceneState.InGame);
-            var yInput = input.GetKey(KeyCode.A, SceneState.InGame);
-            var wInput = input.GetKey(KeyCode.D, SceneState.InGame);
+            var xInput = inputController.GetKey(KeyCode.W, SceneState.InGame);
+            var zInput = inputController.GetKey(KeyCode.S, SceneState.InGame);
+            var yInput = inputController.GetKey(KeyCode.A, SceneState.InGame);
+            var wInput = inputController.GetKey(KeyCode.D, SceneState.InGame);
             
             // 負荷軽減のため、入力がない場合は移動しない
             if (!xInput && !zInput && !yInput && !wInput)
@@ -117,8 +117,7 @@ namespace Behaviour.Player
                 camTransform.forward,
                 camTransform.right,
                 gravBehaviour.GravType
-            );
-            
+            );            
             // 移動速度を掛けて、時間を掛ける
             moveDirection *= Speed * deltaTime;
             
