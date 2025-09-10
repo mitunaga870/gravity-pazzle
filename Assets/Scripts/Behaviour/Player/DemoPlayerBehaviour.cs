@@ -1,5 +1,6 @@
 ﻿#region
 
+using Behaviour.Controller.General;
 using Behaviour.Gravity;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
@@ -24,6 +25,8 @@ namespace Behaviour.Player
         private AGravBehaviour gravBehaviour;
         [SerializeField]
         private DirectionUIWrapper directionUIWrapper;
+        [SerializeField]
+        private InputController inputController;
         
         private GravType _targetGravType = GravType.XNegative;
 
@@ -52,13 +55,13 @@ namespace Behaviour.Player
             base.Update();
             
             // スペースで影響を受けているならフローティングに変換
-            if (Input.GetMouseButton(0))
+            if (inputController.GetMouseButton(0))
             {
                 SetGrav();
             }
             
             // 右クリックでターゲットの方向を変更
-            if (Input.GetMouseButton(1))
+            if (inputController.GetMouseButton(1))
             {
                 // カメラの向いている方向を取得
                 var camTransform = playerCam.transform;
@@ -75,12 +78,12 @@ namespace Behaviour.Player
             }
             
             // スペースキーでプレイヤーの重力を設定済み方向に変更
-            if (Input.GetKeyDown(KeyCode.Space))
+            if (inputController.GetKeyDown(KeyCode.Space))
             {
                 var playerVGrav = gravBehaviour as VGravBehaviour;
                 if (playerVGrav != null)
                 {
-                    playerVGrav.SetGravAffected(_targetGravType, true);
+                    playerVGrav.SetGravAffected(_targetGravType, false);
                 }
             }
             
@@ -95,10 +98,10 @@ namespace Behaviour.Player
         protected override Vector3 GetMoveDirection(float deltaTime)
         {
             // WASDキーの入力を取得
-            var xInput = Input.GetKey(KeyCode.W);
-            var zInput = Input.GetKey(KeyCode.S);
-            var yInput = Input.GetKey(KeyCode.A);
-            var wInput = Input.GetKey(KeyCode.D);
+            var xInput = inputController.GetKey(KeyCode.W);
+            var zInput = inputController.GetKey(KeyCode.S);
+            var yInput = inputController.GetKey(KeyCode.A);
+            var wInput = inputController.GetKey(KeyCode.D);
             
             // 負荷軽減のため、入力がない場合は移動しない
             if (!xInput && !zInput && !yInput && !wInput)
@@ -115,7 +118,6 @@ namespace Behaviour.Player
                 camTransform.right,
                 gravBehaviour.GravType
             );
-            
             
             // 移動速度を掛けて、時間を掛ける
             moveDirection *= Speed * deltaTime;
