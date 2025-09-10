@@ -6371,6 +6371,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9fbd895b42d94e37b86ea98e66d496b4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &529508302 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8394906048519403212, guid: dc62069e53f74c949b2979a1a976f829, type: 3}
+  m_PrefabInstance: {fileID: 529508300}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c95a3a7c9af34a43b088920f05d1dd6f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &529508303 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8174145790894968829, guid: dc62069e53f74c949b2979a1a976f829, type: 3}
+  m_PrefabInstance: {fileID: 529508300}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4a5977d6209240ef87216a560574154c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &540553276
 Mesh:
   m_ObjectHideFlags: 0
@@ -17574,6 +17596,14 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: Input
+      value: 
+      objectReference: {fileID: 529508302}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: sceneStateController
+      value: 
+      objectReference: {fileID: 529508303}
     - target: {fileID: 8602276767187868974, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
       propertyPath: targetScene.m_SceneName
       value: GM9_Title
@@ -17764,6 +17794,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: 1872627733}
   playerAnimator: {fileID: 1872627740}
   playerCam: {fileID: 1706628297}
+  input: {fileID: 529508302}
   gravBehaviour: {fileID: 1872627728}
   directionUIWrapper: {fileID: 127654331}
 --- !u!114 &1872627730
@@ -18393,6 +18424,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5635841674536581256, guid: d74482d72f3ce7a498e4fc7b37ae2c74, type: 3}
+      propertyPath: Input
+      value: 
+      objectReference: {fileID: 529508302}
     - target: {fileID: 5937010255701650354, guid: d74482d72f3ce7a498e4fc7b37ae2c74, type: 3}
       propertyPath: m_LocalPosition.x
       value: 42.13
