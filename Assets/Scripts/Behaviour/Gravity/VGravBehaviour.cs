@@ -33,7 +33,7 @@ namespace Behaviour.Gravity
         }
 
         protected override void FixedUpdate()
-        {
+        {   
             // キーが押されたら重力の向きを変える
             GravAffectionContext.OnFixedUpdate();
         }
