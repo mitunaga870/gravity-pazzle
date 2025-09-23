@@ -17555,7 +17555,7 @@ MonoBehaviour:
   playerRigidBody: {fileID: 1872627733}
   playerAnimator: {fileID: 1872627740}
   playerCam: {fileID: 1706628297}
-  input: {fileID: 529508302}
+  input: {fileID: 0}
   gravBehaviour: {fileID: 1872627728}
   directionUIWrapper: {fileID: 127654331}
   inputController: {fileID: 529508302}
