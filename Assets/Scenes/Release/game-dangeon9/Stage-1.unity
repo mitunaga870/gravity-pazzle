@@ -9643,6 +9643,7 @@ MonoBehaviour:
   input: {fileID: 1854431659}
   gravBehaviour: {fileID: 1218762691}
   directionUIWrapper: {fileID: 1658263504}
+  inputController: {fileID: 1854431659}
 --- !u!114 &1218762693
 MonoBehaviour:
   m_ObjectHideFlags: 0
