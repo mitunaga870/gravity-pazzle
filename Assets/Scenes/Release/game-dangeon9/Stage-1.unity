@@ -9640,9 +9640,10 @@ MonoBehaviour:
   playerRigidBody: {fileID: 1218762696}
   playerAnimator: {fileID: 1218762690}
   playerCam: {fileID: 665133467}
-  input: {fileID: 1854431659}
+  input: {fileID: 0}
   gravBehaviour: {fileID: 1218762691}
   directionUIWrapper: {fileID: 1658263504}
+  inputController: {fileID: 1854431659}
 --- !u!114 &1218762693
 MonoBehaviour:
   m_ObjectHideFlags: 0
