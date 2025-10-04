@@ -31,7 +31,11 @@ namespace Behaviour.Player
                     var springBone = child.GetComponent<SpringBone>();
                     // 重力方向を上向きに設定
                     if (springBone != null)
-                        springBone.springForce = GravUtils.GetGravDirectionUnit(gravBehaviour.GravType) * 0.001f;
+                    {
+                        // 詳細は不明だが、UnityChanのSpringBoneは0.001f程で奇麗な重力になる
+                        var gravFactor = 0.001f;
+                        springBone.springForce = GravUtils.GetGravDirectionUnit(gravBehaviour.GravType) * gravFactor;
+                    }
                 }
         }
 
