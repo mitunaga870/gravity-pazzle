@@ -24,6 +24,10 @@ namespace Behaviour.Camera
         private InputController Input;
 #pragma warning restore CS8618 // null 非許容のフィールドには、コンストラクターの終了時に null 以外の値が入っていなければなりません。Null 許容として宣言することをご検討ください。
 
+        [SerializeField]
+        [Tooltip("マウスでの操作の有効/無効")]
+        private bool IsMouseControlEnabled = true;
+
         #endregion
         #region Private Fields 
         private const float Threshold = 0.01f;
@@ -64,6 +68,9 @@ namespace Behaviour.Camera
 
         private void Update()
         {
+            // マウス操作が無効な場合は何もしない
+            if (!IsMouseControlEnabled) return;
+            
             // プレイヤーの位置が設定されていない場合は何もしない
             if (_playerTrans == null || _gravType == null)
                 return;
