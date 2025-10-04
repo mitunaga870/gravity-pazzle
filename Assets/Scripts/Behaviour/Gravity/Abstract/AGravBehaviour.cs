@@ -1,8 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿#region
+
+using JetBrains.Annotations;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+#endregion
 
 namespace Behaviour.Gravity.Abstract
 {
@@ -26,15 +29,19 @@ namespace Behaviour.Gravity.Abstract
         public GravType InitialGravType => initialGravType;
         
         protected GravAffectionContext GravAffectionContext;
-        
-        protected virtual void Start()
+
+        protected virtual void Awake()
         {
             GravAffectionContext = new GravAffectionContext(
                 new GravAffected(
                     initialGravType,
                     affectedRigidBody,
                     focusCamera != null ? focusCamera.transform : null)
-                );
+            );
+        }
+        
+        protected virtual void Start()
+        {
         }
 
         protected abstract void FixedUpdate();
