@@ -2,6 +2,8 @@
 
 using Behaviour.Camera;
 using Behaviour.Controller.General;
+using Behaviour.Gravity.Abstract;
+using Behaviour.UI;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -29,6 +31,12 @@ namespace Behaviour.Player.Abstract
         [SerializeField]
         protected InputController input;
 
+        [SerializeField]
+        protected AGravBehaviour gravBehaviour;
+
+        [SerializeField]
+        protected DirectionUIWrapper directionUIWrapper;
+
         #endregion
 
         #region Public Properties
@@ -41,7 +49,7 @@ namespace Behaviour.Player.Abstract
 
         #region Unity Methods
 
-        private void Start()
+        protected void Start()
         {
             // SerializeFieldで設定されているかを確認
             if (playerRigidBody == null)
@@ -79,6 +87,9 @@ namespace Behaviour.Player.Abstract
                 playerAnimator.SetBool("Walk", false);
                 playerAnimator.SetBool("Idle", true);
             }
+
+            // カメラに位置を通知
+            playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
         }
 
         #endregion

@@ -23,10 +23,6 @@ namespace Behaviour.Player
         private const float Speed = 5f;
 
         [SerializeField]
-        private AGravBehaviour gravBehaviour;
-        [SerializeField]
-        private DirectionUIWrapper directionUIWrapper;
-        [SerializeField]
         private InputController inputController;
         
         private GravType _targetGravType = GravType.XNegative;
@@ -85,9 +81,6 @@ namespace Behaviour.Player
                     playerVGrav.SetGravAffected(_targetGravType, false);
                 }
             }
-            
-            // カメラに位置を通知
-            playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
         }
         
         #endregion
