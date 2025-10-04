@@ -29,7 +29,7 @@ namespace Behaviour.Player
                 foreach (var child in children)
                 {
                     var springBone = child.GetComponent<SpringBone>();
-                    // 重力方向を上向きに設定
+                    // gravBehaviour.GravTypeに基づいて重力方向を設定
                     if (springBone != null)
                         springBone.springForce = GravUtils.GetGravDirectionUnit(gravBehaviour.GravType) * 0.001f;
                 }
