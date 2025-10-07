@@ -69,28 +69,11 @@ namespace Lib.State.GravAffection
                 // 重力がどう回転したか計算
                 var gravRot = Quaternion.FromToRotation(prevGrav, currGrav);
                 
-                // カメラを重力方向に合わせて正しい向きで回転
-                if (_hasCamera && _focusCameraTransform != null)
+                // RoteShaftベースの三人称カメラ制御
+                if (_hasCamera && _focusCameraTransform != null && _affectedBody != null)
                 {
-                    // カメラの上方向も重力の反対方向に設定
-                    var cameraTargetUp = -currGrav;
-                    var currentCameraForward = _focusCameraTransform.forward;
-                    
-                    // カメラの前方向を新しい上方向に垂直な平面に投影
-                    var cameraTargetForward = Vector3.ProjectOnPlane(currentCameraForward, cameraTargetUp).normalized;
-                    if (cameraTargetForward == Vector3.zero)
-                    {
-                        // 前方向が重力方向と平行の場合、適当な方向を選択
-                        cameraTargetForward = Vector3.ProjectOnPlane(Vector3.forward, cameraTargetUp).normalized;
-                        if (cameraTargetForward == Vector3.zero)
-                            cameraTargetForward = Vector3.ProjectOnPlane(Vector3.right, cameraTargetUp).normalized;
-                    }
-                    
-                    // カメラの目標回転を計算
-                    var cameraTargetRotation = Quaternion.LookRotation(cameraTargetForward, cameraTargetUp);
-                    
-                    LMotion.Create(_focusCameraTransform.rotation, cameraTargetRotation, moveTime)
-                        .BindToRotation(_focusCameraTransform);
+                    // プレイヤー回転完了後にカメラを調整
+                    PositionCameraWithRoteShaft(moveTime);
                 }
                 
                 // プレイヤーを重力方向に合わせて正しい向きで回転
@@ -119,6 +102,54 @@ namespace Lib.State.GravAffection
                 
                 Debug.Log($"Player & Camera rotation: {prev.GravType} → {_gravType}, rotation: {gravRot.eulerAngles}");
             }
+        }
+        
+        /// <summary>
+        /// RoteShaftを使った三人称カメラの位置・回転制御
+        /// </summary>
+        /// <param name="playerRotationDuration">プレイヤー回転の完了時間</param>
+        private void PositionCameraWithRoteShaft(float playerRotationDuration)
+        {
+            // RoteShaftの取得（プレイヤーの子オブジェクト）
+            var roteShaft = _affectedBody.transform.Find("RoteShaft");
+            if (roteShaft == null)
+            {
+                Debug.LogError("RoteShaft not found as child of player. Please add RoteShaft GameObject as child.");
+                return;
+            }
+
+            // プレイヤー回転完了後にカメラを調整
+            LMotion.Create(0f, 1f, 0.1f)
+                .WithDelay(playerRotationDuration)
+                .WithOnComplete(() => {
+                    // RoteShaftのワールド回転を使用
+                    var targetRotation = roteShaft.rotation;
+                    
+                    // 現在のカメラとプレイヤーの距離を保持
+                    var currentDistance = Vector3.Distance(_focusCameraTransform.position, _affectedBody.transform.position);
+                    var cameraDistance = Mathf.Max(currentDistance, 3f); // 最小距離3m
+                    
+                    // プレイヤーの後方にカメラを配置
+                    // RoteShaftの回転を基準に後方と上方のオフセットを計算
+                    var backwardOffset = targetRotation * Vector3.back * (cameraDistance * 0.8f);  // 後方80%
+                    var upwardOffset = targetRotation * Vector3.up * (cameraDistance * 0.3f);      // 上方30%
+                    var targetPosition = _affectedBody.transform.position + backwardOffset + upwardOffset;
+                    
+                    // カメラをプレイヤーに向ける方向を計算
+                    var lookDirection = (_affectedBody.transform.position - targetPosition).normalized;
+                    var cameraTargetRotation = Quaternion.LookRotation(lookDirection, targetRotation * Vector3.up);
+                    
+                    // カメラの位置と回転をスムーズに調整
+                    var adjustDuration = 0.6f;
+                    
+                    LMotion.Create(_focusCameraTransform.position, targetPosition, adjustDuration)
+                        .BindToPosition(_focusCameraTransform);
+                    
+                    LMotion.Create(_focusCameraTransform.rotation, cameraTargetRotation, adjustDuration)
+                        .BindToRotation(_focusCameraTransform);
+                    
+                    Debug.Log($"Camera positioned using RoteShaft. Distance: {cameraDistance:F1}m, RoteShaft rotation: {targetRotation.eulerAngles}");
+                });
         }
 
         public void OnExit()
