@@ -9,8 +9,8 @@ namespace ScriptableObj
     /// <summary>
     ///     初期ユーザー設定を保存するスクリプタブルオブジェクト
     /// </summary>
-    [CreateAssetMenu(fileName = "初期ユーザー設定", menuName = "ScriptableObj/設定", order = 0)]
-    public class InitSettings : ScriptableObject
+    [CreateAssetMenu(fileName = "初期ユーザー設定", menuName = "ScriptableObj/初期ユーザー設定", order = 0)]
+    public class InitUserSettings : ScriptableObject
     {
         #region Serialized Fields
 
@@ -22,7 +22,7 @@ namespace ScriptableObj
         private int resolutionHeight = 1080;
 
         [SerializeField]
-        private bool fullscreen = true;
+        private FullScreenMode fullscreen = FullScreenMode.FullScreenWindow;
 
         [SerializeField]
         private int targetDisplay;
@@ -50,7 +50,7 @@ namespace ScriptableObj
 
         public int ResolutionWidth => resolutionWidth;
         public int ResolutionHeight => resolutionHeight;
-        public bool Fullscreen => fullscreen;
+        public FullScreenMode Fullscreen => fullscreen;
         public int TargetDisplay => targetDisplay;
         public float MasterVolume => masterVolume;
         public float BgmVolume => bgmVolume;

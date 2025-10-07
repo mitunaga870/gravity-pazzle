@@ -1,7 +1,9 @@
 ﻿#region
 
+using Lib.DataClass.Settings;
 using ScriptableObj;
 using UnityEngine;
+using UnityEngine.Audio;
 
 #endregion
 
@@ -26,26 +28,17 @@ namespace Behaviour.Controller.General
 
         #region Data Fields
 
-        // ユーザー設定データ
-        public int ResolutionWidth { get; private set; }
-        public int ResolutionHeight { get; private set; }
-
-        public bool Fullscreen { get; private set; }
-
-        public int TargetDisplay { get; private set; }
-
-        public float MasterVolume { get; private set; }
-        public float BgmVolume { get; private set; }
-        public float SeVolume { get; private set; }
-
-        public bool ShowTutorial { get; private set; }
+        public UserSettings UserSettings { get; private set; }
 
         #endregion
 
         #region Serialized Fields
 
         [SerializeField]
-        private InitSettings initSettings;
+        private InitUserSettings initUserSettings;
+
+        [SerializeField]
+        private AudioMixer audioMixer;
 
         #endregion
 
@@ -64,23 +57,93 @@ namespace Behaviour.Controller.General
             Instance = this;
             DontDestroyOnLoad(gameObject);
 
-            loadSettings();
+            LoadSettings();
+
+            ApplySettings();
         }
 
         #endregion
 
         #region private Method
 
-        private void loadSettings()
+        private void LoadSettings()
         {
-            ResolutionWidth = initSettings.ResolutionWidth;
-            ResolutionHeight = initSettings.ResolutionHeight;
-            Fullscreen = initSettings.Fullscreen;
-            TargetDisplay = initSettings.TargetDisplay;
-            MasterVolume = initSettings.MasterVolume;
-            BgmVolume = initSettings.BgmVolume;
-            SeVolume = initSettings.SeVolume;
-            ShowTutorial = initSettings.ShowTutorial;
+            ResetSettings();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        ///     解像度を設定する
+        /// </summary>
+        public void SetResolution(int width, int height, FullScreenMode fullscreen, int targetDisplay)
+        {
+            width = Mathf.Max(800, width);
+            height = Mathf.Max(600, height);
+
+            UserSettings = UserSettings.DeserveResolution(width, height, fullscreen);
+        }
+
+        /// <summary>
+        ///     BGMボリュームを設定する
+        /// </summary>
+        public void SetBgmVolume(float volume)
+        {
+            volume = Mathf.Clamp01(volume);
+
+            UserSettings = UserSettings.DeserveBgmVolume(volume);
+        }
+
+        /// <summary>
+        ///     SEボリュームを設定する
+        /// </summary>
+        public void SetSeVolume(float volume)
+        {
+            volume = Mathf.Clamp01(volume);
+            UserSettings = UserSettings.DeserveSeVolume(volume);
+        }
+
+        /// <summary>
+        ///     マスターボリュームを設定する
+        /// </summary>
+        public void SetMasterVolume(float volume)
+        {
+            volume = Mathf.Clamp01(volume);
+            UserSettings = UserSettings.DeserveMasterVolume(volume);
+        }
+
+        /// <summary>
+        ///     チュートリアルの表示設定を変更する
+        /// </summary>
+        public void SetShowTutorial(bool showTutorial)
+        {
+            UserSettings = UserSettings.DeserveShowTutorial(showTutorial);
+        }
+
+        /// <summary>
+        ///     設定内容を初期化する
+        /// </summary>
+        public void ResetSettings()
+        {
+            UserSettings = new UserSettings(initUserSettings);
+        }
+
+        /// <summary>
+        ///     設定を反映する
+        /// </summary>
+        public void ApplySettings()
+        {
+            Screen.SetResolution(
+                UserSettings.ResolutionWidth,
+                UserSettings.ResolutionHeight,
+                UserSettings.Fullscreen
+            );
+
+            audioMixer.SetFloat("MasterVolume", Mathf.Log10(UserSettings.MasterVolume) * 20);
+            audioMixer.SetFloat("BgmVolume", Mathf.Log10(UserSettings.BgmVolume) * 20);
+            audioMixer.SetFloat("SeVolume", Mathf.Log10(UserSettings.SeVolume) * 20);
         }
 
         #endregion
