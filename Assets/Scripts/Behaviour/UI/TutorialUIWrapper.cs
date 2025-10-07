@@ -2,6 +2,7 @@
 
 using Behaviour.Camera;
 using Behaviour.Controller;
+using Behaviour.Controller.General;
 using Behaviour.Gravity;
 using Behaviour.Player;
 using Behaviour.UI.PauseMenu;
@@ -81,6 +82,18 @@ namespace Behaviour.UI
             )
             {
                 Debug.LogError("One or more serialized fields are not assigned.");
+                return;
+            }
+
+            // チュートリアルが不要な場合はこのスクリプトを無効化
+            if (!SettingDataController.Instance.UserSettings.ShowTutorial)
+            {
+                gravChangeUI.SetActive(false);
+                targetGravChangeUI.SetActive(false);
+                resetUI.SetActive(false);
+                menuUI.SetActive(false);
+                moveAndCamUI.SetActive(false);
+                gameObject.SetActive(false);
                 return;
             }
 
