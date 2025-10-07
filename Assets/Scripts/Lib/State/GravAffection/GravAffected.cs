@@ -57,8 +57,8 @@ namespace Lib.State.GravAffection
 
         public void OnEnter(IGravAffectionState prev)
         {
-            // カメラを指定位置が下になるように
-            if (_hasCamera && prev != null)
+            // カメラを重力方向が下になるように回転
+            if (_hasCamera && prev != null && _focusCameraTransform != null)
             {
                 // カメラ移動時間
                 var moveTime = 0.5f;
@@ -66,7 +66,7 @@ namespace Lib.State.GravAffection
                 // 既存カメラの向き
                 var cameraRot = _focusCameraTransform.rotation;
                 
-                // 重力の向きベクトル
+                // 重力の向きベクトル（前の重力方向と現在の重力方向）
                 var prevGrav = GravUtils.GetGravDirectionUnit(prev.GravType);
                 var currGrav = _gravity.normalized;
                 
@@ -74,8 +74,10 @@ namespace Lib.State.GravAffection
                 var gravRot = Quaternion.FromToRotation(prevGrav, currGrav);
                 
                 // カメラの向きを重力の向きに合わせる
-                LMotion.Create(cameraRot,   cameraRot * gravRot, moveTime)
-                    .BindToRotation(_affectedBody.transform);
+                LMotion.Create(cameraRot, cameraRot * gravRot, moveTime)
+                    .BindToRotation(_focusCameraTransform);
+                
+                Debug.Log($"Camera rotation: {prev.GravType} → {_gravType}, rotation: {gravRot.eulerAngles}");
             }
         }
 
