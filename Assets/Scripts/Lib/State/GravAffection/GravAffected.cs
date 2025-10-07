@@ -57,14 +57,10 @@ namespace Lib.State.GravAffection
 
         public void OnEnter(IGravAffectionState prev)
         {
-            // カメラを重力方向が下になるように回転
-            if (_hasCamera && prev != null && _focusCameraTransform != null)
+            if (prev != null)
             {
-                // カメラ移動時間
+                // アニメーション時間
                 var moveTime = 0.5f;
-                
-                // 既存カメラの向き
-                var cameraRot = _focusCameraTransform.rotation;
                 
                 // 重力の向きベクトル（前の重力方向と現在の重力方向）
                 var prevGrav = GravUtils.GetGravDirectionUnit(prev.GravType);
@@ -73,11 +69,23 @@ namespace Lib.State.GravAffection
                 // 重力がどう回転したか計算
                 var gravRot = Quaternion.FromToRotation(prevGrav, currGrav);
                 
-                // カメラの向きを重力の向きに合わせる
-                LMotion.Create(cameraRot, cameraRot * gravRot, moveTime)
-                    .BindToRotation(_focusCameraTransform);
+                // カメラを重力方向に合わせて回転
+                if (_hasCamera && _focusCameraTransform != null)
+                {
+                    var cameraRot = _focusCameraTransform.rotation;
+                    LMotion.Create(cameraRot, cameraRot * gravRot, moveTime)
+                        .BindToRotation(_focusCameraTransform);
+                }
                 
-                Debug.Log($"Camera rotation: {prev.GravType} → {_gravType}, rotation: {gravRot.eulerAngles}");
+                // プレイヤーも重力方向に合わせて回転
+                if (_affectedBody != null)
+                {
+                    var playerRot = _affectedBody.transform.rotation;
+                    LMotion.Create(playerRot, playerRot * gravRot, moveTime)
+                        .BindToRotation(_affectedBody.transform);
+                }
+                
+                Debug.Log($"Player & Camera rotation: {prev.GravType} → {_gravType}, rotation: {gravRot.eulerAngles}");
             }
         }
 
