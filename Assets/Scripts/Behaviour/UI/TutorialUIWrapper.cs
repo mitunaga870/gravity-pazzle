@@ -84,10 +84,12 @@ namespace Behaviour.UI
                 Debug.LogError("One or more serialized fields are not assigned.");
                 return;
             }
-
+            
             // チュートリアルが不要な場合はこのスクリプトを無効化
             if (!SettingDataController.Instance.UserSettings.ShowTutorial)
             {
+                Debug.Log("Tutorial is disabled in user settings. Disabling TutorialUIWrapper.");
+                
                 gravChangeUI.SetActive(false);
                 targetGravChangeUI.SetActive(false);
                 resetUI.SetActive(false);
