@@ -29,12 +29,12 @@ namespace Lib.DataClass.Settings
         }
 
         [JsonConstructor]
-        public UserSettings(int initUserSettings, int height, FullScreenMode fullscreen, float masterVolume,
+        public UserSettings(int resolutionWidth, int resolutionHeight, FullScreenMode fullscreen, float masterVolume,
             float bgmVolume, float seVolume, bool showTutorial)
         {
             // 引数で受け取った値をセットする
-            ResolutionWidth = initUserSettings;
-            ResolutionHeight = height;
+            ResolutionWidth = resolutionWidth;
+            ResolutionHeight = resolutionHeight;
             Fullscreen = fullscreen;
             MasterVolume = masterVolume;
             BgmVolume = bgmVolume;

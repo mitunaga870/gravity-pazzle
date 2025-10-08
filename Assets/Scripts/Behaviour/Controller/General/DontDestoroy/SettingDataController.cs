@@ -198,7 +198,7 @@ namespace Behaviour.Controller.General.DontDestoroy
         public void ApplySettings()
         {
             Debug.Log("Apply Settings: " + UserSettings);
-            
+
             Screen.SetResolution(
                 UserSettings.ResolutionWidth,
                 UserSettings.ResolutionHeight,
