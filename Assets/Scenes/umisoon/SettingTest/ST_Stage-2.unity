@@ -6301,6 +6301,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: -3280043090863565490, guid: dc62069e53f74c949b2979a1a976f829, type: 3}
+      propertyPath: environmentSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 50ae13b7c7a69b9498fcd29c91e30802, type: 2}
     - target: {fileID: 2254733339695932710, guid: dc62069e53f74c949b2979a1a976f829, type: 3}
       propertyPath: m_Name
       value: Controller
@@ -14328,9 +14332,57 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2646249462206674806, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646249462206674806, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646249462206674806, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2646249462206674806, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2738317137734037232, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
       propertyPath: m_Name
       value: TutorialUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347660139581241394, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347660139581241394, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347660139581241394, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5347660139581241394, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101958720853570410, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101958720853570410, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101958720853570410, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6101958720853570410, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8025716853324150343, guid: 6e242025cfea89f4398c03f992650ee4, type: 3}
       propertyPath: m_Pivot.x
@@ -17314,6 +17366,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 529508302}
     - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: environmentSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 50ae13b7c7a69b9498fcd29c91e30802, type: 2}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
       propertyPath: sceneStateController
       value: 
       objectReference: {fileID: 529508303}
@@ -17510,6 +17566,7 @@ MonoBehaviour:
   input: {fileID: 529508302}
   gravBehaviour: {fileID: 1872627728}
   directionUIWrapper: {fileID: 127654331}
+  inputController: {fileID: 529508302}
 --- !u!114 &1872627730
 MonoBehaviour:
   m_ObjectHideFlags: 0

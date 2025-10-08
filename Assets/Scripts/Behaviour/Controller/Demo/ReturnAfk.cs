@@ -1,7 +1,7 @@
 ﻿#region
 
 using Behaviour.Controller.General;
-using Lib.DataClass.ForInspector;
+using ScriptableObj.Setting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -14,9 +14,8 @@ namespace Behaviour.Controller.Demo
     /// </summary>
     public class ReturnAfk : MonoBehaviour
     {
-        // 戻るシーン
         [SerializeField]
-        private SceneObj returnScene;
+        private EnvironmentSetting environmentSetting;
 
         // AFK閾値[sec]
         [SerializeField]
@@ -53,7 +52,7 @@ namespace Behaviour.Controller.Demo
 
 
             // シーンに遷移
-            SceneManager.LoadScene(returnScene);
+            SceneManager.LoadScene(environmentSetting.TitleScene);
         }
     }
 }

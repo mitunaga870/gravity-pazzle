@@ -32,5 +32,14 @@ namespace Behaviour.UI
             // ボタンにクリックイベントを追加
             button.onClick.AddListener(() => SceneManager.LoadScene(targetScene));
         }
+
+        /// <summary>
+        ///     ターゲットシーンを設定
+        /// </summary>
+        /// <param name="scene"></param>
+        public void SetTargetScene(SceneObj scene)
+        {
+            targetScene = scene;
+        }
     }
 }

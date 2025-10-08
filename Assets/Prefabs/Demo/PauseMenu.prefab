@@ -218,7 +218,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 302b4219871c47bb98f673cc1ee35b52, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentSetting: {fileID: 0}
   pauseMenu: {fileID: 5504396123825403816}
+  Input: {fileID: 0}
+  sceneStateController: {fileID: 0}
+  returnToTitleButton: {fileID: 8602276767187868974}
 --- !u!1001 &1265134675899000830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -309,7 +313,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7417363081353312976, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
       propertyPath: targetScene.m_SceneName
-      value: DemoTitle
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 7544211025937134802, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
       propertyPath: m_Name
@@ -377,3 +381,14 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1858415056705133321, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
   m_PrefabInstance: {fileID: 1265134675899000830}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8602276767187868974 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7417363081353312976, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
+  m_PrefabInstance: {fileID: 1265134675899000830}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0baa9024582141b39350e66a83dd5163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
