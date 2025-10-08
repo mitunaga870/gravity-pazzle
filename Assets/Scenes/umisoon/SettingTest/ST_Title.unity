@@ -236,6 +236,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 876289164384041284, guid: 94926f0cd4ab7bc44be42069b05142af, type: 3}
+      propertyPath: environmentSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 50ae13b7c7a69b9498fcd29c91e30802, type: 2}
+    - target: {fileID: 876289164384041284, guid: 94926f0cd4ab7bc44be42069b05142af, type: 3}
       propertyPath: stage1Name.m_SceneName
       value: ST_Stage-1
       objectReference: {fileID: 0}
@@ -939,6 +943,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2753990382996511183, guid: 3a174b424ac925846a7a9c3b161d10ae, type: 3}
+      propertyPath: environmentSetting
+      value: 
+      objectReference: {fileID: 11400000, guid: 50ae13b7c7a69b9498fcd29c91e30802, type: 2}
     - target: {fileID: 2767586451441885926, guid: 3a174b424ac925846a7a9c3b161d10ae, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1

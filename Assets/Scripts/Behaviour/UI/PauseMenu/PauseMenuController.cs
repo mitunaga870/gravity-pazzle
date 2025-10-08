@@ -2,6 +2,7 @@
 
 using Behaviour.Controller.General;
 using Lib.State.Scene;
+using ScriptableObj.Setting;
 using UnityEngine;
 
 #endregion
@@ -14,6 +15,11 @@ namespace Behaviour.UI.PauseMenu
     /// </summary>
     public class PauseMenuController : MonoBehaviour
     {
+        #region Serialized Fields
+
+        [SerializeField]
+        private EnvironmentSetting environmentSetting;
+
         [SerializeField]
         private GameObject pauseMenu;
 
@@ -22,6 +28,11 @@ namespace Behaviour.UI.PauseMenu
 
         [SerializeField]
         private SceneStateController sceneStateController;
+
+        [SerializeField]
+        private SceneSelectButton returnToTitleButton;
+
+        #endregion
         
         public bool IsMenuOpened { get; private set; }
 
@@ -34,6 +45,9 @@ namespace Behaviour.UI.PauseMenu
                 Debug.LogError("InputController is not assigned in the inspector.");
             if (sceneStateController == null)
                 Debug.LogError("SceneStateController is not assigned in the inspector.");
+
+            // タイトルに戻るボタンのターゲットシーンを設定
+            returnToTitleButton.SetTargetScene(environmentSetting.TitleScene);
         }
 
         private void Update()
