@@ -5,7 +5,7 @@ using UnityEngine;
 
 #endregion
 
-namespace ScriptableObj
+namespace ScriptableObj.Setting
 {
     /// <summary>
     ///     ユーザー設定の解像度プリセット

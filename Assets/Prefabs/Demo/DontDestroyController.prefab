@@ -92,11 +92,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   demoPlayMin: 5
   stage1Name:
-    m_SceneName: 
+    m_SceneName: Stage-1
   stage2Name:
-    m_SceneName: 
+    m_SceneName: Stage-2
   surveySceneName:
-    m_SceneName: 
+    m_SceneName: EndCard
 --- !u!1 &8921743764930620165
 GameObject:
   m_ObjectHideFlags: 0

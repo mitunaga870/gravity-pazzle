@@ -28,7 +28,21 @@ namespace Behaviour.Controller.General
 
         #region Data Fields
 
-        public UserSettings UserSettings { get; private set; }
+        private UserSettings _userSettings;
+
+        public UserSettings UserSettings
+        {
+            get => _userSettings;
+
+            private set
+            {
+                if (_userSettings != null && _userSettings.Equals(value)) return;
+
+                _userSettings = value;
+                // 変更があった場合に設定を適用する
+                ApplySettings();
+            }
+        }
 
         #endregion
 
@@ -78,7 +92,7 @@ namespace Behaviour.Controller.General
         /// <summary>
         ///     解像度を設定する
         /// </summary>
-        public void SetResolution(int width, int height, FullScreenMode fullscreen, int targetDisplay)
+        public void SetResolution(int width, int height, FullScreenMode fullscreen)
         {
             width = Mathf.Max(800, width);
             height = Mathf.Max(600, height);

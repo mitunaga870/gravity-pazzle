@@ -1,6 +1,7 @@
 ﻿#region
 
 using UnityEngine;
+using Resolution = ScriptableObj.Setting.Resolution;
 
 #endregion
 
@@ -16,17 +17,8 @@ namespace ScriptableObj
 
         [Header("ディスプレイ設定")]
         [SerializeField]
-        private int resolutionWidth = 1920;
-
-        [SerializeField]
-        private int resolutionHeight = 1080;
-
-        [SerializeField]
-        private FullScreenMode fullscreen = FullScreenMode.FullScreenWindow;
-
-        [SerializeField]
-        private int targetDisplay;
-
+        private Resolution resolutionPreset;
+        
         [Header("音声設定")]
         [SerializeField]
         [Range(0f, 1f)]
@@ -48,10 +40,9 @@ namespace ScriptableObj
 
         #region Accessors
 
-        public int ResolutionWidth => resolutionWidth;
-        public int ResolutionHeight => resolutionHeight;
-        public FullScreenMode Fullscreen => fullscreen;
-        public int TargetDisplay => targetDisplay;
+        public int ResolutionWidth => resolutionPreset.Width;
+        public int ResolutionHeight => resolutionPreset.Height;
+        public FullScreenMode Fullscreen => resolutionPreset.FullscreenMode;
         public float MasterVolume => masterVolume;
         public float BgmVolume => bgmVolume;
         public float SeVolume => seVolume;
