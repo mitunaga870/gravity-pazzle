@@ -1,8 +1,8 @@
 ﻿#region
 
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Lib.State.Scene;
-using ScriptableObj.Setting;
 using UnityEngine;
 
 #endregion
@@ -16,9 +16,6 @@ namespace Behaviour.UI.PauseMenu
     public class PauseMenuController : MonoBehaviour
     {
         #region Serialized Fields
-
-        [SerializeField]
-        private EnvironmentSetting environmentSetting;
 
         [SerializeField]
         private GameObject pauseMenu;
@@ -47,7 +44,8 @@ namespace Behaviour.UI.PauseMenu
                 Debug.LogError("SceneStateController is not assigned in the inspector.");
 
             // タイトルに戻るボタンのターゲットシーンを設定
-            returnToTitleButton.SetTargetScene(environmentSetting.TitleScene);
+            returnToTitleButton.SetTargetScene(
+                SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
 
         private void Update()

@@ -1,10 +1,10 @@
 ﻿#region
 
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Trigger;
 using Lib.DataClass.ForInspector;
 using Lib.Logic;
-using ScriptableObj.Setting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -39,20 +39,17 @@ namespace Behaviour.Controller.Demo
         private InputController Input;
 
         // ステージ１のシーン名
-        private SceneObj Stage1Name => environmentSetting.StageScenes[0];
+        private SceneObj Stage1Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[0];
 
         // ステージ２のシーン名
-        private SceneObj Stage2Name => environmentSetting.StageScenes[1];
+        private SceneObj Stage2Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[1];
 
         // アンケートシーン名
-        private SceneObj SurveySceneName => environmentSetting.EndCardScene;
+        private SceneObj SurveySceneName => SettingDataController.Instance.EnvironmentSetting.EndCardScene;
 
         #endregion
 
         #region Serialized Fields
-
-        [SerializeField]
-        private EnvironmentSetting environmentSetting;
 
         // デモワンプレイごとのプレイ時間[min]
         [SerializeField]
