@@ -43,6 +43,8 @@ namespace Behaviour.UI.Settings
 
         private static SettingDataController SettingDataController => SettingDataController.Instance;
 
+        private List<Resolution> curResolutions = new();
+
         #region Unity Methods
 
         private void Awake()
@@ -69,7 +71,7 @@ namespace Behaviour.UI.Settings
         private void OnResolutionChange(int index)
         {
             // 解像度の変更処理をここに実装
-            var selectedResolution = resolutions[index];
+            var selectedResolution = curResolutions[index];
 
             SettingDataController.SetResolution(
                 selectedResolution.Width,
@@ -120,6 +122,10 @@ namespace Behaviour.UI.Settings
                 res.Height == settings.ResolutionHeight &&
                 res.FullscreenMode == settings.Fullscreen);
 
+
+            // 現在の解像度リストを更新
+            curResolutions = new List<Resolution>(resolutions);
+
             // 見つからなかった場合、カスタム現設定を追加
             if (currentResolution == -1)
             {
@@ -131,7 +137,7 @@ namespace Behaviour.UI.Settings
                     settings.Fullscreen);
 
                 // 解像度リストに追加
-                resolutions.Add(customResolution);
+                curResolutions.Add(customResolution);
                 resolutionDropdown.options.Add(new TMP_Dropdown.OptionData("カスタム：" + customResolution.DisplayString));
 
                 // 現在の解像度をカスタムに設定
