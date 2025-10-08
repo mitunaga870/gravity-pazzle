@@ -2,7 +2,7 @@
 
 using Behaviour.Camera;
 using Behaviour.Controller;
-using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
 using Behaviour.Player;
 using Behaviour.UI.PauseMenu;

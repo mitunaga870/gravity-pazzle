@@ -1,5 +1,7 @@
 ﻿#region
 
+using System;
+using Newtonsoft.Json;
 using ScriptableObj;
 using UnityEngine;
 
@@ -7,6 +9,10 @@ using UnityEngine;
 
 namespace Lib.DataClass.Settings
 {
+    /// <summary>
+    ///     ユーザー設定のデータクラス
+    /// </summary>
+    [Serializable]
     public class UserSettings
     {
         #region Constructors
@@ -22,9 +28,11 @@ namespace Lib.DataClass.Settings
             ShowTutorial = initUserSettings.ShowTutorial;
         }
 
-        private UserSettings(int initUserSettings, int height, FullScreenMode fullscreen, float masterVolume,
+        [JsonConstructor]
+        public UserSettings(int initUserSettings, int height, FullScreenMode fullscreen, float masterVolume,
             float bgmVolume, float seVolume, bool showTutorial)
         {
+            // 引数で受け取った値をセットする
             ResolutionWidth = initUserSettings;
             ResolutionHeight = height;
             Fullscreen = fullscreen;
@@ -46,15 +54,14 @@ namespace Lib.DataClass.Settings
 
         public readonly bool ShowTutorial;
 
-
         #region deserver
 
-        public UserSettings DeserveResolution(int width, int height, FullScreenMode fullscreen)
+        public UserSettings DeserveResolution(int width, int height, FullScreenMode fullscreenArg)
         {
             return new UserSettings(
                 width,
                 height,
-                fullscreen,
+                fullscreenArg,
                 MasterVolume,
                 BgmVolume,
                 SeVolume,
@@ -62,46 +69,20 @@ namespace Lib.DataClass.Settings
             );
         }
 
-        public UserSettings DeserveBgmVolume(float bgmVolume)
+        public UserSettings DeserveBgmVolume(float bgmVolumeArg)
         {
             return new UserSettings(
                 ResolutionWidth,
                 ResolutionHeight,
                 Fullscreen,
                 MasterVolume,
-                bgmVolume,
+                bgmVolumeArg,
                 SeVolume,
                 ShowTutorial
             );
         }
 
-        public UserSettings DeserveSeVolume(float seVolume)
-        {
-            return new UserSettings(
-                ResolutionWidth,
-                ResolutionHeight,
-                Fullscreen,
-                MasterVolume,
-                BgmVolume,
-                seVolume,
-                ShowTutorial
-            );
-        }
-
-        public UserSettings DeserveMasterVolume(float masterVolume)
-        {
-            return new UserSettings(
-                ResolutionWidth,
-                ResolutionHeight,
-                Fullscreen,
-                masterVolume,
-                BgmVolume,
-                SeVolume,
-                ShowTutorial
-            );
-        }
-
-        public UserSettings DeserveShowTutorial(bool showTutorial)
+        public UserSettings DeserveSeVolume(float seVolumeArg)
         {
             return new UserSettings(
                 ResolutionWidth,
@@ -109,9 +90,56 @@ namespace Lib.DataClass.Settings
                 Fullscreen,
                 MasterVolume,
                 BgmVolume,
-                SeVolume,
-                showTutorial
+                seVolumeArg,
+                ShowTutorial
             );
+        }
+
+        public UserSettings DeserveMasterVolume(float masterVolumeArg)
+        {
+            return new UserSettings(
+                ResolutionWidth,
+                ResolutionHeight,
+                Fullscreen,
+                masterVolumeArg,
+                BgmVolume,
+                SeVolume,
+                ShowTutorial
+            );
+        }
+
+        public UserSettings DeserveShowTutorial(bool showTutorialArg)
+        {
+            return new UserSettings(
+                ResolutionWidth,
+                ResolutionHeight,
+                Fullscreen,
+                MasterVolume,
+                BgmVolume,
+                SeVolume,
+                showTutorialArg
+            );
+        }
+
+        #endregion
+
+        #region Parse
+
+        public override string ToString()
+        {
+            // デバッグ用    
+            return
+                $"Resolution: {ResolutionWidth}x{ResolutionHeight} Fullscreen: {Fullscreen} " +
+                $"MasterVolume: {MasterVolume} BgmVolume: {BgmVolume} SeVolume: {SeVolume} " +
+                $"ShowTutorial: {ShowTutorial}";
+        }
+
+        /// <summary>
+        ///     保存用のJSON文字列に変換する
+        /// </summary>
+        public string ToJson()
+        {
+            return JsonConvert.SerializeObject(this);
         }
 
         #endregion
