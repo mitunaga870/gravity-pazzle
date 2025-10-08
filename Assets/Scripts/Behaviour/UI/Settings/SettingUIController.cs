@@ -45,7 +45,7 @@ namespace Behaviour.UI.Settings
 
         #region Unity Methods
 
-        private void Start()
+        private void Awake()
         {
             // 解像度の設定
             resolutionDropdown.onValueChanged.AddListener(OnResolutionChange);
@@ -115,14 +115,34 @@ namespace Behaviour.UI.Settings
             var settings = SettingDataController.UserSettings;
 
             // 現在の解像度からプリセットを探索
-            var currentResolution = resolutions.Find(res =>
+            var currentResolution = resolutions.FindIndex(res =>
                 res.Width == settings.ResolutionWidth &&
                 res.Height == settings.ResolutionHeight &&
                 res.FullscreenMode == settings.Fullscreen);
-            // 見つからなかった場合何も設定しない
-            if (currentResolution != null) resolutionDropdown.value = -1;
 
-            // その他設定を反映
+            // 見つからなかった場合、カスタム現設定を追加
+            if (currentResolution == -1)
+            {
+                // カスタム解像度を作成
+                var customResolution = ScriptableObject.CreateInstance<Resolution>();
+                customResolution.Init(
+                    settings.ResolutionWidth,
+                    settings.ResolutionHeight,
+                    settings.Fullscreen);
+
+                // 解像度リストに追加
+                resolutions.Add(customResolution);
+                resolutionDropdown.options.Add(new TMP_Dropdown.OptionData("カスタム：" + customResolution.DisplayString));
+
+                // 現在の解像度をカスタムに設定
+                currentResolution = resolutions.Count - 1;
+            }
+
+            Debug.Log($"Current Resolution Index: {currentResolution}");
+
+            // UIに反映
+            resolutionDropdown.value = currentResolution;
+            resolutionDropdown.RefreshShownValue();
             masterVolumeSlider.value = settings.MasterVolume;
             bgmVolumeSlider.value = settings.BgmVolume;
             seVolumeSlider.value = settings.SeVolume;
