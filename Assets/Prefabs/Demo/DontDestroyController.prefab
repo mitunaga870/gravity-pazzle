@@ -90,13 +90,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397ea532fa9d4fcea83dcd165a1aadb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  environmentSetting: {fileID: 0}
   demoPlayMin: 5
-  stage1Name:
-    m_SceneName: Stage-1
-  stage2Name:
-    m_SceneName: Stage-2
-  surveySceneName:
-    m_SceneName: EndCard
 --- !u!1 &8921743764930620165
 GameObject:
   m_ObjectHideFlags: 0
@@ -106,6 +101,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6622260937521676836}
+  - component: {fileID: 4507922024429930492}
   m_Layer: 0
   m_Name: DontDestroyController
   m_TagString: Untagged
@@ -130,3 +126,15 @@ Transform:
   - {fileID: 9221104224186408442}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &4507922024429930492
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8921743764930620165}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78661ee8c8b847e58dc21bf842fd1c17, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
