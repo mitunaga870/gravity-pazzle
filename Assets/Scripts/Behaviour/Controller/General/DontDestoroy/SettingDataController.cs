@@ -5,6 +5,7 @@ using System.IO;
 using Lib.DataClass.Settings;
 using Newtonsoft.Json;
 using ScriptableObj;
+using ScriptableObj.Setting;
 using UnityEngine;
 using UnityEngine.Audio;
 
@@ -48,8 +49,10 @@ namespace Behaviour.Controller.General.DontDestoroy
             }
         }
 
-        private string saveFilePath => Application.persistentDataPath + "/Settings";
-        private string userSettingsFilePath => saveFilePath + "/UserSettings.json";
+        public EnvironmentSetting EnvironmentSetting => environmentSetting;
+
+        private string SaveFilePath => Application.persistentDataPath + "/Settings";
+        private string UserSettingsFilePath => SaveFilePath + "/UserSettings.json";
 
         #endregion
 
@@ -57,6 +60,9 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         [SerializeField]
         private InitUserSettings initUserSettings;
+
+        [SerializeField]
+        private EnvironmentSetting environmentSetting;
 
         [SerializeField]
         private AudioMixer audioMixer;
@@ -98,11 +104,11 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void LoadSettings()
         {
             // 保存先されたJSONを確認
-            if (File.Exists(userSettingsFilePath))
+            if (File.Exists(UserSettingsFilePath))
                 try
                 {
                     // JSONを読み込んでデシリアライズする
-                    var userSettingsJson = File.ReadAllText(userSettingsFilePath);
+                    var userSettingsJson = File.ReadAllText(UserSettingsFilePath);
                     UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson);
                     return;
                 }
@@ -126,11 +132,11 @@ namespace Behaviour.Controller.General.DontDestoroy
             var userSettingsJson = UserSettings.ToJson();
 
             // 保存先のディレクトリを作成する
-            if (!Directory.Exists(saveFilePath))
-                Directory.CreateDirectory(saveFilePath);
+            if (!Directory.Exists(SaveFilePath))
+                Directory.CreateDirectory(SaveFilePath);
 
             // ファイルに保存する
-            File.WriteAllText(userSettingsFilePath, userSettingsJson);
+            File.WriteAllText(UserSettingsFilePath, userSettingsJson);
         }
 
         #endregion
