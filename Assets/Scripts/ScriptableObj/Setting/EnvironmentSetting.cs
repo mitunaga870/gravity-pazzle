@@ -8,7 +8,7 @@ using UnityEngine;
 
 namespace ScriptableObj.Setting
 {
-    [CreateAssetMenu(fileName = "環境設定", menuName = "ScriptableObj/環境設定", order = 1)]
+    [CreateAssetMenu(fileName = "環境設定", menuName = "ScriptableObj/設定/環境設定", order = 1)]
     public class EnvironmentSetting : ScriptableObject
     {
         [Header("開発用設定")]

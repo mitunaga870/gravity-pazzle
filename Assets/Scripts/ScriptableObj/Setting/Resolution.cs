@@ -10,7 +10,7 @@ namespace ScriptableObj.Setting
     /// <summary>
     ///     ユーザー設定の解像度プリセット
     /// </summary>
-    [CreateAssetMenu(fileName = "解像度プリセット", menuName = "ScriptableObj/解像度プリセット", order = 2)]
+    [CreateAssetMenu(fileName = "解像度プリセット", menuName = "ScriptableObj/設定/解像度プリセット", order = 2)]
     public class Resolution : ScriptableObject
     {
         [SerializeField]
