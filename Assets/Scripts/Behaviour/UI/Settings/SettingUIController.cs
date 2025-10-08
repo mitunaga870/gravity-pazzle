@@ -118,6 +118,51 @@ namespace Behaviour.UI.Settings
             resolutionDropdown.AddOptions(options);
         }
 
-        #endregion 
+        private void LoadCurrentSettings()
+        {
+            // 値を取得
+            var settings = SettingDataController.UserSettings;
+
+            // 現在の解像度からプリセットを探索
+            var currentResolution = resolutions.Find(res =>
+                res.Width == settings.ResolutionWidth &&
+                res.Height == settings.ResolutionHeight &&
+                res.FullscreenMode == settings.Fullscreen);
+            // 見つからなかった場合何も設定しない
+            if (currentResolution != null) resolutionDropdown.value = -1;
+
+            // その他設定を反映
+            masterVolumeSlider.value = settings.MasterVolume;
+            bgmVolumeSlider.value = settings.BgmVolume;
+            seVolumeSlider.value = settings.SeVolume;
+            tutorialToggle.isOn = settings.ShowTutorial;
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        public void ShowSettings()
+        {
+            gameObject.SetActive(true);
+
+            // 現在の設定をUIに反映
+            LoadCurrentSettings();
+        }
+
+        public void HideSettings()
+        {
+            gameObject.SetActive(false);
+        }
+
+        public void ToggleSettings()
+        {
+            if (gameObject.activeSelf)
+                HideSettings();
+            else
+                ShowSettings();
+        }
+
+        #endregion
     }
 }
