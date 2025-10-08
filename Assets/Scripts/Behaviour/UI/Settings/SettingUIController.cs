@@ -1,7 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
-using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -11,6 +11,10 @@ using Resolution = ScriptableObj.Setting.Resolution;
 
 namespace Behaviour.UI.Settings
 {
+    /// <summary>
+    ///     設置UIのコントローラー
+    ///     UI要素とユーザー設定データの同期を担当
+    /// </summary>
     public class SettingUIController : MonoBehaviour
     {
         #region Serialized Fields
@@ -67,7 +71,6 @@ namespace Behaviour.UI.Settings
             // 解像度の変更処理をここに実装
             var selectedResolution = resolutions[index];
 
-            Debug.Log($"解像度が変更されました: {selectedResolution}");
             SettingDataController.SetResolution(
                 selectedResolution.Width,
                 selectedResolution.Height,
@@ -76,33 +79,21 @@ namespace Behaviour.UI.Settings
 
         private void OnMasterVolumeChange(float value)
         {
-            // マスターボリュームの変更処理をここに実装
-            Debug.Log($"マスターボリュームが変更されました: {value}");
-
             SettingDataController.SetMasterVolume(value);
         }
 
         private void OnBGMVolumeChange(float value)
         {
-            // BGMボリュームの変更処理をここに実装
-            Debug.Log($"BGMボリュームが変更されました: {value}");
-
             SettingDataController.SetBgmVolume(value);
         }
 
         private void OnSEVolumeChange(float value)
         {
-            // SEボリュームの変更処理をここに実装
-            Debug.Log($"SEボリュームが変更されました: {value}");
-
             SettingDataController.SetSeVolume(value);
         }
 
         private void OnTutorialToggleChange(bool isOn)
         {
-            // チュートリアルのオンオフ切り替え処理をここに実装
-            Debug.Log($"チュートリアルの設定が変更されました: {isOn}");
-
             SettingDataController.SetShowTutorial(isOn);
         }
 

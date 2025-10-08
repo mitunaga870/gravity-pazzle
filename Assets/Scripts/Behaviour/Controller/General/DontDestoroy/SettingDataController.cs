@@ -1,18 +1,22 @@
 ﻿#region
 
+using System;
+using System.IO;
 using Lib.DataClass.Settings;
+using Newtonsoft.Json;
 using ScriptableObj;
 using UnityEngine;
 using UnityEngine.Audio;
 
 #endregion
 
-namespace Behaviour.Controller.General
+namespace Behaviour.Controller.General.DontDestoroy
 {
     /// <summary>
     ///     ユーザー設定情報の管理を行うコントローラー
     ///     シングルトンパターンで実装予定
     /// </summary>
+    [Serializable]
     public class SettingDataController : MonoBehaviour
     {
         #region Singleton Implementation
@@ -44,6 +48,9 @@ namespace Behaviour.Controller.General
             }
         }
 
+        private string saveFilePath => Application.persistentDataPath + "/Settings";
+        private string userSettingsFilePath => saveFilePath + "/UserSettings.json";
+
         #endregion
 
         #region Serialized Fields
@@ -72,8 +79,16 @@ namespace Behaviour.Controller.General
             DontDestroyOnLoad(gameObject);
 
             LoadSettings();
+        }
 
-            ApplySettings();
+        private void OnDestroy()
+        {
+            // 多重生成を防ぐ
+            if (Instance != this) return;
+
+            // 設定を保存する
+            SaveSettings();
+            Instance = null;
         }
 
         #endregion
@@ -82,7 +97,40 @@ namespace Behaviour.Controller.General
 
         private void LoadSettings()
         {
+            // 保存先されたJSONを確認
+            if (File.Exists(userSettingsFilePath))
+                try
+                {
+                    // JSONを読み込んでデシリアライズする
+                    var userSettingsJson = File.ReadAllText(userSettingsFilePath);
+                    UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson);
+                    return;
+                }
+                catch (Exception e)
+                {
+                    Debug.LogError("Failed to load UserSettings: " + e.Message);
+                }
+            else
+                Debug.LogWarning("UserSettings file not found. Loading default settings.");
+
+            // 読み込みに失敗した場合は初期設定を使用する
             ResetSettings();
+        }
+
+        /**
+         * 設定を保存する
+         */
+        private void SaveSettings()
+        {
+            // JSONに変換する
+            var userSettingsJson = UserSettings.ToJson();
+
+            // 保存先のディレクトリを作成する
+            if (!Directory.Exists(saveFilePath))
+                Directory.CreateDirectory(saveFilePath);
+
+            // ファイルに保存する
+            File.WriteAllText(userSettingsFilePath, userSettingsJson);
         }
 
         #endregion
