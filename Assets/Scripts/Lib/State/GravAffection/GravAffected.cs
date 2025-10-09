@@ -3,8 +3,6 @@
 using System;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
-using LitMotion;
-using LitMotion.Extensions;
 using UnityEngine;
 
 #endregion
@@ -60,22 +58,17 @@ namespace Lib.State.GravAffection
             // カメラを指定位置が下になるように
             if (_hasCamera && prev != null)
             {
-                // カメラ移動時間
-                var moveTime = 0.5f;
-                
-                // 既存カメラの向き
-                var cameraRot = _focusCameraTransform.rotation;
-                
-                // 重力の向きベクトル
-                var prevGrav = GravUtils.GetGravDirectionUnit(prev.GravType);
-                var currGrav = _gravity.normalized;
-                
-                // 重力がどう回転したか計算
-                var gravRot = Quaternion.FromToRotation(prevGrav, currGrav);
-                
-                // カメラの向きを重力の向きに合わせる
-                LMotion.Create(cameraRot,   cameraRot * gravRot, moveTime)
-                    .BindToRotation(_affectedBody.transform);
+                var (axis, angle) = GravUtils.GetGravToGravRotation(prev.GravType, _gravType);
+
+                _affectedBody.transform.RotateAround(
+                    _affectedBody.position,
+                    axis,
+                    angle);
+
+                _focusCameraTransform.RotateAround(
+                    _affectedBody.position,
+                    axis,
+                    angle);
             }
         }
 

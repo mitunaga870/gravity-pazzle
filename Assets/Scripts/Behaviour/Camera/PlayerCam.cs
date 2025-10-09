@@ -100,6 +100,7 @@ namespace Behaviour.Camera
                 var deltaPitch = mouseY - excessPitch;
 
                 // カメラの回転を更新
+                Debug.Log($"Rotated Axis: {rotatedAxis}, Delta Pitch: {deltaPitch}");
                 transform.RotateAround(
                     playerPos,
                     rotatedAxis,
