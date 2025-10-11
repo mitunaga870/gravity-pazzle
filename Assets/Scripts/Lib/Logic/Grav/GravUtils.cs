@@ -54,32 +54,6 @@ namespace Lib.Logic.Gravity
                 _ => Vector3.zero
             };
         }
-
-        /// <summary>
-        /// 重力と直行し、指定カメラの右に出るベクトルを出力する
-        /// </summary>
-        public static Vector3 GetGravRightUnit(GravType gravType, Transform camTrans)
-        {
-            var axis = GetGravPerpendicularUnit(gravType);
-            switch (gravType)
-            {
-                case GravType.YNegative:
-                    return Quaternion.Euler(0, camTrans.rotation.eulerAngles.y, 0) * axis;
-                case GravType.YPositive:
-                    return Quaternion.Euler(0, camTrans.rotation.eulerAngles.y, 0) * axis * -1;
-                case GravType.XNegative:
-                    return Quaternion.Euler(camTrans.rotation.eulerAngles.x, 0, 0) * axis;
-                case GravType.XPositive:
-                    return Quaternion.Euler(camTrans.rotation.eulerAngles.x, 0, 0) * axis * -1;
-                case GravType.ZNegative:
-                    return Quaternion.Euler(0, 0, camTrans.rotation.eulerAngles.z) * axis;
-                case GravType.ZPositive:
-                    return Quaternion.Euler(0, 0, camTrans.rotation.eulerAngles.z) * axis * -1;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(gravType), gravType, null);
-            }
-        }
-        
         /// <summary>
         /// 向きの単位ベクトルを被重力平面に投影し、単位ベクトルを返す
         /// </summary>

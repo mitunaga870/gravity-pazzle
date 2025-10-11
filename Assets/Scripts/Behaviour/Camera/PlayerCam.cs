@@ -2,6 +2,7 @@
 
 #nullable enable
 using Behaviour.Controller.General;
+using Lib.Logic;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using Lib.State.Scene;
@@ -37,6 +38,8 @@ namespace Behaviour.Camera
 
         private float _pitch;
 
+        private bool _isMovable = true;
+
         #endregion
 
         #region Public Fields
@@ -44,6 +47,19 @@ namespace Behaviour.Camera
         // チュートリアル用の状態フィールド
         // カメラが動かされたことがあるか
         public bool IsMoved { get; private set; }
+        
+        // カメラを一時的に動かせなくする
+        public void TemporarilyDisableMovement(float duration)
+        {
+            if (!_isMovable)
+                return;
+            
+            _isMovable = false;
+
+            // duration秒後に動かせるようにする
+            var coroutine = GeneralUtils.DelayCoroutine(duration, () => _isMovable = true);
+            StartCoroutine(coroutine);
+        }
 
         #endregion
 
@@ -68,27 +84,25 @@ namespace Behaviour.Camera
             if (_playerTrans == null || _gravType == null)
                 return;
             
+            // 動かせない場合は何もしない
+            if (!_isMovable)
+                return;
+            
             // プレイヤーの位置と重力の種類を取得
             var playerPos = _playerTrans.position;
             var gravType = _gravType.Value;
             
-            // マウスの動きに合わせてカメラを回転させる
-            var mouseX = Mathf.Clamp(
-                Input.GetAxis("Mouse X", SceneState.InGame) * Sensitivity * -1,
-                MaxPitch*-1,
-                MaxPitch
-                );
             var mouseY = Mathf.Clamp(
                 Input.GetAxis("Mouse Y", SceneState.InGame) * Sensitivity * -1,
                 MaxPitch*-1,
                 MaxPitch
                 );
-            
+
             // 閾値以上の動きがあった場合にカメラを回転させる
             if (Mathf.Abs(mouseY) > Threshold)
             {
                 // 軸をカメラの回転角分だけ回転させる
-                var rotatedAxis = GravUtils.GetGravRightUnit(gravType,transform);
+                var rotatedAxis = transform.right;
                 
                 // ピッチを積算
                 var unClampedPitch = _pitch + mouseY;
@@ -100,7 +114,6 @@ namespace Behaviour.Camera
                 var deltaPitch = mouseY - excessPitch;
 
                 // カメラの回転を更新
-                Debug.Log($"Rotated Axis: {rotatedAxis}, Delta Pitch: {deltaPitch}");
                 transform.RotateAround(
                     playerPos,
                     rotatedAxis,
@@ -110,10 +123,16 @@ namespace Behaviour.Camera
                 // チュートリアル用の状態を更新
                 IsMoved = true;
             }
+            
+            // マウスの動きに合わせてカメラを回転させる
+            var mouseX = Mathf.Clamp(
+                Input.GetAxis("Mouse X", SceneState.InGame) * Sensitivity * -1,
+                MaxPitch*-1,
+                MaxPitch
+                );
 
             if (Mathf.Abs(mouseX) > Threshold)
             {
-                
                 // カメラの回転を更新
                 transform.RotateAround(
                     playerPos,

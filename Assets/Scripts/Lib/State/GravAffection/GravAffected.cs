@@ -3,6 +3,7 @@
 using System;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
+using UnityEditor.Search;
 using UnityEngine;
 
 #endregion
@@ -59,6 +60,21 @@ namespace Lib.State.GravAffection
             if (_hasCamera && prev != null)
             {
                 var (axis, angle) = GravUtils.GetGravToGravRotation(prev.GravType, _gravType);
+                
+                // axisがゼロベクトルの場合は１８０度回転
+                if (axis == Vector3.zero)
+                {
+                    axis = _focusCameraTransform.right; // 適当な軸
+                    angle = 180f;
+                    
+                    // ただ１８０度回すと床に埋まるのでプレイヤーの高さ分上げる
+                    // TODO: 環境設定によって変える（設定のPRマージ後）
+                    const float heightOffset = 1.0f;
+                    var topVector = GravUtils.GetGravDirectionUnit(
+                        GravUtils.GetUpperGravType(prev.GravType));
+                    
+                    var offset = topVector * heightOffset;
+                }
 
                 _affectedBody.transform.RotateAround(
                     _affectedBody.position,
