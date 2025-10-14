@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   initUserSettings: {fileID: 11400000, guid: 45112392342989a4c99863c53c88cbab, type: 2}
+  environmentSetting: {fileID: 11400000, guid: 50ae13b7c7a69b9498fcd29c91e30802, type: 2}
   audioMixer: {fileID: 24100000, guid: 1a6cc842d2315704c8fc58b9e2500473, type: 2}
 --- !u!1 &4493291139345334689
 GameObject:
@@ -90,7 +91,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 397ea532fa9d4fcea83dcd165a1aadb7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  environmentSetting: {fileID: 0}
   demoPlayMin: 5
 --- !u!1 &8921743764930620165
 GameObject:
