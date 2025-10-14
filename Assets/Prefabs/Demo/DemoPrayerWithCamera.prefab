@@ -106,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b8406d3283a7b04e935ba252041ff60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Input: {fileID: 0}
 --- !u!114 &8868414471122545065
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -160,7 +161,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5033662738274766626}
   m_Layer: 2
-  m_Name: PrayerWithCamera
+  m_Name: DemoPrayerWithCamera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -563,8 +564,10 @@ MonoBehaviour:
   playerRigidBody: {fileID: 8188327382149836959}
   playerAnimator: {fileID: 4935840523030931131}
   playerCam: {fileID: 5635841674536581256}
+  input: {fileID: 0}
   gravBehaviour: {fileID: 7419714364373854734}
   directionUIWrapper: {fileID: 0}
+  inputController: {fileID: 0}
 --- !u!114 &7419714364373854734
 MonoBehaviour:
   m_ObjectHideFlags: 0

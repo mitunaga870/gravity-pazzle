@@ -1,6 +1,10 @@
-﻿using Lib.State.Interface.Gravity;
+﻿#region
+
+using System;
+using Lib.State.Interface.Gravity;
 using UnityEngine;
-using UnityEngine.UIElements;
+
+#endregion
 
 namespace Lib.Logic.Gravity
 {
@@ -50,32 +54,6 @@ namespace Lib.Logic.Gravity
                 _ => Vector3.zero
             };
         }
-
-        /// <summary>
-        /// 重力と直行し、指定カメラの右に出るベクトルを出力する
-        /// </summary>
-        public static Vector3 GetGravRightUnit(GravType gravType, Transform camTrans)
-        {
-            var axis = GravUtils.GetGravPerpendicularUnit(gravType);
-            switch (gravType)
-            {
-                case GravType.YNegative:
-                    return Quaternion.Euler(0, camTrans.rotation.eulerAngles.y, 0) * axis;
-                case GravType.YPositive:
-                    return Quaternion.Euler(0, camTrans.rotation.eulerAngles.y, 0) * axis * -1;
-                case GravType.XNegative:
-                    return Quaternion.Euler(camTrans.rotation.eulerAngles.x, 0, 0) * axis;
-                case GravType.XPositive:
-                    return Quaternion.Euler(camTrans.rotation.eulerAngles.x, 0, 0) * axis * -1;
-                case GravType.ZNegative:
-                    return Quaternion.Euler(0, 0, camTrans.rotation.eulerAngles.z) * axis;
-                case GravType.ZPositive:
-                    return Quaternion.Euler(0, 0, camTrans.rotation.eulerAngles.z) * axis * -1;
-                default:
-                    throw new System.ArgumentOutOfRangeException(nameof(gravType), gravType, null);
-            }
-        }
-        
         /// <summary>
         /// 向きの単位ベクトルを被重力平面に投影し、単位ベクトルを返す
         /// </summary>
@@ -132,7 +110,7 @@ namespace Lib.Logic.Gravity
         {
             // 重力の向き
             if (direction.sqrMagnitude <= 0)
-                throw new System.ArgumentException("Direction is zero vector");
+                throw new ArgumentException("Direction is zero vector");
             
             // 最大方向を取得
             var maxAxis = Mathf.Max(Mathf.Abs(direction.x), Mathf.Abs(direction.y), Mathf.Abs(direction.z));
@@ -164,7 +142,7 @@ namespace Lib.Logic.Gravity
                 GravType.XPositive => GravType.XNegative,
                 GravType.ZNegative => GravType.ZPositive,
                 GravType.ZPositive => GravType.ZNegative,
-                _ => throw new System.ArgumentOutOfRangeException(nameof(gravType), gravType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(gravType), gravType, null)
             };
         }
         
@@ -182,9 +160,22 @@ namespace Lib.Logic.Gravity
                 GravType.XPositive => GravType.XPositive,
                 GravType.ZNegative => GravType.ZNegative,
                 GravType.ZPositive => GravType.ZPositive,
-                _ => throw new System.ArgumentOutOfRangeException(nameof(gravType), gravType, null)
+                _ => throw new ArgumentOutOfRangeException(nameof(gravType), gravType, null)
             };
         }
-        
+
+        public static (Vector3, float) GetGravToGravRotation(GravType prev, GravType next)
+        {
+            if (prev == next)
+                return (Vector3.zero, 0f);
+
+            // 回転軸を取得
+            var prevDir = GetGravDirectionUnit(prev);
+            var nextDir = GetGravDirectionUnit(next);
+            var axis = Vector3.Cross(prevDir, nextDir);
+            // 回転角度を取得
+            var angle = Vector3.Angle(prevDir, nextDir);
+            return (axis, angle);
+        }
     }
 }
