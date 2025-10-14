@@ -22,6 +22,11 @@ namespace Behaviour.Player
     {
         private const float Speed = 5f;
 
+        [Header("プレイヤー設定")]
+        [SerializeField]
+        private bool changeableGrav = true;
+
+        [Header("参照用")]
         [SerializeField]
         private AGravBehaviour gravBehaviour;
 
@@ -76,7 +81,7 @@ namespace Behaviour.Player
             }
 
             // スペースキーでプレイヤーの重力を設定済み方向に変更
-            if (inputController.GetKeyDown(KeyCode.Space))
+            if (inputController.GetKeyDown(KeyCode.Space) && changeableGrav)
             {
                 var playerVGrav = gravBehaviour as VGravBehaviour;
                 if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);

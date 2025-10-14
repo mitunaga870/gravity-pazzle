@@ -37,6 +37,10 @@ namespace Behaviour.Player.Abstract
         // プレイヤーが移動したかどうか
         public bool IsMoved { get; private set; }
 
+        // チュートリアル用の状態フィールド
+        // ターゲットの重力方向を変更したか
+        public bool IsTargetGravChanged { get; protected set; }
+
         #endregion
 
         #region Unity Methods

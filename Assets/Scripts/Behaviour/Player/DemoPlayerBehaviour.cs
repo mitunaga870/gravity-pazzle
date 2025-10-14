@@ -33,9 +33,6 @@ namespace Behaviour.Player
 
         #region Public Fields
 
-        // チュートリアル用の状態フィールド
-        // ターゲットの重力方向を変更したか
-        public bool IsTargetGravChanged { get; private set; }
 
         #endregion
 

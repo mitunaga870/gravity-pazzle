@@ -4,7 +4,7 @@ using Behaviour.Camera;
 using Behaviour.Controller;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
-using Behaviour.Player;
+using Behaviour.Player.Abstract;
 using Behaviour.UI.PauseMenu;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -19,7 +19,7 @@ namespace Behaviour.UI
 
         [Header("チュートリアル通過フラグ用の対象")]
         [SerializeField]
-        private DemoPlayerBehaviour demoPlayerBehaviour;
+        private APlayerBehaviour demoPlayerBehaviour;
 
         [SerializeField]
         private PlayerCam playerCam;
