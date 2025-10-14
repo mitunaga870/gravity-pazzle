@@ -1,6 +1,7 @@
 ﻿#region
 
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Trigger;
 using Lib.DataClass.ForInspector;
 using Lib.Logic;
@@ -9,8 +10,11 @@ using UnityEngine.SceneManagement;
 
 #endregion
 
-namespace Behaviour.Controller
+namespace Behaviour.Controller.Demo
 {
+    /// <summary>
+    ///     デモ時にのプレイ時間を計測し、一定時間経過またはステージクリアでアンケートシーンへ遷移するコントローラー
+    /// </summary>
     public class DemoSurveyController : MonoBehaviour
     {
         #region Private Fields
@@ -34,6 +38,15 @@ namespace Behaviour.Controller
         // ReSharper disable once InconsistentNaming
         private InputController Input;
 
+        // ステージ１のシーン名
+        private SceneObj Stage1Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[0];
+
+        // ステージ２のシーン名
+        private SceneObj Stage2Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[1];
+
+        // アンケートシーン名
+        private SceneObj SurveySceneName => SettingDataController.Instance.EnvironmentSetting.EndCardScene;
+
         #endregion
 
         #region Serialized Fields
@@ -41,16 +54,6 @@ namespace Behaviour.Controller
         // デモワンプレイごとのプレイ時間[min]
         [SerializeField]
         private float demoPlayMin = 60f;
-
-        // ステージの名前
-        [SerializeField]
-        private SceneObj stage1Name;
-
-        [SerializeField]
-        private SceneObj stage2Name;
-
-        [SerializeField]
-        private SceneObj surveySceneName;
 
         #endregion
 
@@ -72,8 +75,8 @@ namespace Behaviour.Controller
             DontDestroyOnLoad(gameObject);
 
             // シーン読み込み時に処理を追加
-            SceneManager.sceneLoaded += (scene, mode) => OnSceneLoaded();
-            SceneManager.sceneLoaded += (scene, mode) => Init();
+            SceneManager.sceneLoaded += (_, _) => OnSceneLoaded();
+            SceneManager.sceneLoaded += (_, _) => Init();
         }
 
 
@@ -117,7 +120,7 @@ namespace Behaviour.Controller
             // 数秒待ってからアンケートへ遷移
             var waitCoroutine =
                 GeneralUtils.DelayCoroutine(delayForLoad, () =>
-                    SceneManager.LoadScene(surveySceneName.SceneName));
+                    SceneManager.LoadScene(SurveySceneName.SceneName));
             StartCoroutine(waitCoroutine);
 
             // 初期化フラグを元に戻す
@@ -133,11 +136,11 @@ namespace Behaviour.Controller
             var sceneName = SceneManager.GetActiveScene().name;
 
             // ステージ1クリア
-            if (sceneName == stage1Name.SceneName && !_stage1Clear)
+            if (sceneName == Stage1Name.SceneName && !_stage1Clear)
                 _stage1Clear = true;
 
             // ステージ2クリア
-            if (sceneName == stage2Name.SceneName && !_stage2Clear)
+            if (sceneName == Stage2Name.SceneName && !_stage2Clear)
                 _stage2Clear = true;
 
             // どちらかがクリアされたら終了処理
@@ -165,7 +168,7 @@ namespace Behaviour.Controller
 
             // シーンがステージかどうかを確認
             var sceneName = SceneManager.GetActiveScene().name;
-            if (sceneName != stage1Name.SceneName && sceneName != stage2Name.SceneName)
+            if (sceneName != Stage1Name.SceneName && sceneName != Stage2Name.SceneName)
                 return; // ステージ以外のシーンでは初期化しない
 
             // 初期化フラグを立てる
