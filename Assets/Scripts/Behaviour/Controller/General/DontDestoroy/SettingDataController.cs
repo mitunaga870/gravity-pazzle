@@ -213,7 +213,7 @@ namespace Behaviour.Controller.General.DontDestoroy
             
             var masterVolume = UserSettings.MasterVolume <= 0.0001f ? -80f : Mathf.Log10(UserSettings.MasterVolume) * 20;
             var bgmVolume = UserSettings.BgmVolume <= 0.0001f ? -80f : Mathf.Log10(UserSettings.BgmVolume) * 20;
-            var seVolume = UserSettings.SeVolume <= 0.0001f ? -80f : Mathf.Log
+            var seVolume = UserSettings.SeVolume <= 0.0001f ? -80f : Mathf.Log10(UserSettings.SeVolume) * 20;
 
             audioMixer.SetFloat("MasterVolume", masterVolume);
             audioMixer.SetFloat("BgmVolume", bgmVolume);
