@@ -210,10 +210,14 @@ namespace Behaviour.Controller.General.DontDestoroy
                 UserSettings.ResolutionHeight,
                 UserSettings.Fullscreen
             );
+            
+            var masterVolume = UserSettings.MasterVolume <= 0.0001f ? -80f : Mathf.Log10(UserSettings.MasterVolume) * 20;
+            var bgmVolume = UserSettings.BgmVolume <= 0.0001f ? -80f : Mathf.Log10(UserSettings.BgmVolume) * 20;
+            var seVolume = UserSettings.SeVolume <= 0.0001f ? -80f : Mathf.Log
 
-            audioMixer.SetFloat("MasterVolume", Mathf.Log10(UserSettings.MasterVolume) * 20);
-            audioMixer.SetFloat("BgmVolume", Mathf.Log10(UserSettings.BgmVolume) * 20);
-            audioMixer.SetFloat("SeVolume", Mathf.Log10(UserSettings.SeVolume) * 20);
+            audioMixer.SetFloat("MasterVolume", masterVolume);
+            audioMixer.SetFloat("BgmVolume", bgmVolume);
+            audioMixer.SetFloat("SeVolume", seVolume);
         }
 
         #endregion
