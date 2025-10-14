@@ -60,8 +60,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a4835ffd8d088ae4288719ad786b9e41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  returnScene:
-    m_SceneName: GM9_Title
+  environmentSetting: {fileID: 0}
   afkThreshold: 30
   Input: {fileID: 8394906048519403212}
 --- !u!114 &8174145790894968829
