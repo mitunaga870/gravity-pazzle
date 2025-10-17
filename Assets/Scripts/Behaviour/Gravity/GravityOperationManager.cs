@@ -14,7 +14,7 @@ namespace Behaviour.Gravity
     {
         [SerializeField]
         [Min(0.1f)]
-        private float operationDuration = 5f; // 一つの重力操作に与えられた持続時間（秒）
+        private float operationDuration = 5f; // 重力操作に与えられた持続時間（秒）
 
         [SerializeField]
         [Min(1)]
@@ -203,7 +203,7 @@ namespace Behaviour.Gravity
 
             if (wasEmpty)
             {
-                _sharedRemainingTime = operationDuration; // 共通タイマーを初期化（方向変更ではここに入らない）
+                _sharedRemainingTime = operationDuration; // 最初の操作を開始するときにのみ共有タイマーを初期化（重力操作中のオブジェクトに更に重力操作しても初期化しない）
             }
 
             var ratio = operationDuration > 0f
