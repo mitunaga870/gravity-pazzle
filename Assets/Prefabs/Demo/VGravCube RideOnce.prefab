@@ -286,6 +286,7 @@ GameObject:
   - component: {fileID: 7260400156788781305}
   - component: {fileID: 3520801224400118283}
   - component: {fileID: 4721723034972518916}
+  - component: {fileID: 7377859102755244581}
   m_Layer: 0
   m_Name: VGravCube RideOnce
   m_TagString: Untagged
@@ -583,6 +584,18 @@ MonoBehaviour:
   scale: {x: 1, y: 1}
   rotation: 0
   oldScale: {x: 1, y: 1, z: 1}
+--- !u!114 &7377859102755244581
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3683008173657930156}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d5709ee7b37949f28f48f670beb01251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5740917661978855857
 GameObject:
   m_ObjectHideFlags: 0
