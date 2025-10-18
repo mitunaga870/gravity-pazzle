@@ -22,7 +22,7 @@ namespace Behaviour.ObjectFeature
             _rigidbody = GetComponent<Rigidbody>();
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if (target != null)
                 _rigidbody.MovePosition(target.position);
