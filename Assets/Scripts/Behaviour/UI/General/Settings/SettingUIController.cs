@@ -1,7 +1,9 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using Behaviour.Controller.General.DontDestoroy;
+using Lib.DataClass.Settings.GravSelectMethod;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -39,6 +41,9 @@ namespace Behaviour.UI.Settings
         [SerializeField]
         private Toggle tutorialToggle;
 
+        [SerializeField]
+        private TMP_Dropdown gravSelectMethodDropdown;
+
         #endregion
 
         private static SettingDataController SettingDataController => SettingDataController.Instance;
@@ -59,9 +64,12 @@ namespace Behaviour.UI.Settings
             seVolumeSlider.onValueChanged.AddListener(OnSEVolumeChange);
             // チュートリアルの設定
             tutorialToggle.onValueChanged.AddListener(OnTutorialToggleChange);
+            // 重力選択方法の設定
+            gravSelectMethodDropdown.onValueChanged.AddListener(OnGravSelectMethodChange);
 
-            // 解像度ドロップダウンの初期化
+            // ドロップダウンの初期化
             SetupResolutionDropdown();
+            SetupGravSelectMethodDropdown();
         }
 
         #endregion
@@ -99,6 +107,12 @@ namespace Behaviour.UI.Settings
             SettingDataController.SetShowTutorial(isOn);
         }
 
+        private void OnGravSelectMethodChange(int index)
+        {
+            var selectedMethod = GravSelectMethodExtensions.Methods[index];
+            SettingDataController.SetGravSelectMethod(selectedMethod);
+        }
+
         #endregion
 
         #region Private Methods
@@ -109,6 +123,16 @@ namespace Behaviour.UI.Settings
             var options = new List<string>();
             foreach (var res in resolutions) options.Add(res.DisplayString);
             resolutionDropdown.AddOptions(options);
+        }
+
+        private void SetupGravSelectMethodDropdown()
+        {
+            gravSelectMethodDropdown.ClearOptions();
+            var options = new List<string>();
+            var methodList = GravSelectMethodExtensions.Methods;
+            foreach (var method in methodList)
+                options.Add(method.DisplayName);
+            gravSelectMethodDropdown.AddOptions(options);
         }
 
         private void LoadCurrentSettings()
@@ -144,7 +168,12 @@ namespace Behaviour.UI.Settings
                 currentResolution = resolutions.Count - 1;
             }
 
-            Debug.Log($"Current Resolution Index: {currentResolution}");
+            // 重力選択方法の設定
+            var currentGravMethod = Array.FindIndex(
+                GravSelectMethodExtensions.Methods,
+                method => method.GetType() == SettingDataController.Instance.UserSettings.GravSelectMethod.GetType());
+            gravSelectMethodDropdown.value = currentGravMethod;
+            gravSelectMethodDropdown.RefreshShownValue();
 
             // UIに反映
             resolutionDropdown.value = currentResolution;

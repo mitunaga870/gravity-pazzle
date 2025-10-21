@@ -162,7 +162,12 @@ namespace Lib.DataClass.Settings
         /// </summary>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this);
+            var serializerSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
+
+            return JsonConvert.SerializeObject(this, serializerSettings);
         }
 
         #endregion
