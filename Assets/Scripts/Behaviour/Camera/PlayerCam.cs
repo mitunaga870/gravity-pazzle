@@ -175,8 +175,10 @@ namespace Behaviour.Camera
             var originalPos = camTransform.position;
             var direction = camTransform.forward;
 
+
             // カメラの先にあるオブジェクトを取得
-            return Physics.Raycast(originalPos, direction, out var hit) ?
+            return Physics.Raycast(originalPos, direction, out var hit, 100f, LayerMask.GetMask("Default"))
+                ?
                 // ヒットしたオブジェクトを返す
                 hit.collider.gameObject :
                 // ヒットしなかった場合はnullを返す
