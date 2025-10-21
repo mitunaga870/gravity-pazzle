@@ -27,7 +27,7 @@ namespace Behaviour.Gimmick
                 return;
 
             // GravBehaviourの重力を設定する
-            gravBehaviour.SetGravAffected(_gravType, true);
+            gravBehaviour.SetGravAffected(_gravType, true, registerOperation: false);
         }
 
         /// <summary>
