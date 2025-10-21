@@ -318,6 +318,7 @@ MonoBehaviour:
   playerAnimator: {fileID: 96740067715169694}
   playerCam: {fileID: 5635841674536581256}
   input: {fileID: 0}
+  playerKey: {fileID: 11400000, guid: 568310b2756c9fc47a23753127bfbf65, type: 2}
   changeableGrav: 1
   gravBehaviour: {fileID: 4778392403981936138}
   directionUIWrapper: {fileID: 0}
