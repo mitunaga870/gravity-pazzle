@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4115396243673412626}
   - component: {fileID: 4982682390779248720}
   m_Layer: 5
-  m_Name: Image (2)
+  m_Name: Status
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -290,7 +290,7 @@ GameObject:
   - component: {fileID: 6153458997174029679}
   - component: {fileID: 430526847933723585}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Title
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -412,7 +412,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetScene:
-    m_SceneName: 
+    m_SceneName: GM9_Title
 --- !u!114 &6153458997174029679
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -847,7 +847,7 @@ GameObject:
   - component: {fileID: 5822162675113442312}
   - component: {fileID: 3650456541959790122}
   m_Layer: 5
-  m_Name: Image (1)
+  m_Name: Setting
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1708,7 +1708,7 @@ MonoBehaviour:
   pauseMenu: {fileID: 5504396123825403816}
   Input: {fileID: 0}
   sceneStateController: {fileID: 0}
-  returnToTitleButton: {fileID: 8602276767187868974}
+  returnToTitleButton: {fileID: 6056248558283000939}
 --- !u!1001 &1265134675899000830
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1871,14 +1871,3 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 1858415056705133321, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
   m_PrefabInstance: {fileID: 1265134675899000830}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &8602276767187868974 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7417363081353312976, guid: e77ff3ce50c09104398a5b0a53845d73, type: 3}
-  m_PrefabInstance: {fileID: 1265134675899000830}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0baa9024582141b39350e66a83dd5163, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
