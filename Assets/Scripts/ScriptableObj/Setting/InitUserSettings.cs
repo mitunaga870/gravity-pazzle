@@ -1,5 +1,6 @@
 ﻿#region
 
+using Lib.DataClass.Settings.GravSelectMethod;
 using UnityEngine;
 using Resolution = ScriptableObj.Setting.Resolution;
 
@@ -36,6 +37,9 @@ namespace ScriptableObj
         [SerializeField]
         private bool showTutorial = true;
 
+        [SerializeField]
+        private GravSelectMethod gravSelectMethod = Lib.DataClass.Settings.GravSelectMethod.GravSelectMethod.Mouse;
+
         #endregion
 
         #region Accessors
@@ -47,6 +51,8 @@ namespace ScriptableObj
         public float BgmVolume => bgmVolume;
         public float SeVolume => seVolume;
         public bool ShowTutorial => showTutorial;
+
+        public IGravSelectMethod GravSelectMethod => gravSelectMethod.ToGravSelectMethod();
 
         #endregion
     }
