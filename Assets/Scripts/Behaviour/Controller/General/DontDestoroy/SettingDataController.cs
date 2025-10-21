@@ -3,6 +3,7 @@
 using System;
 using System.IO;
 using Lib.DataClass.Settings;
+using Lib.DataClass.Settings.GravSelectMethod;
 using Newtonsoft.Json;
 using ScriptableObj;
 using ScriptableObj.Setting;
@@ -107,9 +108,14 @@ namespace Behaviour.Controller.General.DontDestoroy
             if (File.Exists(UserSettingsFilePath))
                 try
                 {
+                    var deserializerSettings = new JsonSerializerSettings
+                    {
+                        TypeNameHandling = TypeNameHandling.Objects
+                    };
+                    
                     // JSONを読み込んでデシリアライズする
                     var userSettingsJson = File.ReadAllText(UserSettingsFilePath);
-                    UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson);
+                    UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson, deserializerSettings);
                     return;
                 }
                 catch (Exception e)
@@ -191,6 +197,14 @@ namespace Behaviour.Controller.General.DontDestoroy
         }
 
         /// <summary>
+        ///     重力方向選択方法を設定する
+        /// </summary>
+        public void SetGravSelectMethod(IGravSelectMethod selectedMethod)
+        {
+            UserSettings = UserSettings.DeserveGravSelectMethod(selectedMethod);
+        }
+
+        /// <summary>
         ///     設定内容を初期化する
         /// </summary>
         public void ResetSettings()
@@ -203,8 +217,6 @@ namespace Behaviour.Controller.General.DontDestoroy
         /// </summary>
         public void ApplySettings()
         {
-            Debug.Log("Apply Settings: " + UserSettings);
-
             Screen.SetResolution(
                 UserSettings.ResolutionWidth,
                 UserSettings.ResolutionHeight,

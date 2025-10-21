@@ -14,6 +14,13 @@ namespace Lib.DataClass.Settings.GravSelectMethod
 
     public static class GravSelectMethodExtensions
     {
+        public static IGravSelectMethod[] Methods { get; } =
+        {
+            new Mouse(),
+            new Keyboard()
+        };
+        
+        
         public static IGravSelectMethod ToGravSelectMethod(this GravSelectMethod method)
         {
             return method switch
