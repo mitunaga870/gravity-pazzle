@@ -138,6 +138,7 @@ namespace Behaviour.Player
         {
             var method = SettingDataController.Instance.UserSettings.GravSelectMethod;
             if (method == null) return;
+            ;
 
             switch (method)
             {
@@ -148,9 +149,12 @@ namespace Behaviour.Player
                     SetDirectionByKeyboard();
                     break;
                 default:
-                    throw new NotImplementedException(
+                    throw new Exception(
                         $"grav select method \"{method.DisplayName}\" is not implemented yet.");
             }
+
+            // UIに重力方向を通知
+            directionUIWrapper.SetGravType(_targetGravType);
 
             return;
 
@@ -164,9 +168,6 @@ namespace Behaviour.Player
 
                 // ターゲットの重力方向を変更
                 _targetGravType = GravUtils.GetMaxDirection(camForward);
-
-                // UIに重力方向を通知
-                directionUIWrapper.SetGravType(_targetGravType);
 
                 // ターゲット重力変更済み
                 IsTargetGravChanged = true;
