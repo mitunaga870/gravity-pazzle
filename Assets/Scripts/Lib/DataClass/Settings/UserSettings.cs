@@ -154,7 +154,7 @@ namespace Lib.DataClass.Settings
             return
                 $"Resolution: {ResolutionWidth}x{ResolutionHeight} Fullscreen: {Fullscreen} " +
                 $"MasterVolume: {MasterVolume} BgmVolume: {BgmVolume} SeVolume: {SeVolume} " +
-                $"ShowTutorial: {ShowTutorial}";
+                $"ShowTutorial: {ShowTutorial} GravSelectMethod: {GravSelectMethod.DisplayName}";
         }
 
         /// <summary>
