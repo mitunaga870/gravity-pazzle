@@ -1,10 +1,13 @@
 ﻿#region
 
+using System;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Behaviour.UI;
+using Lib.DataClass.Settings.GravSelectMethod;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using Lib.State.Scene;
@@ -64,21 +67,7 @@ namespace Behaviour.Player
             if (inputController.GetMouseButton(0, SceneState.InGame)) SetGrav();
 
             // 右クリックでターゲットの方向を変更
-            if (inputController.GetMouseButton(1, SceneState.InGame))
-            {
-                // カメラの向いている方向を取得
-                var camTransform = playerCam.transform;
-                var camForward = camTransform.forward;
-
-                // ターゲットの重力方向を変更
-                _targetGravType = GravUtils.GetMaxDirection(camForward);
-
-                // UIに重力方向を通知
-                directionUIWrapper.SetGravType(_targetGravType);
-
-                // ターゲット重力変更済み
-                IsTargetGravChanged = true;
-            }
+            SetGravDirection();
 
             // スペースキーでプレイヤーの重力を設定済み方向に変更
             if (inputController.GetKeyDown(KeyCode.Space) && changeableGrav)
@@ -143,6 +132,73 @@ namespace Behaviour.Player
 
             // ターゲット重力方向にセット
             targetGravBehaviour.SetGravAffected(_targetGravType);
+        }
+
+        private void SetGravDirection()
+        {
+            var method = SettingDataController.Instance.UserSettings.GravSelectMethod;
+            if (method == null) return;
+
+            switch (method)
+            {
+                case Mouse:
+                    SetDirectionByMouse();
+                    break;
+                case Keyboard:
+                    SetDirectionByKeyboard();
+                    break;
+                default:
+                    throw new NotImplementedException(
+                        $"grav select method \"{method.DisplayName}\" is not implemented yet.");
+            }
+
+            return;
+
+            void SetDirectionByMouse()
+            {
+                if (!inputController.GetMouseButton(1, SceneState.InGame)) return;
+
+                // カメラの向いている方向を取得
+                var camTransform = playerCam.transform;
+                var camForward = camTransform.forward;
+
+                // ターゲットの重力方向を変更
+                _targetGravType = GravUtils.GetMaxDirection(camForward);
+
+                // UIに重力方向を通知
+                directionUIWrapper.SetGravType(_targetGravType);
+
+                // ターゲット重力変更済み
+                IsTargetGravChanged = true;
+            }
+
+            void SetDirectionByKeyboard()
+            {
+                const KeyCode modifier = KeyCode.LeftShift;
+                if (!inputController.GetKey(modifier, SceneState.InGame)) return;
+
+                // wasd/space/ctrlでターゲットの重力方向を変更
+                // wasdなら移動方向で最も大きい軸を重力方向に設定
+                if (
+                    inputController.GetKeyDown(KeyCode.W, SceneState.InGame) ||
+                    inputController.GetKeyDown(KeyCode.S, SceneState.InGame) ||
+                    inputController.GetKeyDown(KeyCode.A, SceneState.InGame) ||
+                    inputController.GetKeyDown(KeyCode.D, SceneState.InGame)
+                )
+                {
+                    // 移動方向から最大軸を取得
+                    var moveDirection = GetMoveDirection(1f);
+                    _targetGravType = GravUtils.GetMaxDirection(moveDirection);
+                }
+                else if (inputController.GetKeyDown(KeyCode.Space, SceneState.InGame))
+                {
+                    _targetGravType = GravUtils.GetUpperGravType(gravBehaviour.GravType);
+                }
+                else if (inputController.GetKeyDown(KeyCode.LeftControl, SceneState.InGame))
+                {
+                    _targetGravType = gravBehaviour.GravType;
+                }
+            }
         }
 
         #endregion
