@@ -2,6 +2,7 @@
 
 using Behaviour.Camera;
 using Behaviour.Controller.General;
+using Behaviour.Controller.Stage;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +14,7 @@ namespace Behaviour.Player.Abstract
     /// プレイヤーの挙動を持つオブジェクトの抽象クラス
     /// 実装内容：WASD移動
     /// </summary>
+    [RequireComponent(typeof(Collider))]
     public abstract class APlayerBehaviour : MonoBehaviour 
     {
         #region SerializeField
@@ -45,7 +47,7 @@ namespace Behaviour.Player.Abstract
 
         #region Unity Methods
 
-        private void Start()
+        protected void Start()
         {
             // SerializeFieldで設定されているかを確認
             if (playerRigidBody == null)
@@ -56,6 +58,10 @@ namespace Behaviour.Player.Abstract
                 Debug.LogError("Player Camera is not assigned.");
             if (input == null)
                 Debug.LogError("InputController is not assigned.");
+
+            // ステージ設定にインスタンスIDを登録
+            StageDataController.Instance.PlayerBodyInstanceID = playerRigidBody.GetInstanceID();
+            StageDataController.Instance.PlayerRigidbody = playerRigidBody;
         }
         
         protected void Update()
