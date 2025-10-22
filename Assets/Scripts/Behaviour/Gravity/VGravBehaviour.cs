@@ -64,8 +64,23 @@ namespace Behaviour.Gravity
         /// </summary>
         /// <param name="gravType">適用する重力タイプを設定します</param>
         /// <param name="forceChange">速度があるときに強制的に変更するかどうか</param>
-        public void SetGravAffected(GravType gravType, bool forceChange = false)
+        /// <param name="registerOperation">操作制限マネージャーに登録するかどうか（リセット・ギミック等は false を指定）</param>
+        public bool SetGravAffected(GravType gravType, bool forceChange = false, bool registerOperation = true)
         {
+            var previousType = GravType; // 変更前の重力（タイムアウト時の復帰に使用）
+            var manager = GravityOperationManager.Instance; // 同時操作数／残時間を監視するマネージャー
+            GravityOperationManager.OperationHandle handle = GravityOperationManager.OperationHandle.None; // 操作登録の結果トークン
+
+            if (registerOperation && manager != null && !manager.IsReverting)
+            {
+                // 操作上限を越えていないか確認し、必要であればカウントを登録
+                if (!manager.TryPrepareOperation(this, gravType, previousType, out handle))
+                {
+                    Debug.LogWarning($"[{name}] 重力操作の上限({manager.MaxConcurrentOperations})に達しているため変更できません。");
+                    return false;
+                }
+            }
+
             if (
                 !GravAffectionContext.
                     SetState(
@@ -75,9 +90,24 @@ namespace Behaviour.Gravity
                             _isFocusCameraNotNull ? focusCamera!.transform : null),
                         forceChange
                     ))
+            {
+                // 実際の状態遷移に失敗した場合は操作登録をロールバック
+                if (registerOperation && manager != null && !manager.IsReverting)
+                    manager.RollbackOperation(this, handle);
+
                 Debug.Log("Failed to set GravAffected state.");
-            else
-                IsGravChanged = true;
+                return false;
+            }
+
+            IsGravChanged = true;
+
+            if (registerOperation && manager != null && !manager.IsReverting)
+            {
+                // 成功を通知し、必要であれば操作枠を開放
+                manager.NotifySuccessfulChange(this, handle);
+            }
+
+            return true;
         }
         
         #endregion
