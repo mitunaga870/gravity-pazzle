@@ -74,8 +74,7 @@ namespace Behaviour.Gravity
         {
             var previousType = GravType; // 変更前の重力（タイムアウト時の復帰に使用）
             var manager = GravityOperationManager.Instance; // 同時操作数／残時間を監視するマネージャー
-            var
-                handle = GravityOperationManager.OperationHandle.None; // 操作登録の結果トークン
+            var handle = GravityOperationManager.OperationHandle.None; // 操作登録の結果トークン
 
             if (registerOperation && manager != null && !manager.IsReverting)
             {
@@ -118,7 +117,10 @@ namespace Behaviour.Gravity
                 for (var i = 0; i < size; i++)
                 {
                     var gravBehaviour = aroundObjs[i].GetComponent<GravProps>();
-                    if (gravBehaviour != null && gravBehaviour != this)
+                    if (
+                        gravBehaviour != null &&
+                        gravBehaviour.gameObject != gameObject
+                    )
                     {
                         gravBehaviour.SetGravAffected(gravType);
                     }
