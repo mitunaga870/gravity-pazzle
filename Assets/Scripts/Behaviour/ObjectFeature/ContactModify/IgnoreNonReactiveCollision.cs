@@ -13,7 +13,7 @@ namespace Behaviour.ObjectFeature.ContactModify
     /// <summary>
     /// 反作用を起こさないオブジェクトを無視するコンタクトモディファイア
     /// </summary>
-    public class IgnoreNonRiactiveCollision : ANonReactiveContactModifier
+    public class IgnoreNonReactiveCollision : ANonReactiveContactModifier
     {
         private int _bodyId;
         protected override int BodyId => _bodyId;
