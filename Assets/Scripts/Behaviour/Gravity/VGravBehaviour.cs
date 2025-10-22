@@ -112,7 +112,7 @@ namespace Behaviour.Gravity
             if (affectProps)
             {
                 // 周辺オブジェクトを取得して影響を与える
-                var aroundObjs = new Collider[10];
+                var aroundObjs = new Collider[50];
                 var size = Physics.OverlapSphereNonAlloc(transform.position, 5f, aroundObjs);
 
                 for (var i = 0; i < size; i++)
