@@ -30,7 +30,7 @@ namespace Behaviour.ObjectFeature.ContactModify
             // 自分が含まれているか
             var isContainSelf = isSelf || isOther;
 
-            // 自分が含まれず、かつどちらかが非反作用オブジェクトの場合は無視する
+            // 自分が含まれており、かつ非反作用オブジェクトを含まない場合は無視する
             var isIgnore = isContainSelf && !(isSelfNonReactive || isOtherNonReactive);
 
             return isIgnore;

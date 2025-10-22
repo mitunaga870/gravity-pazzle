@@ -51,7 +51,6 @@ namespace Behaviour.Controller.Stage
 
         /// <summary>
         ///     反作用を起こさないオブジェクトのIDリストにIDを追加する
-        ///     >/
         /// </summary>
         /// <param name="id">追加するRigidbodyのInstanceID</param>
         public void AddPlayerBodyInstanceID(int id)
