@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
 using Behaviour.Gravity.Abstract;
@@ -41,8 +40,6 @@ namespace Behaviour.Player
         [SerializeField]
         private DirectionUIWrapper directionUIWrapper;
 
-        [SerializeField]
-        private InputController inputController;
 
         private GravType _targetGravType = GravType.XNegative;
 
@@ -69,13 +66,13 @@ namespace Behaviour.Player
 
             // スペースで影響を受けているならフローティングに変換
 
-            if (inputController.GetMouseButton((int)playerKey.SetObjGravButton, SceneState.InGame)) SetGrav();
+            if (input.GetMouseButton((int)playerKey.SetObjGravButton, SceneState.InGame)) SetGrav();
 
             // 右クリックでターゲットの方向を変更
             SetGravDirection();
 
             // スペースキーでプレイヤーの重力を設定済み方向に変更
-            if (inputController.GetKeyDown(playerKey.SetPlayerGravKey) && changeableGrav)
+            if (input.GetKeyDown(playerKey.SetPlayerGravKey) && changeableGrav)
             {
                 var playerVGrav = gravBehaviour as VGravBehaviour;
                 if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);
@@ -93,10 +90,10 @@ namespace Behaviour.Player
         {
             // WASDキーの入力を取得
 
-            var xInput = inputController.GetKey(playerKey.MoveForwardKey, SceneState.InGame);
-            var zInput = inputController.GetKey(playerKey.MoveBackwardKey, SceneState.InGame);
-            var yInput = inputController.GetKey(playerKey.MoveLeftKey, SceneState.InGame);
-            var wInput = inputController.GetKey(playerKey.MoveRightKey, SceneState.InGame);
+            var xInput = input.GetKey(playerKey.MoveForwardKey, SceneState.InGame);
+            var zInput = input.GetKey(playerKey.MoveBackwardKey, SceneState.InGame);
+            var yInput = input.GetKey(playerKey.MoveLeftKey, SceneState.InGame);
+            var wInput = input.GetKey(playerKey.MoveRightKey, SceneState.InGame);
 
             // 負荷軽減のため、入力がない場合は移動しない
             if (!xInput && !zInput && !yInput && !wInput)
@@ -165,7 +162,7 @@ namespace Behaviour.Player
 
             void SetDirectionByMouse()
             {
-                if (!inputController.GetMouseButton((int)playerKey.ChangeGravDirectionMouseButton, SceneState.InGame))
+                if (!input.GetMouseButton((int)playerKey.ChangeGravDirectionMouseButton, SceneState.InGame))
                     return;
 
                 // カメラの向いている方向を取得
@@ -182,26 +179,26 @@ namespace Behaviour.Player
             void SetDirectionByKeyboard()
             {
                 var modifier = playerKey.ChangeGravDirectionModifierKey;
-                if (!inputController.GetKey(modifier, SceneState.InGame)) return;
+                if (!input.GetKey(modifier, SceneState.InGame)) return;
 
                 // wasd/space/ctrlでターゲットの重力方向を変更
                 // wasdなら移動方向で最も大きい軸を重力方向に設定
                 if (
-                    inputController.GetKeyDown(playerKey.MoveForwardKey, SceneState.InGame) ||
-                    inputController.GetKeyDown(playerKey.MoveBackwardKey, SceneState.InGame) ||
-                    inputController.GetKeyDown(playerKey.MoveLeftKey, SceneState.InGame) ||
-                    inputController.GetKeyDown(playerKey.MoveRightKey, SceneState.InGame)
+                    input.GetKeyDown(playerKey.MoveForwardKey, SceneState.InGame) ||
+                    input.GetKeyDown(playerKey.MoveBackwardKey, SceneState.InGame) ||
+                    input.GetKeyDown(playerKey.MoveLeftKey, SceneState.InGame) ||
+                    input.GetKeyDown(playerKey.MoveRightKey, SceneState.InGame)
                 )
                 {
                     // 移動方向から最大軸を取得
                     var moveDirection = GetMoveDirection(1f);
                     _targetGravType = GravUtils.GetMaxDirection(moveDirection);
                 }
-                else if (inputController.GetKeyDown(playerKey.ChangeGravDirectionToTopKey, SceneState.InGame))
+                else if (input.GetKeyDown(playerKey.ChangeGravDirectionToTopKey, SceneState.InGame))
                 {
                     _targetGravType = GravUtils.GetUpperGravType(gravBehaviour.GravType);
                 }
-                else if (inputController.GetKeyDown(playerKey.ChangeGravDirectionToBottomKey, SceneState.InGame))
+                else if (input.GetKeyDown(playerKey.ChangeGravDirectionToBottomKey, SceneState.InGame))
                 {
                     _targetGravType = gravBehaviour.GravType;
                 }
