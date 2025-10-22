@@ -59,7 +59,7 @@ namespace Behaviour.Gravity.Abstract
                 var durationSec = returnToInitialGravDelayMs / 1000f;
                 _returnToInitialGravCoroutine = GeneralUtils.DelayCoroutine(
                     durationSec,
-                    () => base.SetGravAffected(_initialGravType, true, false));
+                    () => base.SetGravAffected(_initialGravType, true, false, false));
 
                 StartCoroutine(_returnToInitialGravCoroutine);
             }

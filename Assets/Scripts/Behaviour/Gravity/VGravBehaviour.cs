@@ -119,7 +119,9 @@ namespace Behaviour.Gravity
                 {
                     var gravBehaviour = aroundObjs[i].GetComponent<GravProps>();
                     if (gravBehaviour != null && gravBehaviour != this)
-                        gravBehaviour.SetGravAffected(gravType, forceChange, false);
+                    {
+                        gravBehaviour.SetGravAffected(gravType);
+                    }
                 }
             }
 
