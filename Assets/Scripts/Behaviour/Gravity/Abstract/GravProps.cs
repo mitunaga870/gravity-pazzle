@@ -16,7 +16,7 @@ namespace Behaviour.Gravity.Abstract
     public class GravProps : VGravBehaviour
     {
         [SerializeField]
-        private float returnToInitialGravDelay = 5f;
+        private float returnToInitialGravDelayMs = 500f;
 
         private IEnumerator _returnToInitialGravCoroutine;
 
@@ -56,8 +56,9 @@ namespace Behaviour.Gravity.Abstract
                     StopCoroutine(_returnToInitialGravCoroutine);
 
                 // 一定時間経過後に初期重力に戻す
+                var durationSec = returnToInitialGravDelayMs / 1000f;
                 _returnToInitialGravCoroutine = GeneralUtils.DelayCoroutine(
-                    5f,
+                    durationSec,
                     () => base.SetGravAffected(_initialGravType, true, false));
 
                 StartCoroutine(_returnToInitialGravCoroutine);
