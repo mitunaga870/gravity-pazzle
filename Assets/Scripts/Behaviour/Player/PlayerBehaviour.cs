@@ -48,8 +48,10 @@ namespace Behaviour.Player
 
         #region Unity Methods
 
-        private void Start()
+        private new void Start()
         {
+            base.Start();
+            
             if (gravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
         }
