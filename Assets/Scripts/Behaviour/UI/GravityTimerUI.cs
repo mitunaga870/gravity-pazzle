@@ -10,7 +10,7 @@ namespace Behaviour.UI
     public class GravityTimerUI : MonoBehaviour
     {
         [SerializeField]
-        private Image fillGauge; // Fill Amount で制御するゲージ
+        private Image fillGauge; // Fill Amountで制御するゲージ
 
         private GravityOperationManager _manager;
 
@@ -18,31 +18,12 @@ namespace Behaviour.UI
         {
             _manager = GravityOperationManager.Instance;
             
-            if (_manager != null)
-            {
-                // 残り時間割合の変更イベントを購読
-                _manager.OnOperationRemainingRatioChanged += OnTimerChanged;
-                _manager.OnOperationCountChanged += OnOperationCountChanged;
-            }
-            else
-            {
-                Debug.LogWarning($"{nameof(GravityTimerUI)}: GravityOperationManager が見つかりません。");
-            }
+            // 残り時間割合の変更イベントを購読
+            _manager.OnOperationRemainingRatioChanged += OnTimerChanged;
+            _manager.OnOperationCountChanged += OnOperationCountChanged;
             
             // 初期状態ではゲージをマックスにする
-            if (fillGauge != null)
-            {
-                fillGauge.fillAmount = 1f;
-            }
-        }
-
-        private void OnDestroy()
-        {
-            if (_manager != null)
-            {
-                _manager.OnOperationRemainingRatioChanged -= OnTimerChanged;
-                _manager.OnOperationCountChanged -= OnOperationCountChanged;
-            }
+            fillGauge.fillAmount = 1f;
         }
 
         /// <summary>
@@ -51,10 +32,7 @@ namespace Behaviour.UI
         private void OnTimerChanged(VGravBehaviour target, float ratio)
         {
             // Fill Amount を更新
-            if (fillGauge != null)
-            {
-                fillGauge.fillAmount = ratio;
-            }
+            fillGauge.fillAmount = ratio;
         }
 
         /// <summary>
@@ -63,7 +41,7 @@ namespace Behaviour.UI
         private void OnOperationCountChanged(int activeCount, int maxCount)
         {
             // 操作中でなければゲージをマックスにする
-            if (activeCount == 0 && fillGauge != null)
+            if (activeCount == 0)
             {
                 fillGauge.fillAmount = 1f;
             }
