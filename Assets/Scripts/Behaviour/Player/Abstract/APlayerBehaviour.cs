@@ -75,8 +75,13 @@ namespace Behaviour.Player.Abstract
             // 速度があれば、移動方向を向く
             if (moveDirection != Vector3.zero)
             {
-                var targetRotation = Quaternion.LookRotation(moveDirection);
-                playerRigidBody.MoveRotation(Quaternion.Slerp(playerRigidBody.rotation, targetRotation, Time.deltaTime * 10f));
+                // 値が小さいとLookRotationでエラーになるため、適当な数をかける
+                var adjustedMoveDirection = moveDirection * 1000f;
+                var upDirection = playerRigidBody.transform.up;
+                var targetRotation = Quaternion.LookRotation(adjustedMoveDirection, upDirection);
+
+                // Sharpを使わず、一発で回転させる
+                playerRigidBody.transform.rotation = targetRotation;
                 
                 // アニメーションの更新
                 playerAnimator.SetBool("Walk", true);
