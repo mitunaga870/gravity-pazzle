@@ -43,14 +43,6 @@ namespace Behaviour.Player
 
         private GravType _targetGravType = GravType.XNegative;
 
-        #region Public Fields
-
-        // チュートリアル用の状態フィールド
-        // ターゲットの重力方向を変更したか
-        public bool IsTargetGravChanged { get; private set; }
-
-        #endregion
-
         #region Unity Methods
 
         private new void Start()
@@ -67,7 +59,6 @@ namespace Behaviour.Player
             base.Update();
 
             // スペースで影響を受けているならフローティングに変換
-
             if (input.GetMouseButton((int)playerKey.SetObjGravButton, SceneState.InGame)) SetGrav();
 
             // 右クリックでターゲットの方向を変更
@@ -142,7 +133,6 @@ namespace Behaviour.Player
         {
             var method = SettingDataController.Instance.UserSettings.GravSelectMethod;
             if (method == null) return;
-            ;
 
             switch (method)
             {

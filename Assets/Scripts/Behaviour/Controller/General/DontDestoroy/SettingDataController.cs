@@ -116,6 +116,8 @@ namespace Behaviour.Controller.General.DontDestoroy
                     // JSONを読み込んでデシリアライズする
                     var userSettingsJson = File.ReadAllText(UserSettingsFilePath);
                     UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson, deserializerSettings);
+
+                    Debug.Log($"Completed loading UserSettings: {UserSettings}");
                     return;
                 }
                 catch (Exception e)
@@ -127,6 +129,7 @@ namespace Behaviour.Controller.General.DontDestoroy
 
             // 読み込みに失敗した場合は初期設定を使用する
             ResetSettings();
+            Debug.Log($"Loaded default UserSettings: {UserSettings}");
         }
 
         /**

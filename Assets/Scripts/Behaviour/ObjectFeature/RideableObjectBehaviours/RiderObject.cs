@@ -17,7 +17,6 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         ///     乗っているオブジェクトを指定する
         ///     降りるときにはnullを指定する
         /// </summary>
-        [Obsolete("Obsolete")]
         public GameObject RidingObject
         {
             get => ridingObject;
