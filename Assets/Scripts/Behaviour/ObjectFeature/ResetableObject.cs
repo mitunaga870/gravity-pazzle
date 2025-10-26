@@ -58,7 +58,7 @@ namespace Behaviour.ObjectFeature
             {
                 // GravBehaviourがある場合
                 // 重力を初期値に戻す
-                grav.SetGravAffected(grav.InitialGravType);
+                grav.SetGravAffected(grav.InitialGravType, forceChange: true, registerOperation: false);
             }
             
             // 初期位置に戻す

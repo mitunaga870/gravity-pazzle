@@ -64,7 +64,7 @@ namespace Lib.State.GravAffection
         public void OnEnter(IGravAffectionState prev)
         {
             // カメラを指定位置が下になるように
-            if (_hasCamera && prev != null)
+            if (_hasCamera && prev != null && prev.GravType != _gravType)
             {
                 var (axis, angle) = GravUtils.GetGravToGravRotation(prev.GravType, _gravType);
                 
