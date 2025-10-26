@@ -60,7 +60,6 @@ namespace Behaviour.Player.Abstract
                 Debug.LogError("InputController is not assigned.");
 
             // ステージ設定にインスタンスIDを登録
-            StageDataController.Instance.PlayerBodyInstanceID = playerRigidBody.GetInstanceID();
             StageDataController.Instance.PlayerRigidbody = playerRigidBody;
         }
         
