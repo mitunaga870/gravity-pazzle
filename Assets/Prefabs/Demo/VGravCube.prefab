@@ -8,6 +8,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 275351932226660185, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 952718280325869370, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -48,6 +52,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6536926770405568790, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7007259920982633869, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
       propertyPath: m_Mesh
       value: 
@@ -55,6 +63,10 @@ PrefabInstance:
     - target: {fileID: 7651295946946069998, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
       propertyPath: m_Name
       value: VGravCube
+      objectReference: {fileID: 0}
+    - target: {fileID: 8348064036501069471, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
