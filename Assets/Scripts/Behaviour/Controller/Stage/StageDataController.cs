@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using UnityEngine;
 
 #endregion
@@ -39,23 +40,23 @@ namespace Behaviour.Controller.Stage
 
         #region Private Variables
 
-        private int _playerBodyInstanceID = -1;
+        private readonly List<int> _nonReactiveBodyIds = new();
         private Rigidbody _playerRigidbody;
 
         #endregion
 
         #region Accessors
 
-        public int PlayerBodyInstanceID
+        public int[] NonReactiveBodyIds => _nonReactiveBodyIds.ToArray();
+
+        /// <summary>
+        ///     反作用を起こさないオブジェクトのIDリストにIDを追加する
+        /// </summary>
+        /// <param name="id">追加するRigidbodyのInstanceID</param>
+        public void AddPlayerBodyInstanceID(int id)
         {
-            get => _playerBodyInstanceID;
-            set
-            {
-                if (_playerBodyInstanceID == -1)
-                    _playerBodyInstanceID = value;
-                else
-                    Debug.LogWarning("PlayerInstanceID has already been set and cannot be changed.");
-            }
+            if (!_nonReactiveBodyIds.Contains(id))
+                _nonReactiveBodyIds.Add(id);
         }
 
         public Rigidbody PlayerRigidbody
