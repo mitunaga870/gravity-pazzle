@@ -117,7 +117,9 @@ namespace Behaviour.Controller.General.DontDestoroy
                     var userSettingsJson = File.ReadAllText(UserSettingsFilePath);
                     UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson, deserializerSettings);
 
+#if DEBUG
                     Debug.Log($"Completed loading UserSettings: {UserSettings}");
+#endif
                     return;
                 }
                 catch (Exception e)
@@ -126,10 +128,10 @@ namespace Behaviour.Controller.General.DontDestoroy
                 }
             else
                 Debug.LogWarning("UserSettings file not found. Loading default settings.");
-
-            // 読み込みに失敗した場合は初期設定を使用する
             ResetSettings();
+#if DEBUG
             Debug.Log($"Loaded default UserSettings: {UserSettings}");
+#endif
         }
 
         /**
