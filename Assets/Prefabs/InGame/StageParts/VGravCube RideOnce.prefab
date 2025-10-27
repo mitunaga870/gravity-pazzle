@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: VGravCube RideOnce
       objectReference: {fileID: 0}
+    - target: {fileID: 8431120388265006470, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: a4b62a69d54e80347bd546999c6d4b9e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
