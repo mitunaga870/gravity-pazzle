@@ -1,0 +1,78 @@
+﻿#region
+
+using Behaviour.Controller.General.DontDestoroy;
+using Coffee.UIEffects;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
+
+#endregion
+
+namespace Behaviour.UI.StageSelect
+{
+    /// <summary>
+    ///     マウスホバー時のエフェクトなど、ステージセレクトボタンに関するUIエフェクトを管理するクラス
+    /// </summary>
+    [RequireComponent(typeof(UIEffect))]
+    [RequireComponent(typeof(UIEffectTweener))]
+    public class StageSelectButtonUIEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
+        IPointerClickHandler
+    {
+        [SerializeField]
+        [Tooltip("クリック時に移動するステージ番号")]
+        private int stageNumber;
+
+        private UIEffect _uiEffect;
+        private UIEffectTweener _uiEffectTweener;
+
+        private void Awake()
+        {
+            _uiEffect = GetComponent<UIEffect>();
+            _uiEffectTweener = GetComponent<UIEffectTweener>();
+
+            _uiEffect.enabled = false;
+            _uiEffectTweener.Stop();
+        }
+
+        #region Pointer Event Handlers
+
+        /// <summary>
+        ///     ホバー開始時の処理
+        /// </summary>
+        public void OnPointerEnter(PointerEventData eventData)
+        {
+            _uiEffect.enabled = true;
+        }
+
+        /// <summary>
+        ///     ホバー終了時の処理
+        /// </summary>
+        public void OnPointerExit(PointerEventData eventData)
+        {
+            _uiEffect.enabled = false;
+        }
+
+        /// <summary>
+        ///     クリック時の処理
+        /// </summary>
+        public void OnPointerClick(PointerEventData eventData)
+        {
+            _uiEffectTweener.PlayForward();
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        /// <summary>
+        ///     ステージ遷移
+        /// </summary>
+        public void TransitionToStage()
+        {
+            var starge = SettingDataController.Instance.EnvironmentSetting.StageScenes[stageNumber];
+            SceneManager.LoadScene(starge);
+        }
+
+        #endregion
+    }
+}
