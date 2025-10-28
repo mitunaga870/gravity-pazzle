@@ -36,8 +36,6 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 
                     // 自身を搭乗オブジェクトに設定
                     rider.RidingObject = gameObject;
-
-                    Debug.Log($"Rider {rider.name} ride on {gameObject.name}");
                 });
 
                 rideTrigger.OnRiderExit += (rider =>
@@ -48,8 +46,6 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
 
                     // 自身から降りた時は乗ってるオブジェクトをnullにする
                     rider.RidingObject = null;
-
-                    Debug.Log($"Rider {rider.name} ride off {gameObject.name}");
                 });
             }
         }
