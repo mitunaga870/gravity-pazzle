@@ -10,6 +10,7 @@ namespace Lib.State.GravAffection
     {
         GravAffectionState GetCurrentState { get; }
         GravType GravType { get; }
+        public bool Adapting { get; }
 
         bool Change(IGravAffectionState next, bool forceChange = false);
         
