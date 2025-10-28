@@ -1,8 +1,11 @@
-﻿using JetBrains.Annotations;
+﻿#region
+
+using JetBrains.Annotations;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
-using UnityEngine.Serialization;
+
+#endregion
 
 namespace Behaviour.Gravity.Abstract
 {
@@ -38,5 +41,10 @@ namespace Behaviour.Gravity.Abstract
         }
 
         protected abstract void FixedUpdate();
+
+        /// <summary>
+        ///     重力状態が適応中かどうか
+        /// </summary>
+        public bool IsGravAdapting => GravAffectionContext.CurrentState.Adapting;
     }
 }

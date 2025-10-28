@@ -23,8 +23,6 @@ namespace Behaviour.Player
         private const float Speed = 5f;
 
         [SerializeField]
-        private AGravBehaviour gravBehaviour;
-        [SerializeField]
         private DirectionUIWrapper directionUIWrapper;
         [SerializeField]
         private InputController inputController;
