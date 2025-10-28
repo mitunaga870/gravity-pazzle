@@ -9,7 +9,7 @@ PhysicsMaterial:
   m_Name: Prayer
   serializedVersion: 2
   m_DynamicFriction: 1
-  m_StaticFriction: 1.2
+  m_StaticFriction: 1e+34
   m_Bounciness: 0
   m_FrictionCombine: 2
   m_BounceCombine: 2

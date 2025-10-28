@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using Lib.DataClass.Settings.GravSelectMethod;
 using Newtonsoft.Json;
 using ScriptableObj;
 using UnityEngine;
@@ -26,11 +27,12 @@ namespace Lib.DataClass.Settings
             BgmVolume = initUserSettings.BgmVolume;
             SeVolume = initUserSettings.SeVolume;
             ShowTutorial = initUserSettings.ShowTutorial;
+            GravSelectMethod = initUserSettings.GravSelectMethod;
         }
 
         [JsonConstructor]
         public UserSettings(int resolutionWidth, int resolutionHeight, FullScreenMode fullscreen, float masterVolume,
-            float bgmVolume, float seVolume, bool showTutorial)
+            float bgmVolume, float seVolume, bool showTutorial, IGravSelectMethod gravSelectMethod)
         {
             // 引数で受け取った値をセットする
             ResolutionWidth = resolutionWidth;
@@ -40,6 +42,7 @@ namespace Lib.DataClass.Settings
             BgmVolume = bgmVolume;
             SeVolume = seVolume;
             ShowTutorial = showTutorial;
+            GravSelectMethod = gravSelectMethod;
         }
 
         #endregion
@@ -53,6 +56,7 @@ namespace Lib.DataClass.Settings
         public readonly float SeVolume;
 
         public readonly bool ShowTutorial;
+        public readonly IGravSelectMethod GravSelectMethod;
 
         #region deserver
 
@@ -65,7 +69,8 @@ namespace Lib.DataClass.Settings
                 MasterVolume,
                 BgmVolume,
                 SeVolume,
-                ShowTutorial
+                ShowTutorial,
+                GravSelectMethod
             );
         }
 
@@ -78,7 +83,8 @@ namespace Lib.DataClass.Settings
                 MasterVolume,
                 bgmVolumeArg,
                 SeVolume,
-                ShowTutorial
+                ShowTutorial,
+                GravSelectMethod
             );
         }
 
@@ -91,7 +97,8 @@ namespace Lib.DataClass.Settings
                 MasterVolume,
                 BgmVolume,
                 seVolumeArg,
-                ShowTutorial
+                ShowTutorial,
+                GravSelectMethod
             );
         }
 
@@ -104,7 +111,8 @@ namespace Lib.DataClass.Settings
                 masterVolumeArg,
                 BgmVolume,
                 SeVolume,
-                ShowTutorial
+                ShowTutorial,
+                GravSelectMethod
             );
         }
 
@@ -117,7 +125,22 @@ namespace Lib.DataClass.Settings
                 MasterVolume,
                 BgmVolume,
                 SeVolume,
-                showTutorialArg
+                showTutorialArg,
+                GravSelectMethod
+            );
+        }
+
+        public UserSettings DeserveGravSelectMethod(IGravSelectMethod gravSelectMethodArg)
+        {
+            return new UserSettings(
+                ResolutionWidth,
+                ResolutionHeight,
+                Fullscreen,
+                MasterVolume,
+                BgmVolume,
+                SeVolume,
+                ShowTutorial,
+                gravSelectMethodArg
             );
         }
 
@@ -131,7 +154,7 @@ namespace Lib.DataClass.Settings
             return
                 $"Resolution: {ResolutionWidth}x{ResolutionHeight} Fullscreen: {Fullscreen} " +
                 $"MasterVolume: {MasterVolume} BgmVolume: {BgmVolume} SeVolume: {SeVolume} " +
-                $"ShowTutorial: {ShowTutorial}";
+                $"ShowTutorial: {ShowTutorial} GravSelectMethod: {GravSelectMethod.DisplayName}";
         }
 
         /// <summary>
@@ -139,7 +162,12 @@ namespace Lib.DataClass.Settings
         /// </summary>
         public string ToJson()
         {
-            return JsonConvert.SerializeObject(this);
+            var serializerSettings = new JsonSerializerSettings
+            {
+                TypeNameHandling = TypeNameHandling.Objects
+            };
+
+            return JsonConvert.SerializeObject(this, serializerSettings);
         }
 
         #endregion
