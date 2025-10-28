@@ -1,0 +1,54 @@
+﻿#region
+
+using Lib.Logic.Math;
+using UnityEngine;
+
+#endregion
+
+namespace ScriptableObj.Setting
+{
+    /// <summary>
+    ///     ユーザー設定の解像度プリセット
+    /// </summary>
+    [CreateAssetMenu(fileName = "解像度プリセット", menuName = "ScriptableObj/設定/解像度プリセット", order = 2)]
+    public class Resolution : ScriptableObject
+    {
+        [SerializeField]
+        private int width;
+
+        [SerializeField]
+        private int height;
+
+        [SerializeField]
+        private FullScreenMode fullscreenMode;
+
+        public int Width => width;
+        public int Height => height;
+        public FullScreenMode FullscreenMode => fullscreenMode;
+
+        public string AspectRatioString
+        {
+            get
+            {
+                var gcd = MathUtils.GCD(width, height);
+                return $"{width / gcd}:{height / gcd}";
+            }
+        }
+
+        public string DisplayString =>
+            $"{fullscreenMode}：{width} x {height} ({AspectRatioString})";
+
+        // ReSharper disable line InconsistentNaming
+        public bool Init(int _width, int _height, FullScreenMode _fullscreenMode)
+        {
+            // すでに初期化されている場合はfalseを返す
+            if (width != 0 || height != 0) return false;
+
+            // 初期化されていない場合は初期化してtrueを返す
+            width = _width;
+            height = _height;
+            fullscreenMode = _fullscreenMode;
+            return true;
+        }
+    }
+}

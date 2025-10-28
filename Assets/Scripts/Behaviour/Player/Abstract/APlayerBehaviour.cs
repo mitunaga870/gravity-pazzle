@@ -2,6 +2,7 @@
 
 using Behaviour.Camera;
 using Behaviour.Controller.General;
+using Behaviour.Controller.Stage;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -13,6 +14,7 @@ namespace Behaviour.Player.Abstract
     /// プレイヤーの挙動を持つオブジェクトの抽象クラス
     /// 実装内容：WASD移動
     /// </summary>
+    [RequireComponent(typeof(Collider))]
     public abstract class APlayerBehaviour : MonoBehaviour 
     {
         #region SerializeField
@@ -37,11 +39,15 @@ namespace Behaviour.Player.Abstract
         // プレイヤーが移動したかどうか
         public bool IsMoved { get; private set; }
 
+        // チュートリアル用の状態フィールド
+        // ターゲットの重力方向を変更したか
+        public bool IsTargetGravChanged { get; protected set; }
+
         #endregion
 
         #region Unity Methods
 
-        private void Start()
+        protected void Start()
         {
             // SerializeFieldで設定されているかを確認
             if (playerRigidBody == null)
@@ -52,6 +58,9 @@ namespace Behaviour.Player.Abstract
                 Debug.LogError("Player Camera is not assigned.");
             if (input == null)
                 Debug.LogError("InputController is not assigned.");
+
+            // ステージ設定にインスタンスIDを登録
+            StageDataController.Instance.PlayerRigidbody = playerRigidBody;
         }
         
         protected void Update()
@@ -66,8 +75,13 @@ namespace Behaviour.Player.Abstract
             // 速度があれば、移動方向を向く
             if (moveDirection != Vector3.zero)
             {
-                var targetRotation = Quaternion.LookRotation(moveDirection);
-                playerRigidBody.MoveRotation(Quaternion.Slerp(playerRigidBody.rotation, targetRotation, Time.deltaTime * 10f));
+                // 値が小さいとLookRotationでエラーになるため、適当な数をかける
+                var adjustedMoveDirection = moveDirection * 1000f;
+                var upDirection = playerRigidBody.transform.up;
+                var targetRotation = Quaternion.LookRotation(adjustedMoveDirection, upDirection);
+
+                // Sharpを使わず、一発で回転させる
+                playerRigidBody.transform.rotation = targetRotation;
                 
                 // アニメーションの更新
                 playerAnimator.SetBool("Walk", true);
