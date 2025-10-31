@@ -1,6 +1,10 @@
-﻿using UnityEngine;
+﻿#region
 
-namespace Editor.EditorScript.ForModel
+using UnityEngine;
+
+#endregion
+
+namespace EditorScript.ForModel
 {
     /// <summary>
     /// ドラッグアンドドロップでパスを設定するための属性
