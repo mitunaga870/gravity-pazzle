@@ -39,10 +39,10 @@ namespace Behaviour.Controller.Demo
         private InputController Input;
 
         // ステージ１のシーン名
-        private SceneObj Stage1Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[0];
+        private SceneObj Stage1Name => SettingDataController.Instance.EnvironmentSetting.Stages[0].StageScene;
 
         // ステージ２のシーン名
-        private SceneObj Stage2Name => SettingDataController.Instance.EnvironmentSetting.StageScenes[1];
+        private SceneObj Stage2Name => SettingDataController.Instance.EnvironmentSetting.Stages[1].StageScene;
 
         // アンケートシーン名
         private SceneObj SurveySceneName => SettingDataController.Instance.EnvironmentSetting.EndCardScene;
