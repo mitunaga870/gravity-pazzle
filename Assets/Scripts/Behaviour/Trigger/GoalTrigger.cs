@@ -58,14 +58,13 @@ namespace Behaviour.Trigger
         {
             if (action == null) return;
 
-            _onGoal.Add(WrappedAction);
-            return;
-
             // ラップしたアクションを登録
             void WrappedAction(APlayerBehaviour _, AGravBehaviour __)
             {
                 action();
             }
+
+            _onGoal.Add(WrappedAction);
         }
 
         /// <summary>
