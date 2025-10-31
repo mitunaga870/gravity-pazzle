@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -42,6 +43,12 @@ namespace Behaviour.Controller.Stage
 
         private readonly List<int> _nonReactiveBodyIds = new();
         private Rigidbody _playerRigidbody;
+
+        #endregion
+
+        #region Public Variables
+
+        public TimeSpan PlayTime { get; set; }
 
         #endregion
 

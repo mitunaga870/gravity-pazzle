@@ -1,5 +1,10 @@
-﻿using System.Collections;
+﻿#region
+
+using System;
+using System.Collections;
 using UnityEngine;
+
+#endregion
 
 namespace Lib.Logic
 {
@@ -10,7 +15,7 @@ namespace Lib.Logic
         /// </summary>
         /// <param name="delay">遅延時間</param>
         /// <param name="action">実行するアクション</param>
-        public static IEnumerator DelayCoroutine(float delay, System.Action action)
+        public static IEnumerator DelayCoroutine(float delay, Action action)
         {
             yield return new WaitForSeconds(delay);
             action?.Invoke();
@@ -33,6 +38,25 @@ namespace Lib.Logic
             {
                 return new Vector3(0, 0, Mathf.Sign(vector.z));
             }
+        }
+
+        /// <summary>
+        ///     TimeSpanを"mm:ss"形式の文字列に変換する
+        /// </summary>
+        public static string TimeSpanToMinuteSecondString(TimeSpan timeSpan)
+        {
+            var minutes = (int)timeSpan.TotalMinutes;
+            var seconds = timeSpan.Seconds;
+
+            return $"{minutes:D2}:{seconds:D2}";
+        }
+
+        /// <summary>
+        ///     TimeSpanからミリ秒部分を取得する
+        /// </summary>
+        public static int TimeSpanToMilliSec(TimeSpan timeSpan)
+        {
+            return timeSpan.Milliseconds / 10; // コンマ秒を取得
         }
     }
 }
