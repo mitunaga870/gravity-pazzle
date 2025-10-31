@@ -19,6 +19,15 @@ namespace Behaviour.Trigger
         [SerializeField]
         private GameObject goalText;
 
+#if UNITY_EDITOR
+        private void Update()
+        {
+            // デバッグ用: Gキーでゴール処理を強制的に呼び出す
+            if (Input.GetKeyDown(KeyCode.G)) OnTriggerEnter(GameObject.FindWithTag("Player").GetComponent<Collider>());
+        }
+#endif
+
+
         /// <summary>
         ///     ゴールに到達したときの処理
         /// </summary>
@@ -41,7 +50,7 @@ namespace Behaviour.Trigger
             foreach (var action in _onGoal)
                 action?.Invoke(playerBehaviour, gravBehaviour);
         }
-
+        
         /// <summary>
         ///     ゴールに到達したときのコールバックを登録する
         /// </summary>
