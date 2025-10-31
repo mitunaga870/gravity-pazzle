@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Collections.Generic;
 using Behaviour.Controller.General.DontDestoroy;
 using Coffee.UIEffects;
 using UnityEngine;
@@ -23,15 +24,22 @@ namespace Behaviour.UI.StageSelect
         private int stageNumber;
 
         private UIEffect _uiEffect;
-        private UIEffectTweener _uiEffectTweener;
+        private readonly List<UIEffectTweener> _uiEffectTweeners = new();
 
         private void Awake()
         {
+            // 自身のコンポーネントを取得
             _uiEffect = GetComponent<UIEffect>();
-            _uiEffectTweener = GetComponent<UIEffectTweener>();
+            var uiEffectTweener = GetComponent<UIEffectTweener>();
 
             _uiEffect.enabled = false;
-            _uiEffectTweener.Stop();
+            _uiEffectTweeners.Add(uiEffectTweener);
+
+            // 子オブジェクトのUIEffectTweenerコンポーネントも取得
+            var childTweeners = GetComponentsInChildren<UIEffectTweener>();
+            foreach (var tweener in childTweeners)
+                if (tweener != uiEffectTweener)
+                    _uiEffectTweeners.Add(tweener);
         }
 
         #region Pointer Event Handlers
@@ -57,7 +65,8 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void OnPointerClick(PointerEventData eventData)
         {
-            _uiEffectTweener.PlayForward();
+            foreach (var tweener in _uiEffectTweeners)
+                tweener.PlayForward();
         }
 
         #endregion
