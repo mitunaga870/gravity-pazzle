@@ -1,9 +1,14 @@
 #if UNITY_EDITOR
+
+#region
+
 using System.Collections.Generic;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.EditorScript.ForModel
+#endregion
+
+namespace EditorScript.ForModel
 {
     /// <summary>
     /// PathAttributeが付加されたフィールドの描画
