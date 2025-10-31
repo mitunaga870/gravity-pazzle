@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using Behaviour.Controller.Stage;
 using Behaviour.Trigger;
+using Lib.Logic;
 using TMPro;
 using UnityEngine;
 
@@ -28,10 +30,13 @@ namespace Behaviour.UI.General
         // 停止フラグ
         private bool isStopped;
 
+        private StageDataController _stageDataController;
+
         private void Start()
         {
             // 初期化
             currentTime = TimeSpan.Zero;
+            _stageDataController = StageDataController.Instance;
 
             // クリア時にとめる
             // ゴールトリガーを取得
@@ -51,15 +56,14 @@ namespace Behaviour.UI.General
             
             // タイマーの更新
             currentTime += TimeSpan.FromSeconds(Time.deltaTime);
+            _stageDataController.PlayTime = currentTime;
 
             // 表示の更新
             // 分と秒を計算
-            var minutes = (int)currentTime.TotalMinutes;
-            var seconds = currentTime.Seconds;
-            var milliseconds = currentTime.Milliseconds / 10; // 2桁のコンマ秒
+            var milliseconds = GeneralUtils.TimeSpanToMilliSec(currentTime); // 2桁のコンマ秒
 
             // テキストの更新
-            mainText.text = $"{minutes:D2}:{seconds:D2}";
+            mainText.text = GeneralUtils.TimeSpanToMinuteSecondString(currentTime);
             subText.text = $"{milliseconds:D2}";
             
         }
