@@ -1,8 +1,10 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
 using Lib.DataClass.ForInspector;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #endregion
 
@@ -20,7 +22,7 @@ namespace ScriptableObj.Setting
         private SceneObj titleScene;
 
         [SerializeField]
-        private List<SceneObj> stageScenes = new();
+        private List<StageSetting> stages = new();
 
         [SerializeField]
         private SceneObj endCardScene;
@@ -29,8 +31,19 @@ namespace ScriptableObj.Setting
 
         public SceneObj TitleScene => titleScene;
 
-        public List<SceneObj> StageScenes => stageScenes;
+        public List<StageSetting> Stages => stages;
 
         public SceneObj EndCardScene => endCardScene;
+
+        public (StageSetting, int) GetFromCurScene()
+        {
+            var curSceneName = SceneManager.GetActiveScene().name;
+
+            foreach (var (stage, index) in stages.Select((value, i) => (value, i)))
+                if (stage.StageScene.SceneName == curSceneName)
+                    return (stage, index);
+
+            throw new KeyNotFoundException($"Scene '{curSceneName}' not found in EnvironmentSetting stages.");
+        }
     }
 }

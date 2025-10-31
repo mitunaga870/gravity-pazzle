@@ -34,6 +34,7 @@ namespace Lib.State.GravAffection
         #region IGravAffectionState
         public GravAffectionState GetCurrentState => GravAffectionState.Floating;
         public GravType GravType => _gravType;
+        public bool Adapting => false;
 
         public bool Change(IGravAffectionState next, bool forceChange = false)
         {

@@ -67,7 +67,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: d14e14e5768e8ca4a81620ecc3b84c3b, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 3a1b5a5618e2b864e9de52c9b1e5bdf2, type: 2}
+      objectReference: {fileID: 2100000, guid: 420584fc94d259c4da14db5844f078bb, type: 2}
     - target: {fileID: 919132149155446097, guid: d14e14e5768e8ca4a81620ecc3b84c3b, type: 3}
       propertyPath: m_Name
       value: StaticGravArea
