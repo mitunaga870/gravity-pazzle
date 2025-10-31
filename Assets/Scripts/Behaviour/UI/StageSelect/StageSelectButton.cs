@@ -1,8 +1,9 @@
 ﻿#region
 
 using System.Collections.Generic;
-using Behaviour.Controller.General.DontDestoroy;
 using Coffee.UIEffects;
+using ScriptableObj.Setting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
@@ -16,15 +17,26 @@ namespace Behaviour.UI.StageSelect
     /// </summary>
     [RequireComponent(typeof(UIEffect))]
     [RequireComponent(typeof(UIEffectTweener))]
-    public class StageSelectButtonUIEffect : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
+    public class StageSelectButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,
         IPointerClickHandler
     {
         [SerializeField]
-        [Tooltip("クリック時に移動するステージ番号")]
-        private int stageNumber;
+        private TMP_Text stageId;
 
+        [SerializeField]
+        private TMP_Text stageTitle;
+
+        // エフェクト関連
         private UIEffect _uiEffect;
         private readonly List<UIEffectTweener> _uiEffectTweeners = new();
+
+        // ホバーじのステージ名表示用テキスト
+        private TMP_Text _hoverStageNameText;
+        private TMP_Text _hoverStageTitleText;
+
+        // 渡された情報
+        private StageSetting _stage;
+        private int _stageNumber;
 
         private void Awake()
         {
@@ -49,7 +61,12 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void OnPointerEnter(PointerEventData eventData)
         {
+            // ホバー時のエフェクトを有効化
             _uiEffect.enabled = true;
+
+            // ホバー中のステージ名・説明文を表示
+            _hoverStageNameText.text = _stage.DisplayName;
+            _hoverStageTitleText.text = $"ステージ {_stageNumber}";
         }
 
         /// <summary>
@@ -57,7 +74,12 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void OnPointerExit(PointerEventData eventData)
         {
+            // ホバー時のエフェクトを無効化
             _uiEffect.enabled = false;
+
+            // ホバー中のステージ名・説明文をクリア
+            _hoverStageNameText.text = string.Empty;
+            _hoverStageTitleText.text = string.Empty;
         }
 
         /// <summary>
@@ -74,12 +96,29 @@ namespace Behaviour.UI.StageSelect
         #region Public Methods
 
         /// <summary>
+        ///     stageを指定してステージセレクトボタンを初期化する
+        /// </summary>
+        public void Initialize(
+            StageSetting stage,
+            int stageNumber,
+            TMP_Text hoverStageNameText,
+            TMP_Text hoverStageTitleText
+        )
+        {
+            stageId.text = $"STG {stageNumber}";
+            stageTitle.text = stage.DisplayName;
+            _stage = stage;
+            _stageNumber = stageNumber;
+            _hoverStageNameText = hoverStageNameText;
+            _hoverStageTitleText = hoverStageTitleText;
+        }
+
+        /// <summary>
         ///     ステージ遷移
         /// </summary>
         public void TransitionToStage()
         {
-            var stage = SettingDataController.Instance.EnvironmentSetting.Stages[stageNumber].StageScene;
-            SceneManager.LoadScene(stage);
+            SceneManager.LoadScene(_stage.StageScene);
         }
 
         #endregion
