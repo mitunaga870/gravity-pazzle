@@ -78,8 +78,8 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void TransitionToStage()
         {
-            var starge = SettingDataController.Instance.EnvironmentSetting.StageScenes[stageNumber];
-            SceneManager.LoadScene(starge);
+            var stage = SettingDataController.Instance.EnvironmentSetting.StageScenes[stageNumber];
+            SceneManager.LoadScene(stage);
         }
 
         #endregion
