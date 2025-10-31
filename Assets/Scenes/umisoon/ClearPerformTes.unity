@@ -5484,9 +5484,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9cb2b67fb69c479884539eeab2e874a0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  height: 30
-  radius: 50
-  speed: 1
+  height: 20
+  radius: 40
+  speed: 0.5
 --- !u!114 &733558347
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8755,7 +8755,6 @@ GameObject:
   - component: {fileID: 1118022286}
   - component: {fileID: 1118022289}
   - component: {fileID: 1118022288}
-  - component: {fileID: 1118022287}
   m_Layer: 5
   m_Name: ReviewTitle
   m_TagString: Untagged
@@ -8782,20 +8781,6 @@ RectTransform:
   m_AnchoredPosition: {x: 1425.77, y: -709.46}
   m_SizeDelta: {x: 190, y: 69}
   m_Pivot: {x: 0, y: 1}
---- !u!114 &1118022287
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1118022285}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74c89dda62b443d09ec4ce0967dc2334, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  clearTimeTextMain: {fileID: 0}
-  clearTimeTextSub: {fileID: 0}
 --- !u!114 &1118022288
 MonoBehaviour:
   m_ObjectHideFlags: 0
