@@ -1,6 +1,7 @@
 #region
 
 #nullable enable
+using System;
 using Behaviour.Controller.General;
 using Lib.Logic;
 using Lib.Logic.Gravity;
@@ -60,6 +61,10 @@ namespace Behaviour.Camera
             var coroutine = GeneralUtils.DelayCoroutine(duration, () => _isMovable = true);
             StartCoroutine(coroutine);
         }
+
+        [NonSerialized]
+        // 次のカメラのプレイヤー追従を減らすための量
+        public Vector3 OffsetNextFollow = Vector3.zero;
 
         #endregion
 
@@ -158,6 +163,11 @@ namespace Behaviour.Camera
             
             // 変位量を計算
             var deltaPos = playerTrans.position - _prevPos;
+            deltaPos -= OffsetNextFollow;
+
+            // 次回の追従オフセットをリセット
+            OffsetNextFollow = Vector3.zero;
+            
             // カメラの位置を更新
             transform.position += deltaPos;
                 
