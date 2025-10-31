@@ -5,13 +5,13 @@ using UnityEngine;
 
 #endregion
 
-namespace ScriptableObj.Stage
+namespace ScriptableObj.Setting
 {
     /// <summary>
     ///     ステージの情報を保持するScriptableObject
     /// </summary>
-    [CreateAssetMenu(fileName = "ステージデータ", menuName = "ScriptableObj/ステージ/ステージデータ", order = 1)]
-    public class StageData : ScriptableObject
+    [CreateAssetMenu(fileName = "ステージ設定", menuName = "ScriptableObj/設定/ステージ設定", order = 1)]
+    public class StageSetting : ScriptableObject
     {
         [Header("表示名")]
         [SerializeField]
