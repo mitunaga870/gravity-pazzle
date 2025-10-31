@@ -1,11 +1,16 @@
 #if UNITY_EDITOR
+
+#region
+
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor.EditorScript.ForModel
+#endregion
+
+namespace EditorScript.ForModel
 {
     public class MaterialExtractor : EditorWindow
     {
