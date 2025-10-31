@@ -34,8 +34,6 @@ namespace Behaviour.Player
         private bool changeableGrav = true;
 
         [Header("参照用")]
-        [SerializeField]
-        private AGravBehaviour gravBehaviour;
 
         [SerializeField]
         private DirectionUIWrapper directionUIWrapper;
