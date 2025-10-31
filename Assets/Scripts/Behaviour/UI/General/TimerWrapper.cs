@@ -60,7 +60,7 @@ namespace Behaviour.UI.General
 
             // 表示の更新
             // 分と秒を計算
-            var milliseconds = GeneralUtils.TimeSpanToMilliSec(currentTime); // 2桁のコンマ秒
+            var milliseconds = GeneralUtils.TimeSpanToCentiSec(currentTime); // 2桁のコンマ秒
 
             // テキストの更新
             mainText.text = GeneralUtils.TimeSpanToMinuteSecondString(currentTime);

@@ -63,7 +63,7 @@ namespace Behaviour.UI.InGame
             // クリアタイム表示の更新
             var playTime = StageDataController.PlayTime;
             clearTimeTextMain.text = GeneralUtils.TimeSpanToMinuteSecondString(playTime);
-            clearTimeTextSub.text = ":" + GeneralUtils.TimeSpanToMilliSec(playTime).ToString("D2");
+            clearTimeTextSub.text = ":" + GeneralUtils.TimeSpanToCentiSec(playTime).ToString("D2");
 
             // 星の数の計算
             var clearTimeSec = (int)playTime.TotalSeconds;

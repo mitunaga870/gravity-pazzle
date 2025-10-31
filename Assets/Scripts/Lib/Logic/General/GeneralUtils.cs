@@ -52,9 +52,9 @@ namespace Lib.Logic
         }
 
         /// <summary>
-        ///     TimeSpanからミリ秒部分を取得する
+        ///     TimeSpanからコンマ秒部分を取得する
         /// </summary>
-        public static int TimeSpanToMilliSec(TimeSpan timeSpan)
+        public static int TimeSpanToCentiSec(TimeSpan timeSpan)
         {
             return timeSpan.Milliseconds / 10; // コンマ秒を取得
         }
