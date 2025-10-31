@@ -78,7 +78,7 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void TransitionToStage()
         {
-            var stage = SettingDataController.Instance.EnvironmentSetting.StageScenes[stageNumber];
+            var stage = SettingDataController.Instance.EnvironmentSetting.Stages[stageNumber].StageScene;
             SceneManager.LoadScene(stage);
         }
 
