@@ -27,8 +27,6 @@ namespace Lib.State.GravAffection
             
             // カメラが指定されているか
             _hasCamera = focusCameraTransform != null;
-            
-            InitCameraPos();
         }
         
         private readonly Vector3 _gravity;
@@ -36,12 +34,13 @@ namespace Lib.State.GravAffection
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
 
-        // カメラとプレイヤーの距離
-        private float _cameraDistance;
-        
+
         #region IGravAffectionState
         public GravAffectionState GetCurrentState => GravAffectionState.Affected;
         public GravType GravType => _gravType;
+
+        public bool Adapting { get; private set; }
+        
         private readonly bool _hasCamera;
 
         private float _curAngle;
@@ -53,6 +52,10 @@ namespace Lib.State.GravAffection
             if (_affectedBody == null &&
                 (_affectedBody.velocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
                )
+                return false;
+
+            // 適応中は変更不可
+            if (Adapting && !forceChange)
                 return false;
             
             if (next == null)
@@ -66,8 +69,10 @@ namespace Lib.State.GravAffection
             // カメラを指定位置が下になるように
             if (_hasCamera && prev != null && prev.GravType != _gravType)
             {
+                Adapting = true;
+
+                // 軸取得
                 var (axis, angle) = GravUtils.GetGravToGravRotation(prev.GravType, _gravType);
-                
                 // axisがゼロベクトルの場合は１８０度回転
                 if (axis == Vector3.zero)
                 {
@@ -77,18 +82,24 @@ namespace Lib.State.GravAffection
 
                 var duration = 0.25f;
 
+#if UNITY_EDITOR
+                // 回転角を表示
+                Debug.Log($"GravAffected OnEnter {_gravType}: Rotate Camera around {axis} by {angle} degrees.");
+#endif
+
                 LMotion.Create(0, angle, duration)
                     .WithEase(Ease.InOutSine)
                     .WithScheduler(MotionScheduler.PostLateUpdate)
+                    .WithOnComplete(() => { Adapting = false; })
                     .Bind(this, (nextAngle, self) =>
                     {
                         var diff = nextAngle - self._curAngle;
                         self._curAngle = nextAngle;
-                        
+
                         var parent = self._focusCameraTransform.parent;
-                        
+
                         parent.RotateAround(
-                                _affectedBody.position,
+                            _affectedBody.position,
                             axis,
                             diff);
                     });
@@ -97,7 +108,6 @@ namespace Lib.State.GravAffection
 
         public void OnExit()
         {
-            
         }
 
         public void OnFixedUpdate()
@@ -107,20 +117,6 @@ namespace Lib.State.GravAffection
             
             // 重力の影響を受ける
             _affectedBody.AddForce(_gravity, ForceMode.Acceleration);
-        }
-        #endregion
-
-        #region private methods
-
-        /// <summary>
-        /// カメラとプレイヤーの位置関係を初期化
-        /// </summary>
-        private void InitCameraPos()
-        {
-            if (!_hasCamera)
-                return;
-
-            _cameraDistance = Vector3.Distance(_focusCameraTransform.position, _affectedBody.position);
         }
         #endregion
     }

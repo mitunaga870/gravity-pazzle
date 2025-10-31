@@ -3,6 +3,7 @@
 using Behaviour.Camera;
 using Behaviour.Controller.General;
 using Behaviour.Controller.Stage;
+using Behaviour.Gravity.Abstract;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -15,6 +16,7 @@ namespace Behaviour.Player.Abstract
     /// 実装内容：WASD移動
     /// </summary>
     [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(AGravBehaviour))]
     public abstract class APlayerBehaviour : MonoBehaviour 
     {
         #region SerializeField
@@ -45,6 +47,12 @@ namespace Behaviour.Player.Abstract
 
         #endregion
 
+        #region Protected Fields
+
+        protected AGravBehaviour gravBehaviour { get; private set; }
+
+        #endregion
+
         #region Unity Methods
 
         protected void Start()
@@ -59,12 +67,21 @@ namespace Behaviour.Player.Abstract
             if (input == null)
                 Debug.LogError("InputController is not assigned.");
 
+            // 重力挙動コンポーネントを取得
+            gravBehaviour = GetComponent<AGravBehaviour>();
+            if (gravBehaviour == null)
+                Debug.LogError("GravBehaviour component is not attached to the player.");
+
             // ステージ設定にインスタンスIDを登録
             StageDataController.Instance.PlayerRigidbody = playerRigidBody;
         }
         
         protected void Update()
         {
+            // 重力適応中は移動しない
+            if (gravBehaviour.IsGravAdapting)
+                return;
+            
             // プレイヤーの移動
             var moveDirection = GetMoveDirection(Time.deltaTime);
             playerRigidBody.MovePosition(playerRigidBody.position + moveDirection);
