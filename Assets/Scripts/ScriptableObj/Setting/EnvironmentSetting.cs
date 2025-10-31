@@ -2,6 +2,7 @@
 
 using System.Collections.Generic;
 using Lib.DataClass.ForInspector;
+using ScriptableObj.Stage;
 using UnityEngine;
 
 #endregion
@@ -20,7 +21,7 @@ namespace ScriptableObj.Setting
         private SceneObj titleScene;
 
         [SerializeField]
-        private List<SceneObj> stageScenes = new();
+        private List<StageData> stages = new();
 
         [SerializeField]
         private SceneObj endCardScene;
@@ -29,7 +30,7 @@ namespace ScriptableObj.Setting
 
         public SceneObj TitleScene => titleScene;
 
-        public List<SceneObj> StageScenes => stageScenes;
+        public List<StageData> Stages => stages;
 
         public SceneObj EndCardScene => endCardScene;
     }
