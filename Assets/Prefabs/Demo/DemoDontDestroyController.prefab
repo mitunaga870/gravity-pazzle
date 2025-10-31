@@ -103,7 +103,7 @@ GameObject:
   - component: {fileID: 6622260937521676836}
   - component: {fileID: 4507922024429930492}
   m_Layer: 0
-  m_Name: DontDestroyController
+  m_Name: DemoDontDestroyController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
