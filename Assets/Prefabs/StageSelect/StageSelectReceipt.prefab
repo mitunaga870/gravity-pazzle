@@ -748,7 +748,7 @@ GameObject:
   - component: {fileID: 2428662658174408916}
   - component: {fileID: 1613757150601891710}
   m_Layer: 5
-  m_Name: Denpyou
+  m_Name: StageSelectReceipt
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
