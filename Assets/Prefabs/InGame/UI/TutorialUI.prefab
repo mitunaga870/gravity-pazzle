@@ -537,6 +537,7 @@ GameObject:
   - component: {fileID: 8809464227370999242}
   - component: {fileID: 1671513222857887396}
   - component: {fileID: 8930505866714894015}
+  - component: {fileID: 7295962465123448424}
   m_Layer: 5
   m_Name: TutorialUI
   m_TagString: Untagged
@@ -680,6 +681,18 @@ MonoBehaviour:
   resetUI: {fileID: 3034735116513987876}
   menuUI: {fileID: 1792522287016056134}
   uiDisplayTime: 3
+--- !u!114 &7295962465123448424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2738317137734037232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6e766b45c52486fb148756e52574d0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2750745685222513958
 GameObject:
   m_ObjectHideFlags: 0

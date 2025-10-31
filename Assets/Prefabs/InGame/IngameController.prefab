@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 8174145790894968829}
   - component: {fileID: 8394906048519403212}
   - component: {fileID: 2347672672649573966}
+  - component: {fileID: -4760456260706861769}
   m_Layer: 0
   m_Name: IngameController
   m_TagString: Untagged
@@ -86,3 +87,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e320893d1d884a608d300e0d1100ffd5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &-4760456260706861769
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2254733339695932710}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1d45313cf9c46844bb16e9757d398bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  operationDuration: 5
+  maxConcurrentOperations: 2
