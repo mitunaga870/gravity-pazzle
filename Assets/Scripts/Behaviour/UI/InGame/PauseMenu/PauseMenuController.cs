@@ -2,12 +2,15 @@
 
 using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
+using Behaviour.Controller.Stage;
+using Behaviour.UI.Settings;
 using Lib.State.Scene;
 using UnityEngine;
+using UnityEngine.UI;
 
 #endregion
 
-namespace Behaviour.UI.PauseMenu
+namespace Behaviour.UI.InGame.PauseMenu
 {
     /// <summary>
     ///     ポーズメニューのコントローラー。
@@ -18,20 +21,35 @@ namespace Behaviour.UI.PauseMenu
         #region Serialized Fields
 
         [SerializeField]
-        private GameObject pauseMenu;
+        private FonMover pauseMenu;
 
+        [SerializeField]
+        private SceneSelectButton goToTitleButton;
+
+        [SerializeField]
+        private Button goToSettingsButton;
+
+        [SerializeField]
+        private SceneSelectButton quitStageButton;
+
+        [Header("シーンない参照")]
         [SerializeField]
         private InputController Input;
 
         [SerializeField]
         private SceneStateController sceneStateController;
-
+        
         [SerializeField]
-        private SceneSelectButton returnToTitleButton;
+        private SettingUIController settingUIController;
 
         #endregion
         
         public bool IsMenuOpened { get; private set; }
+
+        private CursorLockMode _previousCursorLockMode;
+        private bool _previousCursorVisibility;
+
+        private bool _isOpen;
 
         private void Start()
         {
@@ -43,9 +61,17 @@ namespace Behaviour.UI.PauseMenu
             if (sceneStateController == null)
                 Debug.LogError("SceneStateController is not assigned in the inspector.");
 
-            // タイトルに戻るボタンのターゲットシーンを設定
-            returnToTitleButton.SetTargetScene(
+            // ボタンアクションの設定
+            goToTitleButton.SetTargetScene(
                 SettingDataController.Instance.EnvironmentSetting.TitleScene);
+            quitStageButton.SetTargetScene(
+                SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
+            goToSettingsButton.onClick.AddListener(() =>
+                settingUIController.ShowSettings());
+
+            // ステージじゃない場合はあきらめるボタンを非表示
+            var stageDataController = FindObjectsByType<StageDataController>(FindObjectsSortMode.None);
+            if (stageDataController.Length == 0) quitStageButton.gameObject.SetActive(false);
         }
 
         private void Update()
@@ -53,7 +79,7 @@ namespace Behaviour.UI.PauseMenu
             if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
             // Escキーが押されたらポーズメニューをトグル
-            if (pauseMenu.activeSelf)
+            if (_isOpen)
                 HidePauseMenu();
             else
                 ShowPauseMenu();
@@ -64,15 +90,19 @@ namespace Behaviour.UI.PauseMenu
         /// </summary>
         private void ShowPauseMenu()
         {
-            pauseMenu.SetActive(true);
+            pauseMenu.reverse = false;
+            pauseMenu.PlayMotion();
 
-            // カーソルを表示し、ゲームの入力を無効にする
+            // カーソルの状態を保存
+            _previousCursorLockMode = Cursor.lockState;
+            _previousCursorVisibility = Cursor.visible;
+            // カーソルを解放し、ゲームの入力を無効にする
             Cursor.lockState = CursorLockMode.None;
-            // カーソルを表示する
             Cursor.visible = true;
             
             // 開いたフラグを立てる
             IsMenuOpened = true;
+            _isOpen = true;
 
             // ゲーム状態をポーズに変更
             sceneStateController.ChangeSceneState(SceneState.Pause);
@@ -83,12 +113,15 @@ namespace Behaviour.UI.PauseMenu
         /// </summary>
         private void HidePauseMenu()
         {
-            pauseMenu.SetActive(false);
+            pauseMenu.reverse = true;
+            pauseMenu.PlayMotion();
 
-            // カーソルをロックし、ゲームの入力を有効にする
-            Cursor.lockState = CursorLockMode.Locked;
-            // カーソルを非表示にする
-            Cursor.visible = false;
+            // カーソルの状態を元に戻す
+            Cursor.lockState = _previousCursorLockMode;
+            Cursor.visible = _previousCursorVisibility;
+
+            // 開いたフラグを下ろす
+            _isOpen = false;
 
             // ゲーム状態を通常に戻す
             sceneStateController.ChangeSceneState(SceneState.InGame);
