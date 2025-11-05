@@ -82,11 +82,6 @@ namespace Lib.State.GravAffection
 
                 var duration = 0.25f;
 
-#if UNITY_EDITOR
-                // 回転角を表示
-                Debug.Log($"GravAffected OnEnter {_gravType}: Rotate Camera around {axis} by {angle} degrees.");
-#endif
-
                 LMotion.Create(0, angle, duration)
                     .WithEase(Ease.InOutSine)
                     .WithScheduler(MotionScheduler.PostLateUpdate)

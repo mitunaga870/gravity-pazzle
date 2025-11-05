@@ -66,10 +66,4 @@ public class FonMover : MonoBehaviour
             .WithEase(ease)
             .Bind(value => target.localScale = value);
     }
-
-    private void Start()
-    {
-        // 起動時に自動再生したいならここを有効に
-        PlayMotion();
-    }
 }

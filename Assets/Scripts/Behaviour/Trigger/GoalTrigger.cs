@@ -37,9 +37,6 @@ namespace Behaviour.Trigger
             // プレイヤー以外のオブジェクトがトリガーに入った場合は何もしない
             if (!other.CompareTag("Player")) return;
 
-            // ゴールに到達した場合の処理
-            Debug.Log("Goal Reached!");
-
             // ゴールに到達したときのコールバックを実行
             var playerBehaviour = other.GetComponent<APlayerBehaviour>();
             if (playerBehaviour == null) throw new Exception("PlayerBehaviour component not found on Player object.");

@@ -29,6 +29,7 @@ namespace Behaviour.UI.StageSelect
         // エフェクト関連
         private UIEffect _uiEffect;
         private readonly List<UIEffectTweener> _uiEffectTweeners = new();
+        private readonly List<UIEffect> _uiEffects = new();
 
         // ホバーじのステージ名表示用テキスト
         private TMP_Text _hoverStageNameText;
@@ -52,6 +53,12 @@ namespace Behaviour.UI.StageSelect
             foreach (var tweener in childTweeners)
                 if (tweener != uiEffectTweener)
                     _uiEffectTweeners.Add(tweener);
+
+            // 子オブジェクトのUIEffectコンポーネントも取得
+            var childEffects = GetComponentsInChildren<UIEffect>();
+            foreach (var effect in childEffects)
+                if (effect != _uiEffect)
+                    _uiEffects.Add(effect);
         }
 
         #region Pointer Event Handlers
@@ -87,6 +94,9 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void OnPointerClick(PointerEventData eventData)
         {
+            // クリック時のエフェクトを再生
+            foreach (var effect in _uiEffects)
+                effect.enabled = true;
             foreach (var tweener in _uiEffectTweeners)
                 tweener.PlayForward();
         }
