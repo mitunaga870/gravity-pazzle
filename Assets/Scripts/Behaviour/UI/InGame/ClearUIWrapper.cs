@@ -8,6 +8,7 @@ using Lib.Logic;
 using ScriptableObj.Setting;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 #endregion
@@ -44,6 +45,8 @@ namespace Behaviour.UI.InGame
         // 星が一つ減る時間の閾値（秒）
         private const int StartThresholdSec = 30;
 
+        private bool _movableToNext;
+
         private void Start()
         {
             var goalTriggers = FindObjectsByType<GoalTrigger>(FindObjectsSortMode.None);
@@ -56,6 +59,12 @@ namespace Behaviour.UI.InGame
             stageTitleText.text = _stageSetting.DisplayName;
 
             gameObject.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (_movableToNext && Input.anyKeyDown)
+                SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
         }
 
         private void OnGoal()
@@ -77,7 +86,14 @@ namespace Behaviour.UI.InGame
             for (var i = 1; i <= 3; i++)
                 starImages[i - 1].sprite = i <= stars ? starOnSprite : starOffSprite;
 
+            // マウスロックを解除
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible = true;
+
+            // 1秒後に進行可能にして表示
             gameObject.SetActive(true);
+            var delay = GeneralUtils.DelayCoroutine(1f, () => { _movableToNext = true; });
+            StartCoroutine(delay);
         }
     }
 }

@@ -12,6 +12,7 @@ namespace Behaviour.UI
     /// <summary>
     ///     指定下シーンにクリックで移動
     /// </summary>
+    [RequireComponent(typeof(Button))]
     public class SceneSelectButton : MonoBehaviour
     {
         [SerializeField]
