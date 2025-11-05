@@ -5,7 +5,7 @@ using Behaviour.Controller;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
 using Behaviour.Player.Abstract;
-using Behaviour.UI.PauseMenu;
+using Behaviour.UI.InGame.PauseMenu;
 using UnityEngine;
 using UnityEngine.Serialization;
 

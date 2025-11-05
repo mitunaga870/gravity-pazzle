@@ -1,6 +1,5 @@
 ﻿#region
 
-using System.Collections.Generic;
 using Behaviour.Controller.General.DontDestoroy;
 using ScriptableObj.Setting;
 using UnityEngine;
@@ -17,7 +16,11 @@ namespace Behaviour.UI.Title
         #region Serialized Fields
 
         [SerializeField]
-        private List<SceneSelectButton> stageButtons = new();
+        private SceneSelectButton startButton; // スタートボタン
+
+        [SerializeField]
+        private SceneSelectButton creditButton; // クレジットボタン
+        
         
         #endregion
 
@@ -32,16 +35,11 @@ namespace Behaviour.UI.Title
 
         private void Start()
         {
-            // ステージ数とボタン数が一致しない場合はエラーを出す
-            if (EnvironmentSetting.Stages.Count != stageButtons.Count)
-            {
-                Debug.LogError("Stage scenes count and stage buttons count do not match.");
-                return;
-            }
+            var stageSelectScene = EnvironmentSetting.StageSelectScene;
+            var creditScene = EnvironmentSetting.CreditScene;
 
-            // ステージ選択ボタンにステージシーンを割り当てる
-            for (var i = 0; i < stageButtons.Count; i++)
-                stageButtons[i].SetTargetScene(EnvironmentSetting.Stages[i].StageScene);
+            startButton.SetTargetScene(stageSelectScene);
+            creditButton.SetTargetScene(creditScene);
         }
     }
 }

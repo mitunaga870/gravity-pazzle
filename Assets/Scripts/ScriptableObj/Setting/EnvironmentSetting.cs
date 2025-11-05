@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Lib.DataClass.ForInspector;
@@ -22,17 +23,27 @@ namespace ScriptableObj.Setting
         private SceneObj titleScene;
 
         [SerializeField]
+        private SceneObj stageSelectScene;
+
+        [SerializeField]
+        private SceneObj creditScene;
+
+        [SerializeField]
         private List<StageSetting> stages = new();
 
         [SerializeField]
+        [Obsolete("EndCardSceneはデモ版専用のため、今後廃止予定です。")]
         private SceneObj endCardScene;
 
         public bool IsDevelopmentBuild => isDevelopmentBuild;
 
         public SceneObj TitleScene => titleScene;
+        public SceneObj StageSelectScene => stageSelectScene;
+        public SceneObj CreditScene => creditScene;
 
         public List<StageSetting> Stages => stages;
 
+        [Obsolete("StageSelectSceneは今後廃止予定です。")]
         public SceneObj EndCardScene => endCardScene;
 
         public (StageSetting, int) GetFromCurScene()
