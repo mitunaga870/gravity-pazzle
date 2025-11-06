@@ -3,6 +3,10 @@
 #nullable enable
 using System;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
+using Behaviour.Controller.Stage;
+using Behaviour.Gravity.Abstract;
+using Behaviour.Player.Abstract;
 using Lib.Logic;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
@@ -40,6 +44,15 @@ namespace Behaviour.Camera
         private float _pitch;
 
         private bool _isMovable = true;
+
+        private bool _hasPlayer;
+        private APlayerBehaviour? _playerBehaviour;
+        private AGravBehaviour? _playerGravBehaviour;
+
+        private Vector3 _initialOffset;
+        private Vector3 _initialForward;
+        private Quaternion _initialRotation;
+        private GravType _initialGrav;
 
         #endregion
 
@@ -81,10 +94,29 @@ namespace Behaviour.Camera
             // シリアライズフィールド確認
             if (Input == null)
                 Debug.LogError("InputController is not assigned in PlayerCam.");
+
+            // プレイヤーのBehaviourを取得
+            _playerBehaviour = StageDataController.Instance.PlayerBehaviour;
+            _playerGravBehaviour = StageDataController.Instance.PlayerGravBehaviour;
+            _hasPlayer = _playerBehaviour != null;
+
+            if (_hasPlayer)
+            {
+                var playerTrans = _playerBehaviour!.transform;
+
+                // 初期位置・回転を保存 localにすることでプレイヤーとの相対位置を保存
+                _initialOffset = transform.position - playerTrans.position;
+                _initialRotation = transform.localRotation;
+                _initialForward = playerTrans.forward;
+                _initialGrav = _playerGravBehaviour!.GravType;
+            }
         }
 
         private void Update()
         {
+            // カメラリセット処理
+            ResetCamera();
+            
             // プレイヤーの位置が設定されていない場合は何もしない
             if (_playerTrans == null || _gravType == null)
                 return;
@@ -193,6 +225,63 @@ namespace Behaviour.Camera
                 hit.collider.gameObject :
                 // ヒットしなかった場合はnullを返す
                 null;
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /**
+         * カメラを初期位置にリセットする
+         */
+        private void ResetCamera()
+        {
+            var playerKey = SettingDataController.Instance.PlayerKey;
+            if (!Input.GetKeyDown(playerKey.CameraResetKey, SceneState.InGame)) return;
+
+            if (_playerBehaviour == null || _playerGravBehaviour == null) return;
+
+            // プレイヤーの位置と重力方向を取得
+            if (!_hasPlayer) return;
+            var playerTrans = _playerBehaviour.transform;
+            var gravType = _playerGravBehaviour.GravType;
+
+            // カメラの位置と回転をリセット
+            transform.position = playerTrans.position + _initialOffset;
+
+            // 重力方向の変化量を出しておく
+            var (gravRotateAxis, gravRotateAngle) =
+                GravUtils.GetGravToGravRotation(_initialGrav, _playerGravBehaviour.GravType);
+            // axisがゼロベクトルの場合は１８０度回転
+            if (gravRotateAxis == Vector3.zero)
+            {
+                gravRotateAxis = GravUtils.GetGravPerpendicularUnit(gravType); // 適当な軸
+                gravRotateAngle = 180f;
+            }
+
+            // 重力方向に合わせて回転　このときにローカル回転もおかしくなるので、この後にリセットする
+            if (gravType != _initialGrav)
+                transform.RotateAround(
+                    playerTrans.position,
+                    gravRotateAxis,
+                    gravRotateAngle
+                );
+            transform.localRotation = _initialRotation;
+
+            // プレイヤーの初期向きも回転
+            var gravedInitialForward = Quaternion.AngleAxis(gravRotateAngle, gravRotateAxis) * _initialForward;
+            // プレイヤーの正面向きになるように
+            var curForward = playerTrans.forward;
+            var quatToInitial = Quaternion.FromToRotation(curForward, gravedInitialForward);
+            var angle = GravUtils.GetGravAxisEulerAngle(gravType, quatToInitial.eulerAngles);
+            transform.RotateAround(
+                playerTrans.position,
+                GravUtils.GetGravDirectionUnit(gravType),
+                angle
+            );
+
+            // ピッチをリセット
+            _pitch = 0f;
         }
 
         #endregion
