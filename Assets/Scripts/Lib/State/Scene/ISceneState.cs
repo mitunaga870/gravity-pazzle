@@ -32,6 +32,7 @@
     public enum SceneState
     {
         InGame,
-        Pause
+        Pause,
+        Instruction
     }
 }
