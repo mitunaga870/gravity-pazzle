@@ -4037,6 +4037,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -75
       objectReference: {fileID: 0}
+    - target: {fileID: 8602276767187868974, guid: 9aa281d9a9a88ea4a832fccde1534e13, type: 3}
+      propertyPath: targetScene.m_SceneName
+      value: CgkTitle
+      objectReference: {fileID: 0}
     - target: {fileID: 9090988885469400122, guid: 9aa281d9a9a88ea4a832fccde1534e13, type: 3}
       propertyPath: m_Name
       value: DemoPauseMenu
