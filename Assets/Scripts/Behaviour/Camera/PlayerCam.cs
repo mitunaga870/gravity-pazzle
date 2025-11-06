@@ -266,6 +266,8 @@ namespace Behaviour.Camera
                     gravRotateAxis,
                     gravRotateAngle
                 );
+            Debug.Log(
+                $"Reset Camera Grav Rotate: From {_initialGrav} to {gravType}, Axis: {gravRotateAxis}, Angle: {gravRotateAngle}");
             transform.localRotation = _initialRotation;
 
             // プレイヤーの初期向きも回転
