@@ -82,6 +82,8 @@ namespace Lib.State.GravAffection
 
                 var duration = 0.25f;
 
+                Debug.Log(
+                    $"[GravAffected] OnEnter: PrevGravType={prev.GravType}, NextGravType={_gravType}, Axis={axis}, Angle={angle}");
                 LMotion.Create(0, angle, duration)
                     .WithEase(Ease.InOutSine)
                     .WithScheduler(MotionScheduler.PostLateUpdate)
