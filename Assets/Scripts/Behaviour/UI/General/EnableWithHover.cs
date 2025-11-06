@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -16,6 +17,12 @@ namespace Behaviour.UI.General
         // ホバーした際に有効化する対象のリスト
         [SerializeField]
         private List<GameObject> targets = new();
+
+        private void Start()
+        {
+            // 初期状態で対象を無効化する
+            foreach (var target in targets.Where(target => target != null)) target.SetActive(false);
+        }
 
         /// <summary>
         ///     ホバーした際に有効化する対象を有効化する
