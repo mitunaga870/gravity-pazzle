@@ -252,6 +252,50 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: Input
+      value: 
+      objectReference: {fileID: 1367923605}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: settingUIController
+      value: 
+      objectReference: {fileID: 1660361227}
+    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: sceneStateController
+      value: 
+      objectReference: {fileID: 1367923606}
+    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 714736349409271895, guid: 9aa281d9a9a88ea4a832fccde1534e13, type: 3}
       propertyPath: Input
       value: 
@@ -338,50 +382,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4366455013223254044, guid: 9aa281d9a9a88ea4a832fccde1534e13, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: Input
-      value: 
-      objectReference: {fileID: 1367923605}
-    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: settingUIController
-      value: 
-      objectReference: {fileID: 1660361227}
-    - target: {fileID: 6499242755616350451, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: sceneStateController
-      value: 
-      objectReference: {fileID: 1367923606}
-    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7052355452269276463, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8076797359267270946, guid: 78427516f57ec4d4aa8a19959b7e096b, type: 3}
-      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8602276767187868974, guid: 9aa281d9a9a88ea4a832fccde1534e13, type: 3}
@@ -1571,11 +1571,27 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 806529977}
+    - target: {fileID: 3864352394518756587, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6212966778369772071, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
       propertyPath: m_Name
       value: StageSelectUI
       objectReference: {fileID: 0}
     - target: {fileID: 6212966778369772071, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7724659953412076220, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8600938361613805202, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
+      propertyPath: m_fontSize
+      value: 18
+      objectReference: {fileID: 0}
+    - target: {fileID: 8888766144779738234, guid: 4a7232e4f90b13e43992f72d207dee25, type: 3}
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}

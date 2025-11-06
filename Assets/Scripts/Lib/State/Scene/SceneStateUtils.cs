@@ -13,6 +13,7 @@
             {
                 SceneState.InGame => new InGame(),
                 SceneState.Pause => new Pause(),
+                SceneState.Instruction => new Instruction(),
                 _ => null
             };
         }
