@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Behaviour.Camera;
+using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using UnityEngine;
 
@@ -45,6 +46,8 @@ namespace Behaviour.Controller.Stage
             if (playerBehaviours.Length != 1)
                 Debug.LogWarning(
                     $"There should be exactly one PlayerBehaviour in the scene. Found: {playerBehaviours.Length}");
+            // PlayerのGravBehaviourを取得
+            if (PlayerBehaviour != null) PlayerGravBehaviour = PlayerBehaviour.GetComponent<AGravBehaviour>();
 
             // シーン内のPlayerCamを探して設定
             var playerCams = FindObjectsByType<PlayerCam>(FindObjectsSortMode.None);
@@ -52,6 +55,7 @@ namespace Behaviour.Controller.Stage
             if (playerCams.Length != 1)
                 Debug.LogWarning(
                     $"There should be exactly one PlayerCam in the scene. Found: {playerCams.Length}");
+            
         }
 
         #endregion
@@ -68,6 +72,7 @@ namespace Behaviour.Controller.Stage
         public TimeSpan PlayTime { get; set; }
 
         public APlayerBehaviour PlayerBehaviour { get; private set; }
+        public AGravBehaviour PlayerGravBehaviour { get; private set; }
 
         public PlayerCam PlayerCam { get; private set; }
 

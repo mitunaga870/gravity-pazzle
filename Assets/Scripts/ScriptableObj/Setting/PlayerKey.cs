@@ -54,6 +54,10 @@ namespace ScriptableObj.Setting
         [SerializeField]
         private KeyCode changeGravDirectionToBottomKey = KeyCode.LeftControl;
 
+        [Header("カメラ関係")]
+        [SerializeField]
+        private KeyCode cameraResetKey = KeyCode.F;
+
         #endregion
 
         #region accessor
@@ -72,6 +76,8 @@ namespace ScriptableObj.Setting
         public KeyCode ChangeGravDirectionModifierKey => changeGravDirectionModifierKey;
         public KeyCode ChangeGravDirectionToTopKey => changeGravDirectionToTopKey;
         public KeyCode ChangeGravDirectionToBottomKey => changeGravDirectionToBottomKey;
+
+        public KeyCode CameraResetKey => cameraResetKey;
 
         #endregion
     }

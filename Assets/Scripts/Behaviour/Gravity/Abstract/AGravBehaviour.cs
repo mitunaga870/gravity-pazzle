@@ -24,8 +24,10 @@ namespace Behaviour.Gravity.Abstract
         protected UnityEngine.Camera focusCamera;
         
         protected Rigidbody AffectedRigidBody => affectedRigidBody;
-        
-        public GravType GravType => GravAffectionContext.CurrentState.GravType;
+
+        public GravType GravType =>
+            GravAffectionContext == null ? initialGravType : GravAffectionContext.CurrentState.GravType;
+
         public GravType InitialGravType => initialGravType;
         
         protected GravAffectionContext GravAffectionContext;
