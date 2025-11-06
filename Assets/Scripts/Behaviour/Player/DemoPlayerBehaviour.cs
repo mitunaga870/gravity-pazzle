@@ -2,7 +2,6 @@
 
 using Behaviour.Controller.General;
 using Behaviour.Gravity;
-using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Behaviour.UI;
 using Lib.Logic.Gravity;
@@ -38,7 +37,7 @@ namespace Behaviour.Player
         
         private void Start()
         {
-            if (gravBehaviour == null)
+            if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
         }
         
@@ -74,7 +73,7 @@ namespace Behaviour.Player
             // スペースキーでプレイヤーの重力を設定済み方向に変更
             if (inputController.GetKeyDown(KeyCode.Space))
             {
-                var playerVGrav = gravBehaviour as VGravBehaviour;
+                var playerVGrav = GravBehaviour as VGravBehaviour;
                 if (playerVGrav != null)
                 {
                     playerVGrav.SetGravAffected(_targetGravType, false);
@@ -82,7 +81,7 @@ namespace Behaviour.Player
             }
             
             // カメラに位置を通知
-            playerCam.SetPlayerPosAndGrav(transform, gravBehaviour.GravType);
+            playerCam.SetPlayerPosAndGrav(transform, GravBehaviour.GravType);
         }
         
         #endregion
@@ -111,7 +110,7 @@ namespace Behaviour.Player
                 wInput,
                 camTransform.forward,
                 camTransform.right,
-                gravBehaviour.GravType
+                GravBehaviour.GravType
             );            
             // 移動速度を掛けて、時間を掛ける
             moveDirection *= Speed * deltaTime;

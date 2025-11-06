@@ -2,6 +2,8 @@
 
 using System;
 using System.Collections.Generic;
+using Behaviour.Camera;
+using Behaviour.Player.Abstract;
 using UnityEngine;
 
 #endregion
@@ -35,6 +37,21 @@ namespace Behaviour.Controller.Stage
             }
 
             Instance = this;
+
+
+            // シーン内のPlayerBehaviourを探して設定
+            var playerBehaviours = FindObjectsByType<APlayerBehaviour>(FindObjectsSortMode.None);
+            PlayerBehaviour = playerBehaviours.Length != 0 ? playerBehaviours[0] : null;
+            if (playerBehaviours.Length != 1)
+                Debug.LogWarning(
+                    $"There should be exactly one PlayerBehaviour in the scene. Found: {playerBehaviours.Length}");
+
+            // シーン内のPlayerCamを探して設定
+            var playerCams = FindObjectsByType<PlayerCam>(FindObjectsSortMode.None);
+            PlayerCam = playerCams.Length != 0 ? playerCams[0] : null;
+            if (playerCams.Length != 1)
+                Debug.LogWarning(
+                    $"There should be exactly one PlayerCam in the scene. Found: {playerCams.Length}");
         }
 
         #endregion
@@ -49,6 +66,10 @@ namespace Behaviour.Controller.Stage
         #region Public Variables
 
         public TimeSpan PlayTime { get; set; }
+
+        public APlayerBehaviour PlayerBehaviour { get; private set; }
+
+        public PlayerCam PlayerCam { get; private set; }
 
         #endregion
 
