@@ -46,6 +46,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initUserSettings: {fileID: 11400000, guid: 45112392342989a4c99863c53c88cbab, type: 2}
   environmentSetting: {fileID: 0}
+  playerKey: {fileID: 11400000, guid: 568310b2756c9fc47a23753127bfbf65, type: 2}
   audioMixer: {fileID: 24100000, guid: 1a6cc842d2315704c8fc58b9e2500473, type: 2}
 --- !u!1 &8921743764930620165
 GameObject:
