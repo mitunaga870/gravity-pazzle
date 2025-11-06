@@ -33,7 +33,13 @@ namespace ScriptableObj.Setting
         private KeyCode setPlayerGravKey = KeyCode.E;
 
         [SerializeField]
+        private KeyCode unsetPlayerGravKey = KeyCode.Q;
+
+        [SerializeField]
         private MouseButton setObjGravButton = MouseButton.Left;
+
+        [SerializeField]
+        private MouseButton unsetObjGravButton = MouseButton.Middle;
 
         [Header("重力方向変更キー設定")]
         [SerializeField]
@@ -58,7 +64,9 @@ namespace ScriptableObj.Setting
         public KeyCode MoveRightKey => moveRightKey;
 
         public KeyCode SetPlayerGravKey => setPlayerGravKey;
+        public KeyCode UnsetPlayerGravKey => unsetPlayerGravKey;
         public MouseButton SetObjGravButton => setObjGravButton;
+        public MouseButton UnsetObjGravButton => unsetObjGravButton;
 
         public MouseButton ChangeGravDirectionMouseButton => changeGravDirectionMouseButton;
         public KeyCode ChangeGravDirectionModifierKey => changeGravDirectionModifierKey;
