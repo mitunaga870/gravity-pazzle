@@ -889,6 +889,7 @@ MonoBehaviour:
   buttonContainer: {fileID: 8337057408435440649}
   hoverStageNameText: {fileID: 8600938361613805202}
   hoverStageTitleText: {fileID: 5575191767984482834}
+  hoverStageThumbnailImage: {fileID: 4357689359488323376}
 --- !u!1 &6256104390104401015
 GameObject:
   m_ObjectHideFlags: 0
