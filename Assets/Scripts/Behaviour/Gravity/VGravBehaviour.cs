@@ -130,6 +130,33 @@ namespace Behaviour.Gravity
             return true;
         }
 
+        /// <summary>
+        ///     重力影響を解除して通常状態に戻す
+        /// </summary>
+        public virtual bool UnsetGravAffected()
+        {
+            // 自分の操作を取得
+            var manager = GravityOperationManager.Instance;
+            if (!manager) return false;
+
+            // 自分の操作情報を取得
+            var hasOperation = manager.GetOperationInfo(this, out var targetGravType, out _);
+            if (!hasOperation) return false;
+
+            // 影響を解除
+            var success = GravAffectionContext.SetState(
+                new GravAffected(
+                    targetGravType,
+                    AffectedRigidBody,
+                    _isFocusCameraNotNull ? focusCamera!.transform : null
+                ));
+            if (!success) return false;
+
+            // 操作を完了として通知
+            manager.ForceRemoveOperation(this);
+            return true;
+        }
+
         #endregion
     }
 }

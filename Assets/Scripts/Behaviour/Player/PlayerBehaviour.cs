@@ -3,7 +3,6 @@
 using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity;
-using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Behaviour.UI;
 using Lib.DataClass.Settings.GravSelectMethod;
@@ -57,7 +56,8 @@ namespace Behaviour.Player
             base.Update();
 
             // スペースで影響を受けているならフローティングに変換
-            if (input.GetMouseButton((int)playerKey.SetObjGravButton, SceneState.InGame)) SetGrav();
+            SetGrav();
+            UnsetGrav();
 
             // 右クリックでターゲットの方向を変更
             SetGravDirection();
@@ -67,6 +67,13 @@ namespace Behaviour.Player
             {
                 var playerVGrav = gravBehaviour as VGravBehaviour;
                 if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);
+            }
+
+            // 元に戻す
+            if (input.GetKeyDown(playerKey.UnsetPlayerGravKey) && changeableGrav)
+            {
+                var playerVGrav = gravBehaviour as VGravBehaviour;
+                if (playerVGrav != null) playerVGrav.UnsetGravAffected();
             }
 
             // カメラに位置を通知
@@ -111,8 +118,13 @@ namespace Behaviour.Player
 
         #region Private Methods
 
+        /// <summary>
+        ///     カメラの先のオブジェクトに重力影響を与える
+        /// </summary>
         private void SetGrav()
         {
+            if (!input.GetMouseButton((int)playerKey.SetObjGravButton, SceneState.InGame)) return;
+            
             // カメラの先のオブジェクトを取得
             var target = playerCam.GetCameraTarget();
             if (target == null)
@@ -125,6 +137,28 @@ namespace Behaviour.Player
 
             // ターゲット重力方向にセット
             targetGravBehaviour.SetGravAffected(_targetGravType);
+        }
+
+        /// <summary>
+        ///     カメラの先のオブジェクトの重力影響を解除する
+        /// </summary>
+        private void UnsetGrav()
+        {
+            if (!input.GetMouseButton((int)playerKey.UnsetObjGravButton, SceneState.InGame))
+                return;
+
+            // カメラの先のオブジェクトを取得
+            var target = playerCam.GetCameraTarget();
+            if (target == null)
+                return;
+
+            // クリックしたオブジェクトの可変重力コンポーネントを取得
+            var targetGravBehaviour = target.GetComponent<VGravBehaviour>();
+            if (targetGravBehaviour == null)
+                return;
+
+            // ターゲット重力方向にセット
+            targetGravBehaviour.UnsetGravAffected();
         }
 
         private void SetGravDirection()
