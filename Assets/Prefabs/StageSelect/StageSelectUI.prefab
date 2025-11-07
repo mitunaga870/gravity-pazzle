@@ -889,6 +889,7 @@ MonoBehaviour:
   buttonContainer: {fileID: 8337057408435440649}
   hoverStageNameText: {fileID: 8600938361613805202}
   hoverStageTitleText: {fileID: 5575191767984482834}
+  hoverStageThumbnailImage: {fileID: 4357689359488323376}
 --- !u!1 &6256104390104401015
 GameObject:
   m_ObjectHideFlags: 0
@@ -1046,9 +1047,9 @@ MonoBehaviour:
   m_fontSize: 32
   m_fontSizeBase: 32
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 32
   m_fontStyle: 0
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512

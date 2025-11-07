@@ -3,6 +3,7 @@
 using Behaviour.Controller.General.DontDestoroy;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 #endregion
 
@@ -27,6 +28,9 @@ namespace Behaviour.UI.StageSelect
         [SerializeField]
         private TMP_Text hoverStageTitleText; // ホバー中のステージ説明を表示
 
+        [SerializeField]
+        private Image hoverStageThumbnailImage; // ホバー中のステージサムネイル画像
+
         #endregion
 
 
@@ -41,7 +45,8 @@ namespace Behaviour.UI.StageSelect
                 var stage = stages[i];
 
                 var stageSelectButton = Instantiate(stageSelectButtonPrefab, buttonContainer);
-                stageSelectButton.Initialize(stage, i + 1, hoverStageNameText, hoverStageTitleText);
+                stageSelectButton.Initialize(stage, i + 1, hoverStageNameText, hoverStageTitleText,
+                    hoverStageThumbnailImage);
             }
         }
     }

@@ -76,7 +76,7 @@ namespace Lib.State.GravAffection
                 // axisがゼロベクトルの場合は１８０度回転
                 if (axis == Vector3.zero)
                 {
-                    axis = _focusCameraTransform.right; // 適当な軸
+                    axis = GravUtils.GetGravPerpendicularUnit(prev.GravType); // 適当な軸
                     angle = 180f;
                 }
 

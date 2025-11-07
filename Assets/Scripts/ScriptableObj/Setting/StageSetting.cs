@@ -30,5 +30,11 @@ namespace ScriptableObj.Setting
         private SceneObj stageScene;
 
         public SceneObj StageScene => stageScene;
+
+        [Header("ステージサムネ")]
+        [SerializeField]
+        private Sprite stageThumbnail;
+
+        public Sprite StageThumbnail => stageThumbnail;
     }
 }

@@ -7,6 +7,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 #endregion
 
@@ -25,6 +26,8 @@ namespace Behaviour.UI.StageSelect
 
         [SerializeField]
         private TMP_Text stageTitle;
+
+        private Image stageThumbnail;
 
         // エフェクト関連
         private UIEffect _uiEffect;
@@ -71,6 +74,10 @@ namespace Behaviour.UI.StageSelect
             // ホバー時のエフェクトを有効化
             _uiEffect.enabled = true;
 
+            // サムネイル画像を設定
+            stageThumbnail.sprite = _stage.StageThumbnail;
+            stageThumbnail.gameObject.SetActive(true);
+
             // ホバー中のステージ名・説明文を表示
             _hoverStageNameText.text = _stage.DisplayName;
             _hoverStageTitleText.text = $"ステージ {_stageNumber}";
@@ -83,6 +90,9 @@ namespace Behaviour.UI.StageSelect
         {
             // ホバー時のエフェクトを無効化
             _uiEffect.enabled = false;
+
+            // サムネイル画像をクリア
+            stageThumbnail.gameObject.SetActive(false);
 
             // ホバー中のステージ名・説明文をクリア
             _hoverStageNameText.text = string.Empty;
@@ -112,7 +122,8 @@ namespace Behaviour.UI.StageSelect
             StageSetting stage,
             int stageNumber,
             TMP_Text hoverStageNameText,
-            TMP_Text hoverStageTitleText
+            TMP_Text hoverStageTitleText,
+            Image thumbnailImage
         )
         {
             stageId.text = $"STG {stageNumber}";
@@ -121,6 +132,7 @@ namespace Behaviour.UI.StageSelect
             _stageNumber = stageNumber;
             _hoverStageNameText = hoverStageNameText;
             _hoverStageTitleText = hoverStageTitleText;
+            stageThumbnail = thumbnailImage;
         }
 
         /// <summary>

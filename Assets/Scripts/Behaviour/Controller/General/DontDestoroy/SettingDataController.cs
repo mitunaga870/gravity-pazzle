@@ -52,6 +52,8 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         public EnvironmentSetting EnvironmentSetting => environmentSetting;
 
+        public PlayerKey PlayerKey => playerKey;
+
         private string SaveFilePath => Application.persistentDataPath + "/Settings";
         private string UserSettingsFilePath => SaveFilePath + "/UserSettings.json";
 
@@ -64,6 +66,9 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         [SerializeField]
         private EnvironmentSetting environmentSetting;
+
+        [SerializeField]
+        private PlayerKey playerKey;
 
         [SerializeField]
         private AudioMixer audioMixer;

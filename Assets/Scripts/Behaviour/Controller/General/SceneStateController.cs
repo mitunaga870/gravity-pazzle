@@ -22,7 +22,7 @@ namespace Behaviour.Controller.General
 
         #region Unity Methods
 
-        private void Start()
+        private void Awake()
         {
             // コンテキストの初期化
             Context = new SceneStateContext(
@@ -40,6 +40,8 @@ namespace Behaviour.Controller.General
         /// <param name="forceChange">強制的に変更するかどうか</param>
         public void ChangeSceneState(SceneState next, bool forceChange = false)
         {
+            Context ??= new SceneStateContext(
+                SceneStateUtils.GenerateState(initialState));
             // 状態を変更する
             Context.Change(SceneStateUtils.GenerateState(next), forceChange);
         }

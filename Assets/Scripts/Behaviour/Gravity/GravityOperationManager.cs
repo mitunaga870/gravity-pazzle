@@ -1,7 +1,11 @@
+#region
+
 using System;
 using System.Collections.Generic;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
+
+#endregion
 
 namespace Behaviour.Gravity
 {
@@ -243,6 +247,30 @@ namespace Behaviour.Gravity
                         _sharedRemainingTime = 0f; // 最後の操作が戻ったのでカウントをリセット
                 }
             }
+        }
+
+        /// <summary>
+        ///     指定されたVGravBehaviourに対する操作情報を取得する。
+        ///     見つかった場合は true を返し、元の重力タイプと要求された重力タイプを out パラメーターで返す。
+        /// </summary>
+        public bool GetOperationInfo(
+            VGravBehaviour behaviour,
+            out GravType originalType,
+            out GravType requestedType
+        )
+        {
+            // 指定された挙動に対する操作情報を取得する
+            if (_operations.TryGetValue(behaviour, out var operation))
+            {
+                originalType = operation.OriginalGravType;
+                requestedType = operation.RequestedGravType;
+                return true;
+            }
+
+            // 見つからなかった場合
+            originalType = default;
+            requestedType = default;
+            return false;
         }
 
         /// <summary>

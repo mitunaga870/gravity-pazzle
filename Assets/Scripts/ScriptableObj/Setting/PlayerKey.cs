@@ -33,7 +33,13 @@ namespace ScriptableObj.Setting
         private KeyCode setPlayerGravKey = KeyCode.E;
 
         [SerializeField]
+        private KeyCode unsetPlayerGravKey = KeyCode.Q;
+
+        [SerializeField]
         private MouseButton setObjGravButton = MouseButton.Left;
+
+        [SerializeField]
+        private MouseButton unsetObjGravButton = MouseButton.Middle;
 
         [Header("重力方向変更キー設定")]
         [SerializeField]
@@ -48,6 +54,10 @@ namespace ScriptableObj.Setting
         [SerializeField]
         private KeyCode changeGravDirectionToBottomKey = KeyCode.LeftControl;
 
+        [Header("カメラ関係")]
+        [SerializeField]
+        private KeyCode cameraResetKey = KeyCode.F;
+
         #endregion
 
         #region accessor
@@ -58,12 +68,16 @@ namespace ScriptableObj.Setting
         public KeyCode MoveRightKey => moveRightKey;
 
         public KeyCode SetPlayerGravKey => setPlayerGravKey;
+        public KeyCode UnsetPlayerGravKey => unsetPlayerGravKey;
         public MouseButton SetObjGravButton => setObjGravButton;
+        public MouseButton UnsetObjGravButton => unsetObjGravButton;
 
         public MouseButton ChangeGravDirectionMouseButton => changeGravDirectionMouseButton;
         public KeyCode ChangeGravDirectionModifierKey => changeGravDirectionModifierKey;
         public KeyCode ChangeGravDirectionToTopKey => changeGravDirectionToTopKey;
         public KeyCode ChangeGravDirectionToBottomKey => changeGravDirectionToBottomKey;
+
+        public KeyCode CameraResetKey => cameraResetKey;
 
         #endregion
     }
