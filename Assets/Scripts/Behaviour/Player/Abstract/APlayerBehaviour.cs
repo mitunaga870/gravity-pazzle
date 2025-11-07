@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using Behaviour.Camera;
 using Behaviour.Controller.General;
 using Behaviour.Controller.Stage;
@@ -27,6 +28,7 @@ namespace Behaviour.Player.Abstract
         private Animator playerAnimator;
         
         [SerializeField]
+        [Obsolete("カメラはStageDataControllerから取得するようになりました。")]
         protected PlayerCam playerCam;
 
         [FormerlySerializedAs("Input")]
@@ -49,7 +51,11 @@ namespace Behaviour.Player.Abstract
 
         #region Protected Fields
 
-        protected AGravBehaviour gravBehaviour { get; private set; }
+        protected AGravBehaviour GravBehaviour { get; private set; }
+
+        protected bool HasCam { get; private set; }
+        protected PlayerCam PlayerCam { get; private set; }
+        
 
         #endregion
 
@@ -62,15 +68,17 @@ namespace Behaviour.Player.Abstract
                 Debug.LogError("Player Rigidbody is not assigned.");
             if (playerAnimator == null)
                 Debug.LogError("Player Animator is not assigned.");
-            if (playerCam == null)
-                Debug.LogError("Player Camera is not assigned.");
             if (input == null)
                 Debug.LogError("InputController is not assigned.");
 
             // 重力挙動コンポーネントを取得
-            gravBehaviour = GetComponent<AGravBehaviour>();
-            if (gravBehaviour == null)
+            GravBehaviour = GetComponent<AGravBehaviour>();
+            if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour component is not attached to the player.");
+
+            // カメラを取得
+            PlayerCam = StageDataController.Instance.PlayerCam;
+            HasCam = PlayerCam != null;
 
             // ステージ設定にインスタンスIDを登録
             StageDataController.Instance.PlayerRigidbody = playerRigidBody;
@@ -79,7 +87,7 @@ namespace Behaviour.Player.Abstract
         protected void Update()
         {
             // 重力適応中は移動しない
-            if (gravBehaviour.IsGravAdapting)
+            if (GravBehaviour.IsGravAdapting)
                 return;
             
             // プレイヤーの移動

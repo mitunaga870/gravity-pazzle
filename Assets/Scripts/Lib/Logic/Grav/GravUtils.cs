@@ -177,5 +177,22 @@ namespace Lib.Logic.Gravity
             var angle = Vector3.Angle(prevDir, nextDir);
             return (axis, angle);
         }
+
+        /// <summary>
+        ///     Euler角度の重力軸周りの角度だけ取得する
+        /// </summary>
+        public static float GetGravAxisEulerAngle(GravType gravType, Vector3 eulerAngles)
+        {
+            return gravType switch
+            {
+                GravType.YNegative => eulerAngles.y,
+                GravType.YPositive => eulerAngles.y * -1,
+                GravType.XNegative => eulerAngles.x,
+                GravType.XPositive => eulerAngles.x * -1,
+                GravType.ZNegative => eulerAngles.z,
+                GravType.ZPositive => eulerAngles.z * -1,
+                _ => 0f
+            };
+        }
     }
 }
