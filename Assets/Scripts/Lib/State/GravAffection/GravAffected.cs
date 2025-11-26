@@ -40,6 +40,7 @@ namespace Lib.State.GravAffection
 
         // 脱出処理の最大時間
         private const float ExitMaxDuration = 1.0f;
+        
         private float _accelerationMultiplier;
         private const float AccelerationDuration = 1f;
 
