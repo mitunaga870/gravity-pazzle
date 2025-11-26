@@ -35,6 +35,9 @@ namespace Lib.State.GravAffection
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
 
+        // 抗力倍率
+        private const float ExitDampingMultiplier = 3.0f;
+        
         // 停止判定用の速度閾値
         private const float ExitStopThresholdSqr = 5;
 
@@ -114,12 +117,11 @@ namespace Lib.State.GravAffection
             // 徐々に速度をゼロにする
             while (_affectedBody.linearVelocity.sqrMagnitude > ExitStopThresholdSqr)
             {
-                _affectedBody.linearVelocity = Vector3.Lerp(
-                    _affectedBody.linearVelocity,
-                    Vector3.zero,
-                    0.1f);
+                // 抗力を賭ける
+                var damping = -_affectedBody.linearVelocity * (_affectedBody.mass * ExitDampingMultiplier) - _gravity;
+                _affectedBody.AddForce(damping, ForceMode.Acceleration);
 
-                await Task.Yield();
+                await Task.Delay(10);
 
                 // 最大時間を超えたら強制終了
                 if (Time.time - exitStartTime > ExitMaxDuration)

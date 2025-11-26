@@ -45,7 +45,7 @@ namespace Behaviour.Gravity
         /// <summary>
         ///     無重力状態にする
         /// </summary>
-        public async void SetGravFloating()
+        public async Task SetGravFloating()
         {
             var success = await GravAffectionContext.SetState(
                 new GravFloating(

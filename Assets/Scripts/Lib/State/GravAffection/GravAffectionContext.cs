@@ -38,14 +38,14 @@ namespace Lib.State.GravAffection
                 return false;
 
             // 前の状態を終了
-            await CurrentState?.OnExit()!;
+            await CurrentState.OnExit()!;
             
             //　状態更新
             _prevState = CurrentState;
             CurrentState = next;
 
             // 新しい状態を開始
-            CurrentState?.OnEnter(_prevState);
+            CurrentState.OnEnter(_prevState);
             
             return true;
         }
