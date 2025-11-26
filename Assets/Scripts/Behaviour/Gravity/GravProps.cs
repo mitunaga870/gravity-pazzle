@@ -1,6 +1,7 @@
 ﻿#region
 
 using System.Collections;
+using System.Threading.Tasks;
 using Lib.Logic;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
@@ -37,14 +38,14 @@ namespace Behaviour.Gravity.Abstract
         /// <param name="registerOperation">操作制限マネージャーに登録するかどうか</param>
         /// <param name="affectProps">他の重力影響を受けるオブジェクトにも影響を与えるかどうか</param>
         // ReSharper disable OptionalParameterHierarchyMismatch
-        public override bool SetGravAffected(
+        public override async Task<bool> SetGravAffected(
             GravType gravType,
             bool forceChange = false,
             bool registerOperation = false,
             bool affectProps = false
         )
         {
-            var success = base.SetGravAffected(gravType, true, false, false);
+            var success = await base.SetGravAffected(gravType, true, false, false);
 
             if (!success) return false;
 
