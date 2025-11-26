@@ -16,7 +16,7 @@ namespace Lib.State.GravAffection
         bool Change(IGravAffectionState next, bool forceChange = false);
         
         void OnEnter(IGravAffectionState prev = null);
-        Task OnExit();
+        Task OnExit(); // 非同期なのでキャンセル処理が必要になるかも
         void OnFixedUpdate();
     }
 
