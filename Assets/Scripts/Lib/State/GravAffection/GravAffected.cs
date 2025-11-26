@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
@@ -34,6 +35,15 @@ namespace Lib.State.GravAffection
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
 
+        // 抗力倍率
+        private const float ExitDampingMultiplier = 3.0f;
+        
+        // 停止判定用の速度閾値
+        private const float ExitStopThresholdSqr = 5;
+
+        // 脱出処理の最大時間
+        private const float ExitMaxDuration = 1.0f;
+        
         private float _accelerationMultiplier;
         private const float AccelerationDuration = 1f;
 
@@ -100,8 +110,23 @@ namespace Lib.State.GravAffection
             _accelerationMultiplier = 0f;
         }
 
-        public void OnExit()
+        public async Task OnExit()
         {
+            var exitStartTime = Time.time;
+
+            // 徐々に速度をゼロにする
+            while (_affectedBody.linearVelocity.sqrMagnitude > ExitStopThresholdSqr)
+            {
+                // 抗力を賭ける
+                var damping = -_affectedBody.linearVelocity * (_affectedBody.mass * ExitDampingMultiplier) - _gravity;
+                _affectedBody.AddForce(damping, ForceMode.Acceleration);
+
+                await Task.Delay(10);
+
+                // 最大時間を超えたら強制終了
+                if (Time.time - exitStartTime > ExitMaxDuration)
+                    break;
+            }
         }
 
         public void OnFixedUpdate()

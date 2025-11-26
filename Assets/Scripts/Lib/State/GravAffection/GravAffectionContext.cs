@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading.Tasks;
 using UnityEngine;
 
 #endregion
@@ -31,19 +32,20 @@ namespace Lib.State.GravAffection
         /// </summary>
         /// <param name="next"></param>
         /// <returns> できたかどうかをboolで </returns>
-        public bool SetState(IGravAffectionState next, bool forceChange = false)
+        public async Task<bool> SetState(IGravAffectionState next, bool forceChange = false)
         {
             if (!CurrentState.Change(next, forceChange))
                 return false;
+
+            // 前の状態を終了
+            await CurrentState.OnExit()!;
             
             //　状態更新
             _prevState = CurrentState;
             CurrentState = next;
-            
-            // 前の状態を終了
-            _prevState?.OnExit();
+
             // 新しい状態を開始
-            CurrentState?.OnEnter(_prevState);
+            CurrentState.OnEnter(_prevState);
             
             return true;
         }
