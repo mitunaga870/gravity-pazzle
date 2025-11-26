@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading.Tasks;
 using Behaviour.Gravity.Abstract;
 using Lib.State.GravAffection;
 using Lib.State.Interface.Gravity;
@@ -44,17 +45,17 @@ namespace Behaviour.Gravity
         /// <summary>
         ///     無重力状態にする
         /// </summary>
-        public void SetGravFloating()
+        public async void SetGravFloating()
         {
-            if (
-                !GravAffectionContext.
-                    SetState(
-                        new GravFloating(
-                            GravType, 
-                            AffectedRigidBody,
-                            transform,
-                            _isFocusCameraNotNull ? focusCamera!.transform : null
-            )))
+            var success = await GravAffectionContext.SetState(
+                new GravFloating(
+                    GravType,
+                    AffectedRigidBody,
+                    transform,
+                    _isFocusCameraNotNull ? focusCamera!.transform : null
+                ));
+
+            if (!success)
                 Debug.LogError("Failed to set GravFloating state.");
         }
 
@@ -65,7 +66,7 @@ namespace Behaviour.Gravity
         /// <param name="forceChange">速度があるときに強制的に変更するかどうか</param>
         /// <param name="registerOperation">操作制限マネージャーに登録するかどうか（リセット・ギミック等は false を指定）</param>
         /// <param name="affectProps">他の重力影響を受けるオブジェクトにも影響を与えるかどうか</param>
-        public virtual bool SetGravAffected(
+        public virtual async Task<bool> SetGravAffected(
             GravType gravType,
             bool forceChange = false,
             bool registerOperation = true,
@@ -86,7 +87,7 @@ namespace Behaviour.Gravity
                 }
             }
 
-            var success = GravAffectionContext.SetState(
+            var success = await GravAffectionContext.SetState(
                 new GravAffected(
                     gravType,
                     AffectedRigidBody,
@@ -133,7 +134,7 @@ namespace Behaviour.Gravity
         /// <summary>
         ///     重力影響を解除して通常状態に戻す
         /// </summary>
-        public virtual bool UnsetGravAffected()
+        public virtual async Task<bool> UnsetGravAffected()
         {
             // 自分の操作を取得
             var manager = GravityOperationManager.Instance;
@@ -144,7 +145,7 @@ namespace Behaviour.Gravity
             if (!hasOperation) return false;
 
             // 影響を解除
-            var success = GravAffectionContext.SetState(
+            var success = await GravAffectionContext.SetState(
                 new GravAffected(
                     targetGravType,
                     AffectedRigidBody,

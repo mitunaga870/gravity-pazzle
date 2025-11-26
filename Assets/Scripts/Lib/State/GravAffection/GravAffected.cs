@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
@@ -34,6 +35,11 @@ namespace Lib.State.GravAffection
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
 
+        // 停止判定用の速度閾値
+        private const float ExitStopThresholdSqr = 5;
+
+        // 脱出処理の最大時間
+        private const float ExitMaxDuration = 1.0f;
 
         #region IGravAffectionState
         public GravAffectionState GetCurrentState => GravAffectionState.Affected;
@@ -50,7 +56,7 @@ namespace Lib.State.GravAffection
         {
             // 速度がゼロでない場合は変更不可
             if (_affectedBody == null &&
-                (_affectedBody.velocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
+                (_affectedBody.linearVelocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
                )
                 return false;
 
@@ -101,8 +107,24 @@ namespace Lib.State.GravAffection
             }
         }
 
-        public void OnExit()
+        public async Task OnExit()
         {
+            var exitStartTime = Time.time;
+
+            // 徐々に速度をゼロにする
+            while (_affectedBody.linearVelocity.sqrMagnitude > ExitStopThresholdSqr)
+            {
+                _affectedBody.linearVelocity = Vector3.Lerp(
+                    _affectedBody.linearVelocity,
+                    Vector3.zero,
+                    0.1f);
+
+                await Task.Yield();
+
+                // 最大時間を超えたら強制終了
+                if (Time.time - exitStartTime > ExitMaxDuration)
+                    break;
+            }
         }
 
         public void OnFixedUpdate()

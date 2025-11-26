@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
@@ -62,9 +63,9 @@ namespace Lib.State.GravAffection
                 });
         }
 
-        public void OnExit()
+        public Task OnExit()
         {
-            
+            return Task.CompletedTask;
         }
 
         public void OnFixedUpdate()
