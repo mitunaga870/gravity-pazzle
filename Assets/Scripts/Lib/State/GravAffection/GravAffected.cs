@@ -40,6 +40,8 @@ namespace Lib.State.GravAffection
 
         // 脱出処理の最大時間
         private const float ExitMaxDuration = 1.0f;
+        private float _accelerationMultiplier;
+        private const float AccelerationDuration = 1f;
 
         #region IGravAffectionState
         public GravAffectionState GetCurrentState => GravAffectionState.Affected;
@@ -54,12 +56,6 @@ namespace Lib.State.GravAffection
         [Obsolete("Obsolete")]
         public bool Change(IGravAffectionState next, bool forceChange = false) 
         {
-            // 速度がゼロでない場合は変更不可
-            if (_affectedBody == null &&
-                (_affectedBody.linearVelocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
-               )
-                return false;
-
             // 適応中は変更不可
             if (Adapting && !forceChange)
                 return false;
@@ -105,6 +101,9 @@ namespace Lib.State.GravAffection
                             diff);
                     });
             }
+
+            // 速度係数初期化
+            _accelerationMultiplier = 0f;
         }
 
         public async Task OnExit()
@@ -131,9 +130,13 @@ namespace Lib.State.GravAffection
         {
             if (_affectedBody == null)
                 return;
+
+            // 徐々に加速度を増加させる
+            _accelerationMultiplier =
+                Mathf.Min(_accelerationMultiplier + Time.fixedDeltaTime / AccelerationDuration, 1f);
             
             // 重力の影響を受ける
-            _affectedBody.AddForce(_gravity, ForceMode.Acceleration);
+            _affectedBody.AddForce(_gravity * _accelerationMultiplier, ForceMode.Acceleration);
         }
         #endregion
     }
