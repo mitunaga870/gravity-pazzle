@@ -64,6 +64,9 @@ namespace Behaviour.Controller.Stage
 
         private readonly List<int> _nonReactiveBodyIds = new();
         private Rigidbody _playerRigidbody;
+        
+        private readonly HashSet<string> _allCoinIds = new();
+        private readonly HashSet<string> _collectedCoinIds = new();
 
         #endregion
 
@@ -102,6 +105,58 @@ namespace Behaviour.Controller.Stage
                 else
                     Debug.LogWarning("PlayerRigidbody has already been set and cannot be changed.");
             }
+        }
+
+        #endregion
+
+        #region Coin Management
+
+        /// <summary>
+        ///     コインを登録する
+        /// </summary>
+        /// <param name="coinId">コインの識別子</param>
+        public void RegisterCoin(string coinId)
+        {
+            _allCoinIds.Add(coinId);
+        }
+
+        /// <summary>
+        ///     コインを取得する
+        /// </summary>
+        /// <param name="coinId">コインの識別子</param>
+        public void CollectCoin(string coinId)
+        {
+            _collectedCoinIds.Add(coinId);
+        }
+
+        /// <summary>
+        ///     配置されたコインの総数を取得
+        /// </summary>
+        public int TotalCoinCount => _allCoinIds.Count;
+
+        /// <summary>
+        ///     取得したコインの数を取得
+        /// </summary>
+        public int CollectedCoinCount => _collectedCoinIds.Count;
+
+        /// <summary>
+        ///     配置されたすべてのコインの識別子を取得
+        /// </summary>
+        public IReadOnlyCollection<string> AllCoinIds => _allCoinIds;
+
+        /// <summary>
+        ///     取得したコインの識別子を取得
+        /// </summary>
+        public IReadOnlyCollection<string> CollectedCoinIds => _collectedCoinIds;
+
+        /// <summary>
+        ///     特定のコインが取得済みかどうかを確認
+        /// </summary>
+        /// <param name="coinId">コインの識別子</param>
+        /// <returns>取得済みの場合true</returns>
+        public bool IsCoinCollected(string coinId)
+        {
+            return _collectedCoinIds.Contains(coinId);
         }
 
         #endregion
