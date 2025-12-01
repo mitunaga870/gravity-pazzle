@@ -23,9 +23,19 @@ namespace Behaviour.Trigger
             // IDが設定されていない場合は、GameObjectのInstanceIDを使用
             if (string.IsNullOrEmpty(coinId))
                 coinId = gameObject.GetInstanceID().ToString();
+        }
 
-            // StageDataControllerにコインを登録
-            StageDataController.Instance.RegisterCoin(coinId);
+        private void Start()
+        {
+            // StageDataControllerにコインを登録（Startで実行することでStageDataControllerの初期化を保証）
+            if (StageDataController.Instance != null)
+            {
+                StageDataController.Instance.RegisterCoin(coinId);
+            }
+            else
+            {
+                Debug.LogError($"[CoinTrigger] コイン'{coinId}'をGameObject'{gameObject.name}'に登録しようとしましたが、StageDataController.Instanceがnullです。CoinTrigger.Awake()の前にStageDataControllerが初期化されていることを確認してください。");
+            }
         }
 
         private void OnTriggerEnter(Collider other)
