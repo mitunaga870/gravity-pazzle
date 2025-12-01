@@ -117,7 +117,11 @@ namespace Behaviour.Controller.Stage
         /// <param name="coinId">コインの識別子</param>
         public void RegisterCoin(string coinId)
         {
-            _allCoinIds.Add(coinId);
+            // コインIDをセットに追加（重複登録を防止）
+            if (!_allCoinIds.Add(coinId))// すでに存在する場合は警告を表示
+            {
+                Debug.LogWarning($"重複したコインIDの登録が試みられました: {coinId}");
+            }
         }
 
         /// <summary>
