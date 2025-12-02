@@ -5,6 +5,7 @@
     "com.atteneder.gltfast": "https://github.com/atteneder/glTFast.git",
     "com.coffee.ui-effect": "https://github.com/mob-sakai/UIEffect.git?path=Packages/src",
     "com.cqf.urpvolumetricfog": "https://github.com/CristianQiu/Unity-URP-Volumetric-Light.git",
+    "com.github-glitchenzo.nugetforunity": "https://github.com/GlitchEnzo/NuGetForUnity.git?path=/src/NuGetForUnity",
     "com.unity.2d.sprite": "1.0.0",
     "com.unity.collab-proxy": "2.10.0",
     "com.unity.feature.development": "1.0.2",
