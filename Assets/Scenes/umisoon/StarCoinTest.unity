@@ -11523,7 +11523,7 @@ PrefabInstance:
     - target: {fileID: 3991428738184483255, guid: 41a0610e0710d2c4cb9eb841fc21d718, type: 3}
       propertyPath: environmentSetting
       value: 
-      objectReference: {fileID: 11400000, guid: bf9fa30117003b34ab7a2951fbb99ece, type: 2}
+      objectReference: {fileID: 11400000, guid: 57932155448c94849a7f6b44733ca309, type: 2}
     - target: {fileID: 6622260937521676836, guid: 41a0610e0710d2c4cb9eb841fc21d718, type: 3}
       propertyPath: m_LocalPosition.x
       value: -7.380736
@@ -11588,7 +11588,7 @@ PrefabInstance:
     - target: {fileID: 2347672672649573966, guid: 734fb1079d4ccb64b8ef61d0012d84f8, type: 3}
       propertyPath: stageData
       value: 
-      objectReference: {fileID: 11400000, guid: 584d42e6b3e958e48af49441e95815ba, type: 2}
+      objectReference: {fileID: 11400000, guid: 2519de89f73af6c4d88bd9915b08c041, type: 2}
     - target: {fileID: 8551918628968382709, guid: 734fb1079d4ccb64b8ef61d0012d84f8, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.973172
