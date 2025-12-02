@@ -17,6 +17,8 @@ namespace Lib.Logic.General
     {
         private static string BaseSavePath => Application.persistentDataPath;
 
+        #region Save
+
         /// <summary>
         ///     セーブデータを保存する
         /// </summary>
@@ -42,6 +44,10 @@ namespace Lib.Logic.General
 
             File.WriteAllText(savePath, data);
         }
+
+        #endregion
+
+        #region Load
 
         /// <summary>
         ///     セーブデータを読み込む
@@ -108,6 +114,52 @@ namespace Lib.Logic.General
             }
         }
 
+        #endregion
+
+
+        #region Delete
+
+        /// <summary>
+        ///     セーブデータを削除する
+        /// </summary>
+        public static void DeleteData(SaveDataType type)
+        {
+            var savePath = GetSavePath(type);
+
+            if (File.Exists(savePath))
+            {
+                File.Delete(savePath);
+                Debug.Log($"Deleted save data at {savePath}");
+            }
+            else
+            {
+                Debug.LogWarning($"No save data found to delete at {savePath}");
+            }
+        }
+
+        /// <summary>
+        ///     プレイデータを全て削除する
+        /// </summary>
+        public static void DeleteAllPlayData()
+        {
+            var directoryPath = BaseSavePath;
+
+            if (Directory.Exists(directoryPath))
+                // Settingsフォルダを除外して削除
+                foreach (var dir in Directory.GetDirectories(directoryPath))
+                {
+                    if (Path.GetFileName(dir) == "Settings") continue;
+
+                    Directory.Delete(dir, true);
+                    Debug.Log($"Deleted play data directory at {dir}");
+                }
+            else
+                Debug.LogWarning($"No play data directory found to delete at {directoryPath}");
+        }
+
+        #endregion
+
+        #region Utils
         /// <summary>
         ///     SaveDataTypeに対応するファイル、ディレクトリのパスを取得する
         /// </summary>
@@ -117,7 +169,7 @@ namespace Lib.Logic.General
 
             var fileName = type switch
             {
-                SaveDataType.UserSettings => "UserSettings.json",
+                SaveDataType.UserSettings => "Settings/UserSettings.json",
                 SaveDataType.PlayerData => "PlayerData.json",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
@@ -148,6 +200,8 @@ namespace Lib.Logic.General
 
             return Path.Combine(directoryPath, fileName);
         }
+
+        #endregion
     }
 
     /// <summary>

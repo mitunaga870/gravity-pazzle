@@ -214,6 +214,14 @@ namespace Behaviour.Controller.General.DontDestoroy
             audioMixer.SetFloat("SeVolume", seVolume);
         }
 
+        /// <summary>
+        ///     全てのデータを再読み込みする
+        /// </summary>
+        public void ReloadAllData()
+        {
+            LoadSettings();
+        }
+
         #endregion
     }
 }
