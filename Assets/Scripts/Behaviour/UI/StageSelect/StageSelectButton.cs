@@ -39,7 +39,7 @@ namespace Behaviour.UI.StageSelect
         private TMP_Text _hoverStageTitleText;
 
         // 渡された情報
-        private StageSetting _stage;
+        private StageData _stage;
         private int _stageNumber;
 
         private void Awake()
@@ -119,7 +119,7 @@ namespace Behaviour.UI.StageSelect
         ///     stageを指定してステージセレクトボタンを初期化する
         /// </summary>
         public void Initialize(
-            StageSetting stage,
+            StageData stage,
             int stageNumber,
             TMP_Text hoverStageNameText,
             TMP_Text hoverStageTitleText,

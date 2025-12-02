@@ -35,7 +35,35 @@ namespace Lib.Logic.General
         public static bool LoadData<T>(SaveDataType type, out T data) where T : SavableData
         {
             var savePath = GetSavePath(type);
-            if (!File.Exists(savePath))
+
+            return LoadExe(savePath, out data);
+        }
+
+
+        /// <summary>
+        ///     ステージ固有のセーブデータを読み込む
+        ///     ファイルが存在しない場合はfalseを返す
+        /// </summary>
+        /// <param name="stageId"></param>
+        /// <param name="type"></param>
+        /// <param name="data"></param>
+        public static bool LoadStageData<T>(string stageId, StageSaveDataType type, out T data) where T : SavableData
+        {
+            var savePath = GetStageSavePath(stageId, type);
+
+            return LoadExe(savePath, out data);
+        }
+
+        /// <summary>
+        ///     ロードの実体処理
+        /// </summary>
+        /// <param name="path"></param>
+        /// <param name="data"></param>
+        /// <typeparam name="T"></typeparam>
+        /// <returns></returns>
+        private static bool LoadExe<T>(string path, out T data) where T : SavableData
+        {
+            if (!File.Exists(path))
             {
                 data = null;
                 return false;
@@ -48,14 +76,14 @@ namespace Lib.Logic.General
                     TypeNameHandling = TypeNameHandling.Objects
                 };
 
-                var json = File.ReadAllText(savePath);
+                var json = File.ReadAllText(path);
                 data = JsonConvert.DeserializeObject<T>(json, deserializerSettings);
 
                 return true;
             }
             catch (Exception e)
             {
-                Debug.LogError($"Failed to load save data from {savePath}: {e.Message}");
+                Debug.LogError($"Failed to load save data from {path}: {e.Message}");
                 data = null;
                 return false;
             }
@@ -67,21 +95,32 @@ namespace Lib.Logic.General
         private static string GetSavePath(SaveDataType type)
         {
             var directoryPath = BaseSavePath;
-            string fileName;
 
-            switch (type)
+            var fileName = type switch
             {
-                case SaveDataType.UserSettings:
-                    directoryPath += "/Settings";
-                    fileName = "UserSettings.json";
-                    break;
-                case SaveDataType.StarCoinCollection:
-                    directoryPath += "/Save/StarCoins";
-                    fileName = "StarCoinCollection.json";
-                    break;
-                default:
-                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
-            }
+                SaveDataType.UserSettings => "UserSettings.json",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+
+            // ディレクトリが存在しない場合は作成する
+            if (!Directory.Exists(directoryPath))
+                Directory.CreateDirectory(directoryPath);
+
+            return Path.Combine(directoryPath, fileName);
+        }
+
+        /// <summary>
+        ///     StageSaveDataTypeに対応するファイル、ディレクトリのパスを取得する
+        /// </summary>
+        private static string GetStageSavePath(string stageId, StageSaveDataType type)
+        {
+            var directoryPath = BaseSavePath + "/Stages/" + stageId;
+
+            var fileName = type switch
+            {
+                StageSaveDataType.CoinData => "CoinData.json",
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
 
             // ディレクトリが存在しない場合は作成する
             if (!Directory.Exists(directoryPath))
@@ -97,6 +136,13 @@ namespace Lib.Logic.General
     public enum SaveDataType
     {
         UserSettings,
-        StarCoinCollection
+    }
+
+    /// <summary>
+    ///     ステージ固有のセーブデータの種類を表す列挙型
+    /// </summary>
+    public enum StageSaveDataType
+    {
+        CoinData
     }
 }

@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using Behaviour.Camera;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
+using Lib.DataClass.PlayData;
+using ScriptableObj.Setting;
 using UnityEngine;
 
 #endregion
@@ -55,18 +57,34 @@ namespace Behaviour.Controller.Stage
             if (playerCams.Length != 1)
                 Debug.LogWarning(
                     $"There should be exactly one PlayerCam in the scene. Found: {playerCams.Length}");
-            
+
+            Load();
+        }
+
+        #endregion
+
+        #region Private Methods
+
+        /// <summary>
+        ///     セーブデータの読み込み処理
+        /// </summary>
+        private void Load()
+        {
+            _coinData = new CoinData(stageData.StageId); // ステージIDは適宜変更
         }
 
         #endregion
 
         #region Private Variables
 
+        [SerializeField]
+        private StageData stageData;
+
         private readonly List<int> _nonReactiveBodyIds = new();
         private Rigidbody _playerRigidbody;
         
         private readonly HashSet<string> _allCoinIds = new();
-        private readonly HashSet<string> _collectedCoinIds = new();
+        private CoinData _coinData;
 
         #endregion
 
@@ -130,7 +148,7 @@ namespace Behaviour.Controller.Stage
         /// <param name="coinId">コインの識別子</param>
         public void CollectCoin(string coinId)
         {
-            _collectedCoinIds.Add(coinId);
+            _coinData = _coinData.CollectCoin(coinId);
         }
 
         /// <summary>
@@ -141,7 +159,7 @@ namespace Behaviour.Controller.Stage
         /// <summary>
         ///     取得したコインの数を取得
         /// </summary>
-        public int CollectedCoinCount => _collectedCoinIds.Count;
+        public int CollectedCoinCount => _coinData.CollectedCoinCount;
 
         /// <summary>
         ///     配置されたすべてのコインの識別子を取得
@@ -151,7 +169,7 @@ namespace Behaviour.Controller.Stage
         /// <summary>
         ///     取得したコインの識別子を取得
         /// </summary>
-        public IReadOnlyCollection<string> CollectedCoinIds => _collectedCoinIds;
+        public IReadOnlyCollection<string> CollectedCoinIds => _coinData.CollectedCoinIds;
 
         /// <summary>
         ///     特定のコインが取得済みかどうかを確認
@@ -160,7 +178,7 @@ namespace Behaviour.Controller.Stage
         /// <returns>取得済みの場合true</returns>
         public bool IsCoinCollected(string coinId)
         {
-            return _collectedCoinIds.Contains(coinId);
+            return _coinData.IsCoinCollected(coinId);
         }
 
         #endregion
