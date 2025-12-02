@@ -1,5 +1,6 @@
 #region
 
+using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using UnityEngine;
@@ -15,7 +16,7 @@ namespace Behaviour.Trigger
     public class CoinTrigger : MonoBehaviour
     {
         [SerializeField]
-        private string coinId;
+        private string coinId = Guid.NewGuid().ToString();
 
         private bool _collected;
 
