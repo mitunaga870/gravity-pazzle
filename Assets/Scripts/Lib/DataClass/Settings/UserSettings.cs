@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using Lib.DataClass.Interface;
 using Lib.DataClass.Settings.GravSelectMethod;
 using Newtonsoft.Json;
 using ScriptableObj;
@@ -14,7 +15,7 @@ namespace Lib.DataClass.Settings
     ///     ユーザー設定のデータクラス
     /// </summary>
     [Serializable]
-    public class UserSettings
+    public class UserSettings : SavableData
     {
         #region Constructors
 
@@ -155,19 +156,6 @@ namespace Lib.DataClass.Settings
                 $"Resolution: {ResolutionWidth}x{ResolutionHeight} Fullscreen: {Fullscreen} " +
                 $"MasterVolume: {MasterVolume} BgmVolume: {BgmVolume} SeVolume: {SeVolume} " +
                 $"ShowTutorial: {ShowTutorial} GravSelectMethod: {GravSelectMethod.DisplayName}";
-        }
-
-        /// <summary>
-        ///     保存用のJSON文字列に変換する
-        /// </summary>
-        public string ToJson()
-        {
-            var serializerSettings = new JsonSerializerSettings
-            {
-                TypeNameHandling = TypeNameHandling.Objects
-            };
-
-            return JsonConvert.SerializeObject(this, serializerSettings);
         }
 
         #endregion
