@@ -118,6 +118,7 @@ namespace Lib.Logic.General
             var fileName = type switch
             {
                 SaveDataType.UserSettings => "UserSettings.json",
+                SaveDataType.PlayerData => "PlayerData.json",
                 _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
             };
 
@@ -155,6 +156,7 @@ namespace Lib.Logic.General
     public enum SaveDataType
     {
         UserSettings,
+        PlayerData
     }
 
     /// <summary>
