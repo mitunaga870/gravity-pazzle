@@ -53,9 +53,6 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         public PlayerKey PlayerKey => playerKey;
 
-        private string SaveFilePath => Application.persistentDataPath + "/Settings";
-        private string UserSettingsFilePath => SaveFilePath + "/UserSettings.json";
-
         #endregion
 
         #region Serialized Fields
@@ -112,17 +109,12 @@ namespace Behaviour.Controller.General.DontDestoroy
             if (SaveUtils.LoadData<UserSettings>(SaveDataType.UserSettings, out var userSettings))
             {
                 UserSettings = userSettings;
-
-                Debug.Log($"Completed loading UserSettings: {UserSettings}");
             }
             else
             {
-                Debug.LogWarning("UserSettings file not found. Loading default settings.");
-
                 ResetSettings();
-#if DEBUG
+                
                 Debug.Log($"Loaded default UserSettings: {UserSettings}");
-#endif
             }
         }
 
