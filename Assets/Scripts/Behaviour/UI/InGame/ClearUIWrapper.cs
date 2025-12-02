@@ -40,7 +40,7 @@ namespace Behaviour.UI.InGame
 
         private StageDataController StageDataController => StageDataController.Instance;
 
-        private StageSetting _stageSetting;
+        private StageData _stageData;
 
         // 星が一つ減る時間の閾値（秒）
         private const int StartThresholdSec = 30;
@@ -53,10 +53,10 @@ namespace Behaviour.UI.InGame
             foreach (var goalTrigger in goalTriggers) goalTrigger.AddOnGoal(OnGoal);
 
             int stageNum;
-            (_stageSetting, stageNum) = SettingDataController.Instance.EnvironmentSetting.GetFromCurScene();
+            (_stageData, stageNum) = SettingDataController.Instance.EnvironmentSetting.GetFromCurScene();
 
             stageNameText.text = $"ステージ{stageNum + 1}";
-            stageTitleText.text = _stageSetting.DisplayName;
+            stageTitleText.text = _stageData.DisplayName;
 
             gameObject.SetActive(false);
         }
@@ -76,7 +76,7 @@ namespace Behaviour.UI.InGame
 
             // 星の数の計算
             var clearTimeSec = (int)playTime.TotalSeconds;
-            var estimatedClearTimeSec = _stageSetting.ClearTimeMinutes * 60;
+            var estimatedClearTimeSec = _stageData.ClearTimeMinutes * 60;
             var diffSec = clearTimeSec - estimatedClearTimeSec;
             var decreaseStars =
                 diffSec <= 0 ? 0 : Mathf.CeilToInt((float)diffSec / StartThresholdSec);
