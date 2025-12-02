@@ -64,9 +64,8 @@ namespace Behaviour.Controller.Stage
 
         private void OnDestroy()
         {
+            if (DontSaveOnDestroy) return;
             Save();
-
-            if (Instance == this) Instance = null;
         }
 
         #endregion
@@ -107,6 +106,8 @@ namespace Behaviour.Controller.Stage
         #region Public Variables
 
         public TimeSpan PlayTime { get; set; }
+
+        public bool DontSaveOnDestroy;
 
         public APlayerBehaviour PlayerBehaviour { get; private set; }
         public AGravBehaviour PlayerGravBehaviour { get; private set; }

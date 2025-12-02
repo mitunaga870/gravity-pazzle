@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Behaviour.Controller.General.DontDestoroy;
+using Behaviour.Controller.Stage;
 using Lib.DataClass.Settings.GravSelectMethod;
 using Lib.Logic.General;
 using TMPro;
@@ -191,6 +192,10 @@ namespace Behaviour.UI.Settings
 
             SettingDataController.Instance.ReloadAllData();
             PlayerDataController.Instance.ReloadAllData();
+
+            // ステージの場合、保存を無効化する
+            var instance = StageDataController.Instance;
+            if (instance != null) instance.DontSaveOnDestroy = true;
 
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
