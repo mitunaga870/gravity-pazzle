@@ -73,5 +73,14 @@ namespace Behaviour.Controller.General.DontDestoroy
         {
             PlayerData = PlayerData.AddCollectedCoinCount(amount);
         }
+
+
+        /// <summary>
+        ///     全てのデータをリロードする
+        /// </summary>
+        public void ReloadAllData()
+        {
+            LoadPlayerData();
+        }
     }
 }
