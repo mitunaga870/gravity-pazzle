@@ -31,6 +31,14 @@ namespace Behaviour.Trigger
             if (StageDataController.Instance != null)
             {
                 StageDataController.Instance.RegisterCoin(coinId);
+
+                // 既に取得済みの場合はコインオブジェクトを非表示にする
+                // ReSharper disable once InvertIf
+                if (StageDataController.Instance.IsCoinCollected(coinId))
+                {
+                    _collected = true;
+                    gameObject.SetActive(false);
+                }
             }
             else
             {
