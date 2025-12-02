@@ -6,6 +6,7 @@ using Behaviour.Camera;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Lib.DataClass.PlayData;
+using Lib.Logic.General;
 using ScriptableObj.Setting;
 using UnityEngine;
 
@@ -61,6 +62,13 @@ namespace Behaviour.Controller.Stage
             Load();
         }
 
+        private void OnDestroy()
+        {
+            Save();
+
+            if (Instance == this) Instance = null;
+        }
+
         #endregion
 
         #region Private Methods
@@ -71,6 +79,14 @@ namespace Behaviour.Controller.Stage
         private void Load()
         {
             _coinData = new CoinData(stageData.StageId); // ステージIDは適宜変更
+        }
+
+        /// <summary>
+        ///     セーブ処理
+        /// </summary>
+        private void Save()
+        {
+            SaveUtils.SaveStageData(stageData.StageId, StageSaveDataType.CoinData, _coinData);
         }
 
         #endregion

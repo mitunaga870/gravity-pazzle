@@ -29,6 +29,19 @@ namespace Lib.Logic.General
         }
 
         /// <summary>
+        ///     ステージ固有のセーブデータを保存する
+        /// </summary>
+        public static void SaveStageData(string stageId, StageSaveDataType type, SavableData dataClass)
+        {
+            var data = dataClass.ToJson();
+            var savePath = GetStageSavePath(stageId, type);
+
+            Debug.Log($"Saving stage data to {savePath}, data: {data}");
+
+            File.WriteAllText(savePath, data);
+        }
+
+        /// <summary>
         ///     セーブデータを読み込む
         ///     ファイルが存在しない場合はfalseを返す
         /// </summary>
@@ -65,6 +78,8 @@ namespace Lib.Logic.General
         {
             if (!File.Exists(path))
             {
+                Debug.LogWarning($"Save file not found at {path}");
+                
                 data = null;
                 return false;
             }
@@ -78,6 +93,8 @@ namespace Lib.Logic.General
 
                 var json = File.ReadAllText(path);
                 data = JsonConvert.DeserializeObject<T>(json, deserializerSettings);
+
+                Debug.Log($"Loaded save data from {path}: {json}, data: {data}");
 
                 return true;
             }
