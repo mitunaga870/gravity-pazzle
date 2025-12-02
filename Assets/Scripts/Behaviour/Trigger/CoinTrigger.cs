@@ -59,7 +59,7 @@ namespace Behaviour.Trigger
             // コインを取得
             _collected = true;
 
-            // 欠くオブジェクトに通知
+            // データコントローラーにコイン取得を通知
             StageDataController.Instance.CollectCoin(coinId);
             PlayerDataController.Instance.CollectCoin(1);
 
