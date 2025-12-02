@@ -1,5 +1,6 @@
 #region
 
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using UnityEngine;
 
@@ -56,7 +57,10 @@ namespace Behaviour.Trigger
 
             // コインを取得
             _collected = true;
+
+            // 欠くオブジェクトに通知
             StageDataController.Instance.CollectCoin(coinId);
+            PlayerDataController.Instance.CollectCoin(1);
 
             // コインオブジェクトを非表示にする
             gameObject.SetActive(false);
