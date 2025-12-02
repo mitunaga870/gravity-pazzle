@@ -1,10 +1,9 @@
 ﻿#region
 
 using System;
-using System.IO;
 using Lib.DataClass.Settings;
 using Lib.DataClass.Settings.GravSelectMethod;
-using Newtonsoft.Json;
+using Lib.Logic.General;
 using ScriptableObj;
 using ScriptableObj.Setting;
 using UnityEngine;
@@ -109,34 +108,22 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private void LoadSettings()
         {
-            // 保存先されたJSONを確認
-            if (File.Exists(UserSettingsFilePath))
-                try
-                {
-                    var deserializerSettings = new JsonSerializerSettings
-                    {
-                        TypeNameHandling = TypeNameHandling.Objects
-                    };
-                    
-                    // JSONを読み込んでデシリアライズする
-                    var userSettingsJson = File.ReadAllText(UserSettingsFilePath);
-                    UserSettings = JsonConvert.DeserializeObject<UserSettings>(userSettingsJson, deserializerSettings);
+            // セーブデータの読み込みを試みる
+            if (SaveUtils.LoadData<UserSettings>(SaveDataType.UserSettings, out var userSettings))
+            {
+                UserSettings = userSettings;
 
-#if DEBUG
-                    Debug.Log($"Completed loading UserSettings: {UserSettings}");
-#endif
-                    return;
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError("Failed to load UserSettings: " + e.Message);
-                }
+                Debug.Log($"Completed loading UserSettings: {UserSettings}");
+            }
             else
+            {
                 Debug.LogWarning("UserSettings file not found. Loading default settings.");
-            ResetSettings();
+
+                ResetSettings();
 #if DEBUG
-            Debug.Log($"Loaded default UserSettings: {UserSettings}");
+                Debug.Log($"Loaded default UserSettings: {UserSettings}");
 #endif
+            }
         }
 
         /**
@@ -144,15 +131,8 @@ namespace Behaviour.Controller.General.DontDestoroy
          */
         private void SaveSettings()
         {
-            // JSONに変換する
-            var userSettingsJson = UserSettings.ToJson();
-
-            // 保存先のディレクトリを作成する
-            if (!Directory.Exists(SaveFilePath))
-                Directory.CreateDirectory(SaveFilePath);
-
-            // ファイルに保存する
-            File.WriteAllText(UserSettingsFilePath, userSettingsJson);
+            // セーブデータを保存する
+            SaveUtils.SaveData(SaveDataType.UserSettings, UserSettings);
         }
 
         #endregion
