@@ -25,6 +25,8 @@ namespace Lib.Logic.General
             var data = dataClass.ToJson();
             var savePath = GetSavePath(type);
 
+            Debug.Log($"Saving data to {savePath}, data: {data}");
+
             File.WriteAllText(savePath, data);
         }
 
