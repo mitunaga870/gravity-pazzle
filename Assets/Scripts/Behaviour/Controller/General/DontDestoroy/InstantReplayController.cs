@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using System.IO;
 using System.Threading.Tasks;
 using InstantReplay;
@@ -76,11 +77,26 @@ namespace Behaviour.Controller.General.DontDestoroy
                 _ = StopRecording();
         }
 
-        private void OnDestroy()
+        private async void OnDestroy()
         {
-            _session?.Dispose();
-            // ログの購読を解除
-            Application.logMessageReceived -= UpdateDebugLog;
+            try
+            {
+                if (_session != null)
+                {
+                    // 録画を停止してエクスポートその後破棄
+                    var path = await _session.StopAndExportAsync();
+                    FileUtil.DeleteFileOrDirectory(path);
+
+                    _session.Dispose();
+                }
+
+                // ログの購読を解除
+                Application.logMessageReceived -= UpdateDebugLog;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Error while destroying InstantReplayController: {e}");
+            }
         }
 
         /// <summary>
