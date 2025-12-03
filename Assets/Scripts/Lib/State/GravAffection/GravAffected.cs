@@ -1,6 +1,7 @@
 ﻿#region
 
 using System;
+using System.Threading.Tasks;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
 using LitMotion;
@@ -34,6 +35,17 @@ namespace Lib.State.GravAffection
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
 
+        // 抗力倍率
+        private const float ExitDampingMultiplier = 3.0f;
+        
+        // 停止判定用の速度閾値
+        private const float ExitStopThresholdSqr = 5;
+
+        // 脱出処理の最大時間
+        private const float ExitMaxDuration = 1.0f;
+        
+        private float _accelerationMultiplier;
+        private const float AccelerationDuration = 1f;
 
         #region IGravAffectionState
         public GravAffectionState GetCurrentState => GravAffectionState.Affected;
@@ -48,12 +60,6 @@ namespace Lib.State.GravAffection
         [Obsolete("Obsolete")]
         public bool Change(IGravAffectionState next, bool forceChange = false) 
         {
-            // 速度がゼロでない場合は変更不可
-            if (_affectedBody == null &&
-                (_affectedBody.velocity.sqrMagnitude > 0.01f || !forceChange) // 速度が０か強制フラグ
-               )
-                return false;
-
             // 適応中は変更不可
             if (Adapting && !forceChange)
                 return false;
@@ -99,19 +105,41 @@ namespace Lib.State.GravAffection
                             diff);
                     });
             }
+
+            // 速度係数初期化
+            _accelerationMultiplier = 0f;
         }
 
-        public void OnExit()
+        public async Task OnExit()
         {
+            var exitStartTime = Time.time;
+
+            // 徐々に速度をゼロにする
+            while (_affectedBody.linearVelocity.sqrMagnitude > ExitStopThresholdSqr)
+            {
+                // 抗力を賭ける
+                var damping = -_affectedBody.linearVelocity * (_affectedBody.mass * ExitDampingMultiplier) - _gravity;
+                _affectedBody.AddForce(damping, ForceMode.Acceleration);
+
+                await Task.Delay(10);
+
+                // 最大時間を超えたら強制終了
+                if (Time.time - exitStartTime > ExitMaxDuration)
+                    break;
+            }
         }
 
         public void OnFixedUpdate()
         {
             if (_affectedBody == null)
                 return;
+
+            // 徐々に加速度を増加させる
+            _accelerationMultiplier =
+                Mathf.Min(_accelerationMultiplier + Time.fixedDeltaTime / AccelerationDuration, 1f);
             
             // 重力の影響を受ける
-            _affectedBody.AddForce(_gravity, ForceMode.Acceleration);
+            _affectedBody.AddForce(_gravity * _accelerationMultiplier, ForceMode.Acceleration);
         }
         #endregion
     }

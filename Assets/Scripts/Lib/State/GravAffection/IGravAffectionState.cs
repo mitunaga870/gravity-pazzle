@@ -1,5 +1,6 @@
 ﻿#region
 
+using System.Threading.Tasks;
 using Lib.State.Interface.Gravity;
 
 #endregion
@@ -15,7 +16,7 @@ namespace Lib.State.GravAffection
         bool Change(IGravAffectionState next, bool forceChange = false);
         
         void OnEnter(IGravAffectionState prev = null);
-        void OnExit();
+        Task OnExit(); // 非同期なのでキャンセル処理が必要になるかも
         void OnFixedUpdate();
     }
 
