@@ -65,7 +65,7 @@ namespace Behaviour.Controller.General.DontDestoroy
             Application.logMessageReceived += UpdateDebugLog;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             // キーログを表示
             var keyString = $"Key: {Input.inputString}";
