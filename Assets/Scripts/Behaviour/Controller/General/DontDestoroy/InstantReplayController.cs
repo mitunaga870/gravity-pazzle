@@ -121,9 +121,17 @@ namespace Behaviour.Controller.General.DontDestoroy
         /// </summary>
         private async Task StopRecording()
         {
-            // 保存先ディレクトリの作成
+            // 保存先ディレクトリの準備
             const string instantReplayDirName = "InstantReplay";
-            var instantReplayDir = Path.Combine(Application.dataPath, instantReplayDirName);
+            var executeDirName = Path.GetDirectoryName(Application.dataPath);
+            if (executeDirName == null)
+            {
+                Debug.LogError("Failed to get execute directory name.");
+                return;
+            }
+
+            // 保存先ディレクトリの作成
+            var instantReplayDir = Path.Combine(executeDirName, instantReplayDirName);
             if (!Directory.Exists(instantReplayDir))
                 Directory.CreateDirectory(instantReplayDir);
             var thisReplayDir = Path.Combine(instantReplayDir,
