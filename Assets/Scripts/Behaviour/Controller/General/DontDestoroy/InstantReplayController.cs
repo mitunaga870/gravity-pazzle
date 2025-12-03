@@ -3,6 +3,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using InstantReplay;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 
@@ -20,6 +21,12 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private const KeyCode StopRecordModifierKey = KeyCode.LeftControl;
         private const KeyCode StartRecordKey = KeyCode.T;
+
+        [SerializeField]
+        private TMP_Text keyLog;
+
+        [SerializeField]
+        private TMP_Text debugLog;
 
         #region Singleton Implementation
 
@@ -51,11 +58,20 @@ namespace Behaviour.Controller.General.DontDestoroy
             // シングルトンパターンの実装
             instance = this;
             DontDestroyOnLoad(gameObject);
+            
             _session = RealtimeInstantReplaySession.CreateDefault();
+
+            // ログをテキストに表示
+            Application.logMessageReceived += UpdateDebugLog;
         }
 
         private void Update()
         {
+            // キーログを表示
+            var keyString = $"Key: {Input.inputString}";
+            keyLog.text = keyString;
+            
+            
             if (Input.GetKeyDown(StartRecordKey) && Input.GetKey(StopRecordModifierKey))
                 _ = StopRecording();
         }
@@ -63,6 +79,19 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void OnDestroy()
         {
             _session?.Dispose();
+            // ログの購読を解除
+            Application.logMessageReceived -= UpdateDebugLog;
+        }
+
+        private void UpdateDebugLog(string condition, string stackTrace, LogType type)
+        {
+            var message = $"[{type}] {condition}\n{stackTrace}";
+
+            //100文字以上になったら切り詰める
+            if (message.Length > 100)
+                message = message.Substring(0, 100) + "...(truncated)";
+
+            debugLog.text = message;
         }
 
         /// <summary>
