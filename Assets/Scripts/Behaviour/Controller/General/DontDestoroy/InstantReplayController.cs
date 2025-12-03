@@ -5,7 +5,6 @@ using System.IO;
 using System.Threading.Tasks;
 using InstantReplay;
 using TMPro;
-using UnityEditor;
 using UnityEngine;
 
 #endregion
@@ -85,7 +84,7 @@ namespace Behaviour.Controller.General.DontDestoroy
                 {
                     // 録画を停止してエクスポートその後破棄
                     var path = await _session.StopAndExportAsync();
-                    FileUtil.DeleteFileOrDirectory(path);
+                    File.Delete(path);
 
                     _session.Dispose();
                 }
@@ -135,13 +134,13 @@ namespace Behaviour.Controller.General.DontDestoroy
             // 録画を停止してエクスポート
             var savedPath = await _session.StopAndExportAsync();
             var movieDest = Path.Combine(thisReplayDir, Path.GetFileName(savedPath));
-            FileUtil.MoveFileOrDirectory(savedPath, movieDest);
+            File.Move(savedPath, movieDest);
             Debug.Log($"Instant Replay saved to: {movieDest}");
 
             // ログファイルの保存
             var logDest = Path.Combine(thisReplayDir, "log.txt");
             var logLines = Application.consoleLogPath;
-            FileUtil.CopyFileOrDirectory(logLines, logDest);
+            File.Copy(logLines, logDest, true);
             Debug.Log($"Log file saved to: {logDest}");
 
             // 新しいセッションを開始
