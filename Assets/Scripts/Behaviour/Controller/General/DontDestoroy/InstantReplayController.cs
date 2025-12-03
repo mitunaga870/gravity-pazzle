@@ -1,7 +1,9 @@
 ﻿#region
 
+using System.IO;
 using System.Threading.Tasks;
 using InstantReplay;
+using UnityEditor;
 using UnityEngine;
 
 #endregion
@@ -64,12 +66,20 @@ namespace Behaviour.Controller.General.DontDestoroy
         }
 
         /// <summary>
-        ///     録画を停止し、ログ等とまとめて実行ファイル付近に保存する
+        ///     録画を停止し、ログ等とまとめて保存する
         /// </summary>
         private async Task StopRecording()
         {
+            Debug.Log("Stopping Instant Replay recording...");
             var savedPath = await _session.StopAndExportAsync();
-            Debug.Log($"Instant Replay saved to: {savedPath}");
+
+            // 動画を移動
+            var dest = Path.Combine(Application.dataPath, "InstantReplay", Path.GetFileName(savedPath));
+            if (!Directory.Exists(Path.GetDirectoryName(dest)))
+                Directory.CreateDirectory(Path.GetDirectoryName(dest)!);
+            FileUtil.MoveFileOrDirectory(savedPath, dest);
+            Debug.Log($"Instant Replay saved to: {dest}");
+            
             _session = RealtimeInstantReplaySession.CreateDefault();
         }
     }
