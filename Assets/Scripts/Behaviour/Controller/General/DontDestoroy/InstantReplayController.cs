@@ -43,7 +43,7 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void Start()
         {
             // 開発ビルドの時以外はオブジェクトを破棄する
-            if (!SettingDataController.Instance.EnvironmentSetting.IsDevelopmentBuild)
+            if (!Debug.isDebugBuild)
             {
                 Destroy(gameObject);
                 return;
@@ -122,16 +122,29 @@ namespace Behaviour.Controller.General.DontDestoroy
         /// </summary>
         private async Task StopRecording()
         {
-            Debug.Log("Stopping Instant Replay recording...");
-            var savedPath = await _session.StopAndExportAsync();
+            // 保存先ディレクトリの作成
+            const string instantReplayDirName = "InstantReplay";
+            var instantReplayDir = Path.Combine(Application.dataPath, instantReplayDirName);
+            if (!Directory.Exists(instantReplayDir))
+                Directory.CreateDirectory(instantReplayDir);
+            var thisReplayDir = Path.Combine(instantReplayDir,
+                DateTime.Now.ToString("yyyy-MM-dd_HH-mm-ss"));
+            if (!Directory.Exists(thisReplayDir))
+                Directory.CreateDirectory(thisReplayDir);
 
-            // 動画を移動
-            var dest = Path.Combine(Application.dataPath, "InstantReplay", Path.GetFileName(savedPath));
-            if (!Directory.Exists(Path.GetDirectoryName(dest)))
-                Directory.CreateDirectory(Path.GetDirectoryName(dest)!);
-            FileUtil.MoveFileOrDirectory(savedPath, dest);
-            Debug.Log($"Instant Replay saved to: {dest}");
-            
+            // 録画を停止してエクスポート
+            var savedPath = await _session.StopAndExportAsync();
+            var movieDest = Path.Combine(thisReplayDir, Path.GetFileName(savedPath));
+            FileUtil.MoveFileOrDirectory(savedPath, movieDest);
+            Debug.Log($"Instant Replay saved to: {movieDest}");
+
+            // ログファイルの保存
+            var logDest = Path.Combine(thisReplayDir, "log.txt");
+            var logLines = Application.consoleLogPath;
+            FileUtil.CopyFileOrDirectory(logLines, logDest);
+            Debug.Log($"Log file saved to: {logDest}");
+
+            // 新しいセッションを開始
             _session = RealtimeInstantReplaySession.CreateDefault();
         }
     }
