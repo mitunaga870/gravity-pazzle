@@ -83,6 +83,13 @@ namespace Behaviour.Controller.General.DontDestoroy
             Application.logMessageReceived -= UpdateDebugLog;
         }
 
+        /// <summary>
+        ///     デバッグログをUIに表示する
+        ///     Application.logMessageReceivedのコールバックとして使用する
+        /// </summary>
+        /// <param name="condition"></param>
+        /// <param name="stackTrace"></param>
+        /// <param name="type"></param>
         private void UpdateDebugLog(string condition, string stackTrace, LogType type)
         {
             var message = $"[{type}] {condition}\n{stackTrace}";
