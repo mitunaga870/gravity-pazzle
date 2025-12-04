@@ -1,5 +1,7 @@
 #region
 
+using System;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using UnityEngine;
 
@@ -14,7 +16,7 @@ namespace Behaviour.Trigger
     public class CoinTrigger : MonoBehaviour
     {
         [SerializeField]
-        private string coinId;
+        private string coinId = Guid.NewGuid().ToString();
 
         private bool _collected;
 
@@ -31,6 +33,14 @@ namespace Behaviour.Trigger
             if (StageDataController.Instance != null)
             {
                 StageDataController.Instance.RegisterCoin(coinId);
+
+                // 既に取得済みの場合はコインオブジェクトを非表示にする
+                // ReSharper disable once InvertIf
+                if (StageDataController.Instance.IsCoinCollected(coinId))
+                {
+                    _collected = true;
+                    gameObject.SetActive(false);
+                }
             }
             else
             {
@@ -48,7 +58,10 @@ namespace Behaviour.Trigger
 
             // コインを取得
             _collected = true;
+
+            // データコントローラーにコイン取得を通知
             StageDataController.Instance.CollectCoin(coinId);
+            PlayerDataController.Instance.CollectCoin(1);
 
             // コインオブジェクトを非表示にする
             gameObject.SetActive(false);
