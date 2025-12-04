@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InstantReplay;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #endregion
 
@@ -66,14 +67,15 @@ namespace Behaviour.Controller.General.DontDestoroy
 
                 // ログをテキストに表示
                 Application.logMessageReceived += UpdateDebugLog;
+
+                // 開発ログを非表示にする
+                SceneManager.sceneLoaded += (_, _) => { Debug.developerConsoleVisible = false; };
             }
             catch (Exception e)
             {
                 Debug.LogError($"Failed to initialize InstantReplaySettings: {e}");
             }
 
-            // 開発ログを非表示にする
-            Debug.developerConsoleVisible = false;
         }
 
         private void FixedUpdate()
