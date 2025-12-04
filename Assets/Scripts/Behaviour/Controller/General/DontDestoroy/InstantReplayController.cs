@@ -58,11 +58,18 @@ namespace Behaviour.Controller.General.DontDestoroy
             // シングルトンパターンの実装
             instance = this;
             DontDestroyOnLoad(gameObject);
-            
-            _session = RealtimeInstantReplaySession.CreateDefault();
 
-            // ログをテキストに表示
-            Application.logMessageReceived += UpdateDebugLog;
+            try
+            {
+                _session = RealtimeInstantReplaySession.CreateDefault();
+
+                // ログをテキストに表示
+                Application.logMessageReceived += UpdateDebugLog;
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"Failed to initialize InstantReplaySettings: {e}");
+            }
         }
 
         private void FixedUpdate()
