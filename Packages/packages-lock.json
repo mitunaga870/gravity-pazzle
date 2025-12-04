@@ -358,6 +358,13 @@
       },
       "url": "https://packages.unity.com"
     },
+    "jp.co.cyberagent.instant-replay": {
+      "version": "https://github.com/CyberAgentGameEntertainment/InstantReplay.git?path=Packages/jp.co.cyberagent.instant-replay#release",
+      "depth": 0,
+      "source": "git",
+      "dependencies": {},
+      "hash": "08e32cc9420d7a8df42c2c420e0eb5889e111082"
+    },
     "jp.lilxyzw.liltoon": {
       "version": "file:jp.lilxyzw.liltoon",
       "depth": 0,
