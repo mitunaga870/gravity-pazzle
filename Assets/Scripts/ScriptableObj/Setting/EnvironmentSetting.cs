@@ -29,7 +29,7 @@ namespace ScriptableObj.Setting
         private SceneObj creditScene;
 
         [SerializeField]
-        private List<StageSetting> stages = new();
+        private List<StageData> stages = new();
 
         [SerializeField]
         [Obsolete("EndCardSceneはデモ版専用のため、今後廃止予定です。")]
@@ -41,12 +41,12 @@ namespace ScriptableObj.Setting
         public SceneObj StageSelectScene => stageSelectScene;
         public SceneObj CreditScene => creditScene;
 
-        public List<StageSetting> Stages => stages;
+        public List<StageData> Stages => stages;
 
         [Obsolete("StageSelectSceneは今後廃止予定です。")]
         public SceneObj EndCardScene => endCardScene;
 
-        public (StageSetting, int) GetFromCurScene()
+        public (StageData, int) GetFromCurScene()
         {
             var curSceneName = SceneManager.GetActiveScene().name;
 

@@ -3,9 +3,12 @@
 using System;
 using System.Collections.Generic;
 using Behaviour.Controller.General.DontDestoroy;
+using Behaviour.Controller.Stage;
 using Lib.DataClass.Settings.GravSelectMethod;
+using Lib.Logic.General;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using Resolution = ScriptableObj.Setting.Resolution;
 
@@ -44,6 +47,9 @@ namespace Behaviour.UI.Settings
         [SerializeField]
         private TMP_Dropdown gravSelectMethodDropdown;
 
+        [SerializeField]
+        private Button resetButton;
+
         #endregion
 
         private static SettingDataController SettingDataController => SettingDataController.Instance;
@@ -54,18 +60,14 @@ namespace Behaviour.UI.Settings
 
         private void Awake()
         {
-            // 解像度の設定
+            // 各種UI要素のイベントリスナー登録
             resolutionDropdown.onValueChanged.AddListener(OnResolutionChange);
-            // マスターボリュームの設定
             masterVolumeSlider.onValueChanged.AddListener(OnMasterVolumeChange);
-            // BGMボリュームの設定
             bgmVolumeSlider.onValueChanged.AddListener(OnBGMVolumeChange);
-            // SEボリュームの設定
             seVolumeSlider.onValueChanged.AddListener(OnSEVolumeChange);
-            // チュートリアルの設定
             tutorialToggle.onValueChanged.AddListener(OnTutorialToggleChange);
-            // 重力選択方法の設定
             gravSelectMethodDropdown.onValueChanged.AddListener(OnGravSelectMethodChange);
+            resetButton.onClick.AddListener(OnResetButtonClick);
 
             // ドロップダウンの初期化
             SetupResolutionDropdown();
@@ -182,6 +184,20 @@ namespace Behaviour.UI.Settings
             bgmVolumeSlider.value = settings.BgmVolume;
             seVolumeSlider.value = settings.SeVolume;
             tutorialToggle.isOn = settings.ShowTutorial;
+        }
+
+        private void OnResetButtonClick()
+        {
+            SaveUtils.DeleteAllPlayData();
+
+            SettingDataController.Instance.ReloadAllData();
+            PlayerDataController.Instance.ReloadAllData();
+
+            // ステージの場合、保存を無効化する
+            var instance = StageDataController.Instance;
+            if (instance != null) instance.DontSaveOnDestroy = true;
+
+            SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
 
         #endregion

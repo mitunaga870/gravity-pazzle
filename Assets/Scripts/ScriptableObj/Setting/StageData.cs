@@ -1,5 +1,6 @@
 ﻿#region
 
+using System;
 using Lib.DataClass.ForInspector;
 using UnityEngine;
 
@@ -10,9 +11,15 @@ namespace ScriptableObj.Setting
     /// <summary>
     ///     ステージの情報を保持するScriptableObject
     /// </summary>
-    [CreateAssetMenu(fileName = "ステージ設定", menuName = "ScriptableObj/設定/ステージ設定", order = 1)]
-    public class StageSetting : ScriptableObject
+    [CreateAssetMenu(fileName = "ステージ情報", menuName = "ScriptableObj/パラメータ設定/ステージ情報", order = 1)]
+    public class StageData : ScriptableObject
     {
+        [Header("ステージID")]
+        [SerializeField]
+        private string stageId = Guid.NewGuid().ToString();
+
+        public string StageId => stageId;
+        
         [Header("表示名")]
         [SerializeField]
         private string displayName;
