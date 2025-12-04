@@ -59,6 +59,7 @@ namespace Behaviour.Controller.General.DontDestoroy
             instance = this;
             DontDestroyOnLoad(gameObject);
 
+            // 初期化処理
             try
             {
                 _session = RealtimeInstantReplaySession.CreateDefault();
@@ -70,6 +71,9 @@ namespace Behaviour.Controller.General.DontDestoroy
             {
                 Debug.LogError($"Failed to initialize InstantReplaySettings: {e}");
             }
+
+            // 開発ログを非表示にする
+            Debug.developerConsoleVisible = false;
         }
 
         private void FixedUpdate()
