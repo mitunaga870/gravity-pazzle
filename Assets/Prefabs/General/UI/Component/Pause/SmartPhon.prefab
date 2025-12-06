@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5402747734127236011}
   - component: {fileID: 912714749062928397}
   - component: {fileID: 7356511738307325201}
+  - component: {fileID: 3640333041375445312}
   m_Layer: 5
   m_Name: SmartPhon
   m_TagString: Untagged
@@ -33,8 +34,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 321.8, y: -327.8}
   m_SizeDelta: {x: 2048, y: 1066}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -88,8 +89,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0fac158b6b2db442bd1502a72669127, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  target: {fileID: 4698461529088883224}
-  startPosition: {x: 321.8, y: -327.8, z: 0}
+  target: {fileID: 0}
+  startPosition: {x: -649, y: -1167, z: 0}
+  startRotation: {x: 0, y: 0, z: 90}
+  startScale: {x: 0.49, y: 0.49, z: 0.49}
+  endPosition: {x: 0, y: -5, z: 0}
+  endRotation: {x: 0, y: 0, z: 0}
+  endScale: {x: 0.64, y: 0.64, z: 0.64}
+  duration: 1
+  ease: 6
+  reverse: 1
+--- !u!114 &3640333041375445312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 444051941879356632}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0fac158b6b2db442bd1502a72669127, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 0}
+  startPosition: {x: 321.8, y: -555, z: 0}
   startRotation: {x: 0, y: 0, z: 90}
   startScale: {x: 0.49, y: 0.49, z: 0.49}
   endPosition: {x: 973, y: 525, z: 0}
@@ -97,4 +120,4 @@ MonoBehaviour:
   endScale: {x: 1.18, y: 1.18, z: 1.18}
   duration: 1
   ease: 6
-  reverse: 1
+  reverse: 0
