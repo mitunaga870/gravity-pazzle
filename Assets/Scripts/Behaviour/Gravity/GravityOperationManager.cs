@@ -87,7 +87,7 @@ namespace Behaviour.Gravity
             var playerData = playerDataController.PlayerData;
 
             _operationDuration = playerData.OperationDuration;
-            _maxConcurrentOperations = playerData.MaxConcurrentOperations;
+            _maxConcurrentOperations = playerData.MaxCurrentOperations;
         }
 
         private void Update()

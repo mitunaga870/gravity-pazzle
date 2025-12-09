@@ -28,12 +28,12 @@ namespace Behaviour.Controller.General.DontDestoroy
         [SerializeField]
         private InitPlayerData initPlayerData;
 
-        [Header("強化後パラメータ")]
+        [Header("強化情報")]
         [SerializeField]
-        private UpgradedOperationTime upgradedOperationTime;
+        private ParamUpgrade upgradedOperationDuration;
 
         [SerializeField]
-        private UpgradedMaxOperationCount upgradedMaxOperationCount;
+        private ParamUpgrade upgradedMaxOperationCount;
 
         #endregion
         
@@ -84,6 +84,8 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         #endregion
 
+        #region Coin Methods
+        
         /// <summary>
         ///     コインを収集したときに呼び出すメソッド
         /// </summary>
@@ -92,6 +94,16 @@ namespace Behaviour.Controller.General.DontDestoroy
             PlayerData = PlayerData.AddCollectedCoinCount(amount);
         }
 
+        #endregion
+
+        #region Upgrade Methods
+
+        public void Upgrade(UpgradeType upgradeType)
+        {
+        }
+
+        #endregion
+        
 
         /// <summary>
         ///     全てのデータをリロードする
