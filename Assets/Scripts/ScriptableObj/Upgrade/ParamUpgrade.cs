@@ -1,5 +1,6 @@
 ﻿#region
 
+using Lib.DataClass.PlayData;
 using UnityEngine;
 
 #endregion
@@ -20,24 +21,11 @@ namespace ScriptableObj.Upgrade
 
         public float[] UpgradedParams => upgradedParams;
 
-
-        /// <summary>
-        ///     次のレベルのパラメータを取得する
-        ///     強化不能の場合はfalseを返す
-        /// </summary>
-        /// <param name="level">要望レベル</param>
-        /// <param name="nextParam">次のパラメータ</param>
-        /// <returns></returns>
-        public bool GetNextParam(int level, out float nextParam)
+        public override bool IsUpgradeable(PlayerData playerData)
         {
-            if (level < upgradedParams.Length)
-            {
-                nextParam = upgradedParams[level];
-                return false;
-            }
+            var nextLevel = playerData.GetLevel(UpgradeType) + 1;
 
-            nextParam = upgradedParams[level];
-            return true;
+            return nextLevel >= upgradedParams.Length;
         }
     }
 }

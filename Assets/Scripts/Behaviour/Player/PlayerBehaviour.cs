@@ -51,7 +51,7 @@ namespace Behaviour.Player
             if (playerDataController == null) throw new Exception("PlayerDataController.Instance is not assigned.");
             var playerData = playerDataController.PlayerData;
             if (playerData == null) throw new Exception("PlayerDataController.PlayerData is not assigned.");
-            _changeableGrav = playerData.CanChangePlayerGrav;
+            _changeableGrav = playerData.PlayerGravChangeLevel >= 1;
         }
 
         private new void Update()

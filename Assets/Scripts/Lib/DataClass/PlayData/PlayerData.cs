@@ -1,8 +1,10 @@
 ﻿#region
 
+using System;
 using Lib.DataClass.Interface;
 using Newtonsoft.Json;
 using ScriptableObj;
+using ScriptableObj.Upgrade;
 
 #endregion
 
@@ -22,9 +24,9 @@ namespace Lib.DataClass.PlayData
             CollectedCoinCount = 0;
             OperationDurationLevel = 0;
             OperationDuration = initPlayerData.OperationDuration;
-            MaxCurrentOperationsLevel = 0;
+            MaxOperationCountLevel = 0;
             MaxCurrentOperations = initPlayerData.MaxConcurrentOperations;
-            CanChangePlayerGrav = false;
+            PlayerGravChangeLevel = 0;
         }
 
         [JsonConstructor]
@@ -32,17 +34,17 @@ namespace Lib.DataClass.PlayData
             int collectedCoinCount,
             int operationDurationLevel,
             float operationDuration,
-            int maxCurrentOperationsLevel,
+            int maxOperationCountLevel,
             int maxCurrentOperations,
-            bool canChangePlayerGrav
+            int playerGravChangeLevel
         )
         {
             CollectedCoinCount = collectedCoinCount;
             OperationDurationLevel = operationDurationLevel;
             OperationDuration = operationDuration;
-            MaxCurrentOperationsLevel = maxCurrentOperationsLevel;
+            MaxOperationCountLevel = maxOperationCountLevel;
             MaxCurrentOperations = maxCurrentOperations;
-            CanChangePlayerGrav = canChangePlayerGrav;
+            PlayerGravChangeLevel = playerGravChangeLevel;
         }
 
         #endregion
@@ -53,11 +55,11 @@ namespace Lib.DataClass.PlayData
 
         public readonly float OperationDuration;
 
-        public readonly int MaxCurrentOperationsLevel;
+        public readonly int MaxOperationCountLevel;
 
         public readonly int MaxCurrentOperations;
 
-        public readonly bool CanChangePlayerGrav;
+        public readonly int PlayerGravChangeLevel;
 
         #region deserver
 
@@ -67,9 +69,9 @@ namespace Lib.DataClass.PlayData
                 collectedCoinCount,
                 OperationDurationLevel,
                 OperationDuration,
-                MaxCurrentOperationsLevel,
+                MaxOperationCountLevel,
                 MaxCurrentOperations,
-                CanChangePlayerGrav
+                PlayerGravChangeLevel
             );
         }
 
@@ -79,9 +81,9 @@ namespace Lib.DataClass.PlayData
                 CollectedCoinCount,
                 operationDurationLevel,
                 OperationDuration,
-                MaxCurrentOperationsLevel,
+                MaxOperationCountLevel,
                 MaxCurrentOperations,
-                CanChangePlayerGrav
+                PlayerGravChangeLevel
             );
         }
 
@@ -91,13 +93,13 @@ namespace Lib.DataClass.PlayData
                 CollectedCoinCount,
                 OperationDurationLevel,
                 operationDuration,
-                MaxCurrentOperationsLevel,
+                MaxOperationCountLevel,
                 MaxCurrentOperations,
-                CanChangePlayerGrav
+                PlayerGravChangeLevel
             );
         }
 
-        private PlayerData DeserveMaxCurrentOperationsLevel(int maxCurrentOperationsLevel)
+        private PlayerData DeserveMaxOperationCountLevel(int maxCurrentOperationsLevel)
         {
             return new PlayerData(
                 CollectedCoinCount,
@@ -105,29 +107,29 @@ namespace Lib.DataClass.PlayData
                 OperationDuration,
                 maxCurrentOperationsLevel,
                 MaxCurrentOperations,
-                CanChangePlayerGrav
+                PlayerGravChangeLevel
             );
         }
 
-        private PlayerData DeserveMaxConcurrentOperations(int maxConcurrentOperations)
+        private PlayerData DeserveMaxOperationCount(int maxConcurrentOperations)
         {
             return new PlayerData(
                 CollectedCoinCount,
                 OperationDurationLevel,
                 OperationDuration,
-                MaxCurrentOperationsLevel,
+                MaxOperationCountLevel,
                 maxConcurrentOperations,
-                CanChangePlayerGrav
+                PlayerGravChangeLevel
             );
         }
 
-        private PlayerData DeserveCanChangePlayerGrav(bool canChangePlayerGrav)
+        private PlayerData DeservePlayerGravChangeLevel(int canChangePlayerGrav)
         {
             return new PlayerData(
                 CollectedCoinCount,
                 OperationDurationLevel,
                 OperationDuration,
-                MaxCurrentOperationsLevel,
+                MaxOperationCountLevel,
                 MaxCurrentOperations,
                 canChangePlayerGrav
             );
@@ -140,12 +142,57 @@ namespace Lib.DataClass.PlayData
             return DeserveCollectedCoinCount(CollectedCoinCount + amount);
         }
 
-        public PlayerData LevelUpOperationDuration(int level, float duration)
+        public PlayerData UseCoin(int amount)
         {
-            var result = DeserveOperationDurationLevel(level);
-            result = result.DeserveOperationDuration(duration);
+            return DeserveCollectedCoinCount(CollectedCoinCount - amount);
+        }
 
-            return result;
+        public PlayerData LevelUpParamUpgrade(UpgradeType type, int nextLevel, float nextParam)
+        {
+            PlayerData nextPlayerData;
+
+            switch (type)
+            {
+                case UpgradeType.OperationDuration:
+                    nextPlayerData = DeserveOperationDurationLevel(nextLevel);
+                    nextPlayerData = nextPlayerData.DeserveOperationDuration(nextParam);
+                    break;
+                case UpgradeType.MaxOperationCount:
+                    nextPlayerData = DeserveMaxOperationCountLevel(MaxCurrentOperations);
+                    nextPlayerData = nextPlayerData.DeserveMaxOperationCount(MaxCurrentOperations);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return nextPlayerData;
+        }
+
+        public PlayerData LevelUpActionUpgrade(UpgradeType type)
+        {
+            PlayerData nextPlayerData;
+
+            switch (type)
+            {
+                case UpgradeType.PlayerGravChange:
+                    nextPlayerData = DeservePlayerGravChangeLevel(1);
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+
+            return nextPlayerData;
+        }
+
+        public int GetLevel(UpgradeType type)
+        {
+            return type switch
+            {
+                UpgradeType.OperationDuration => OperationDurationLevel,
+                UpgradeType.MaxOperationCount => MaxOperationCountLevel,
+                UpgradeType.PlayerGravChange => PlayerGravChangeLevel,
+                _ => throw new Exception("対応していないアップグレードタイプです。PlayerData.GetLevel")
+            };
         }
     }
 }

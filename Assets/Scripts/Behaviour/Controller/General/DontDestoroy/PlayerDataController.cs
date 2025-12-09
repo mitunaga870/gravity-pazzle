@@ -1,6 +1,8 @@
 ﻿#region
 
+using System;
 using Lib.DataClass.PlayData;
+using Lib.Logic;
 using Lib.Logic.General;
 using ScriptableObj;
 using ScriptableObj.Upgrade;
@@ -30,10 +32,13 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         [Header("強化情報")]
         [SerializeField]
-        private ParamUpgrade upgradedOperationDuration;
+        private ParamUpgrade operationDurationData;
 
         [SerializeField]
-        private ParamUpgrade upgradedMaxOperationCount;
+        private ParamUpgrade maxOperationCountData;
+
+        [SerializeField]
+        private ActionUpgrade playerGravChangeData;
 
         #endregion
         
@@ -98,8 +103,50 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         #region Upgrade Methods
 
-        public void Upgrade(UpgradeType upgradeType)
+        public bool Upgrade(UpgradeType type)
         {
+            var category = UpgradeUtils.GetCategory(type);
+            var upgradeData = GetUpgradeData(type);
+            var curLevel = PlayerData.GetLevel(type);
+
+            // UIでも隠す予定だが、間違ってアップグレードされないよう処理
+            var upgradeable = upgradeData.IsUpgradeable(PlayerData);
+            if (!upgradeable) throw new Exception($"{type} is not upgradeable.");
+
+            // コスト確認
+            var cost = upgradeData.Cost[curLevel];
+            if (PlayerData.CollectedCoinCount < cost) return false;
+
+            // アップグレードの実処理
+            if (upgradeData is ParamUpgrade paramUpgrade)
+            {
+                var nextParam = paramUpgrade.UpgradedParams[curLevel];
+                PlayerData = PlayerData.LevelUpParamUpgrade(type, curLevel + 1, nextParam);
+            }
+            else if (upgradeData is ActionUpgrade actionUpgrade)
+            {
+                PlayerData = PlayerData.LevelUpActionUpgrade(type);
+            }
+            else
+            {
+                throw new Exception($"{type} is not upgradeable.");
+            }
+
+            // コイン使用処理
+            PlayerData = PlayerData.UseCoin(cost);
+
+            return true;
+        }
+
+        private AUpgrade GetUpgradeData(UpgradeType type)
+        {
+            return type switch
+            {
+                UpgradeType.OperationDuration => operationDurationData,
+                UpgradeType.MaxOperationCount => maxOperationCountData,
+                UpgradeType.PlayerGravChange => playerGravChangeData,
+                _ => null
+            };
         }
 
         #endregion

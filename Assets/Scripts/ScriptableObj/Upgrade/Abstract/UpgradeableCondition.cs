@@ -18,9 +18,13 @@ namespace ScriptableObj.Upgrade
         [SerializeField]
         private int targetLevel;
 
+        public int TargetLevel => targetLevel;
+
         [Header("アップグレード条件　アップグレードごとにレベルを登録")]
         [SerializeField]
         private UpgradeableConditionValue conditionLevels;
+
+        public UpgradeableConditionValue ConditionLevels => conditionLevels;
     }
 
     /// <summary>
