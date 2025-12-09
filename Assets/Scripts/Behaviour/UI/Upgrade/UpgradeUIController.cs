@@ -2,6 +2,7 @@
 
 using System;
 using Behaviour.Controller.General.DontDestoroy;
+using ScriptableObj.Upgrade;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -9,7 +10,7 @@ using UnityEngine.UI;
 
 namespace Behaviour.UI.Upgrade
 {
-    public class UpgradeUIController
+    public class UpgradeUIController : MonoBehaviour
     {
         #region Serialized Fields
 
@@ -42,6 +43,14 @@ namespace Behaviour.UI.Upgrade
             // ハンドラー登録
             upgradeOperationDurationButton.onClick.AddListener(HandlerUpgradeOperationDuration);
             upgradeMaxOperationsButton.onClick.AddListener(HandlerUpgradeMaxOperations);
+            enablePlayerGravChangeButton.onClick.AddListener(HandlerPlayerGravChange);
+
+            // 強化可能出ない場合の処理
+            foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
+            {
+                var upgradeable = _playerDataController.IsUpgradeable(type);
+                if (!upgradeable) DisableButton(type);
+            }
         }
 
         #endregion
@@ -50,12 +59,37 @@ namespace Behaviour.UI.Upgrade
 
         private void HandlerUpgradeOperationDuration()
         {
+            _playerDataController.Upgrade(UpgradeType.OperationDuration);
         }
 
         private void HandlerUpgradeMaxOperations()
         {
+            _playerDataController.Upgrade(UpgradeType.MaxOperationCount);
+        }
+
+        private void HandlerPlayerGravChange()
+        {
+            _playerDataController.Upgrade(UpgradeType.PlayerGravChange);
         }
 
         #endregion
+
+        private void DisableButton(UpgradeType type)
+        {
+            switch (type)
+            {
+                case UpgradeType.OperationDuration:
+                    upgradeOperationDurationButton.enabled = false;
+                    break;
+                case UpgradeType.MaxOperationCount:
+                    upgradeMaxOperationsButton.enabled = false;
+                    break;
+                case UpgradeType.PlayerGravChange:
+                    enablePlayerGravChangeButton.enabled = false;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
     }
 }

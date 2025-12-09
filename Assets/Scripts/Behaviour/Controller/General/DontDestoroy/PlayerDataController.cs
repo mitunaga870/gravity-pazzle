@@ -2,7 +2,6 @@
 
 using System;
 using Lib.DataClass.PlayData;
-using Lib.Logic;
 using Lib.Logic.General;
 using ScriptableObj;
 using ScriptableObj.Upgrade;
@@ -105,7 +104,6 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         public bool Upgrade(UpgradeType type)
         {
-            var category = UpgradeUtils.GetCategory(type);
             var upgradeData = GetUpgradeData(type);
             var curLevel = PlayerData.GetLevel(type);
 
@@ -136,6 +134,12 @@ namespace Behaviour.Controller.General.DontDestoroy
             PlayerData = PlayerData.UseCoin(cost);
 
             return true;
+        }
+
+        public bool IsUpgradeable(UpgradeType type)
+        {
+            var upgradeData = GetUpgradeData(type);
+            return upgradeData.IsUpgradeable(PlayerData);
         }
 
         private AUpgrade GetUpgradeData(UpgradeType type)
