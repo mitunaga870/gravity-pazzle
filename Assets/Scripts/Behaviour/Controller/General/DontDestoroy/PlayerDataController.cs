@@ -2,6 +2,8 @@
 
 using Lib.DataClass.PlayData;
 using Lib.Logic.General;
+using ScriptableObj;
+using ScriptableObj.Upgrade;
 using UnityEngine;
 
 #endregion
@@ -20,6 +22,21 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         #endregion
 
+        #region Serilized Fields
+
+        [Header("初期セーブデータ")]
+        [SerializeField]
+        private InitPlayerData initPlayerData;
+
+        [Header("強化後パラメータ")]
+        [SerializeField]
+        private UpgradedOperationTime upgradedOperationTime;
+
+        [SerializeField]
+        private UpgradedMaxOperationCount upgradedMaxOperationCount;
+
+        #endregion
+        
         #region Data Fields
 
         public PlayerData PlayerData { get; private set; }
@@ -56,7 +73,8 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void LoadPlayerData()
         {
             var isPlayerDataLoaded = SaveUtils.LoadData<PlayerData>(SaveDataType.PlayerData, out var loadedData);
-            PlayerData = isPlayerDataLoaded ? loadedData : new PlayerData();
+            PlayerData =
+                isPlayerDataLoaded ? loadedData : new PlayerData(initPlayerData);
         }
 
         private void SavePlayerData()

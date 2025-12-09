@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using Behaviour.Controller.General.DontDestoroy;
 using Lib.State.Interface.Gravity;
 using UnityEngine;
 
@@ -16,13 +17,9 @@ namespace Behaviour.Gravity
     [DisallowMultipleComponent]
     public sealed class GravityOperationManager : MonoBehaviour
     {
-        [SerializeField]
-        [Min(0.1f)]
-        private float operationDuration = 5f; // 重力操作に与えられた持続時間（秒）
+        private float _operationDuration; // 重力操作に与えられた持続時間（秒）
 
-        [SerializeField]
-        [Min(1)]
-        private int maxConcurrentOperations = 2; // 同時に許容される操作数（プレイヤー自身を含む）
+        private int _maxConcurrentOperations; // 同時に許容される操作数（プレイヤー自身を含む）
 
         private static readonly OperationHandle HandleNone = new(OperationHandleKind.None);
         private static readonly OperationHandle HandleManualRevert = new(OperationHandleKind.ManualRevert);
@@ -40,12 +37,12 @@ namespace Behaviour.Gravity
         /// <summary>
         /// 同時操作可能数
         /// </summary>
-        public int MaxConcurrentOperations => maxConcurrentOperations;
+        public int MaxConcurrentOperations => _maxConcurrentOperations;
 
         /// <summary>
         /// 操作継続時間（秒）
         /// </summary>
-        public float OperationDuration => operationDuration;
+        public float OperationDuration => _operationDuration;
 
         /// <summary>
         /// 現在進行中の操作数
@@ -58,6 +55,9 @@ namespace Behaviour.Gravity
         // 各操作対象に対して共有タイマーの残り割合を通知するイベント。
         public event Action<VGravBehaviour, float> OnOperationRemainingRatioChanged;
 
+
+        #region Singleton Implementation
+        
         private void Awake()
         {
             if (Instance != null && Instance != this)
@@ -66,7 +66,6 @@ namespace Behaviour.Gravity
                 Destroy(this);
                 return;
             }
-
             Instance = this;
         }
 
@@ -76,6 +75,19 @@ namespace Behaviour.Gravity
             {
                 Instance = null;
             }
+        }
+
+        #endregion
+
+        private void Start()
+        {
+            // PlayerData読み込み
+            var playerDataController = PlayerDataController.Instance;
+            if (playerDataController == null) throw new Exception("プレイヤーデータを取得出来ません");
+            var playerData = playerDataController.PlayerData;
+
+            _operationDuration = playerData.OperationDuration;
+            _maxConcurrentOperations = playerData.MaxConcurrentOperations;
         }
 
         private void Update()
@@ -123,8 +135,8 @@ namespace Behaviour.Gravity
             }
 
             // 共通タイマーの残り割合を全対象へ通知
-            var ratio = operationDuration > 0f
-                ? Mathf.Clamp01(_sharedRemainingTime / operationDuration)
+            var ratio = _operationDuration > 0f
+                ? Mathf.Clamp01(_sharedRemainingTime / _operationDuration)
                 : 0f;
 
             foreach (var kvp in _operations)
@@ -195,7 +207,7 @@ namespace Behaviour.Gravity
                 return true;
             }
 
-            if (_operations.Count >= maxConcurrentOperations)
+            if (_operations.Count >= _maxConcurrentOperations)
                 return false;
 
             var wasEmpty = _operations.Count == 0;
@@ -207,11 +219,11 @@ namespace Behaviour.Gravity
 
             if (wasEmpty)
             {
-                _sharedRemainingTime = operationDuration; // 最初の操作を開始するときにのみ共有タイマーを初期化（重力操作中のオブジェクトに更に重力操作しても初期化しない）
+                _sharedRemainingTime = _operationDuration; // 最初の操作を開始するときにのみ共有タイマーを初期化（重力操作中のオブジェクトに更に重力操作しても初期化しない）
             }
 
-            var ratio = operationDuration > 0f
-                ? Mathf.Clamp01(_sharedRemainingTime / operationDuration)
+            var ratio = _operationDuration > 0f
+                ? Mathf.Clamp01(_sharedRemainingTime / _operationDuration)
                 : 0f;
             OnOperationRemainingRatioChanged?.Invoke(behaviour, ratio);
             return true;
@@ -291,7 +303,7 @@ namespace Behaviour.Gravity
 
         private void RaiseOperationCountChanged()
         {
-            OnOperationCountChanged?.Invoke(_operations.Count, maxConcurrentOperations);
+            OnOperationCountChanged?.Invoke(_operations.Count, _maxConcurrentOperations);
         }
 
         private sealed class Operation

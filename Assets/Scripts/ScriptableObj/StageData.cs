@@ -6,12 +6,12 @@ using UnityEngine;
 
 #endregion
 
-namespace ScriptableObj.Setting
+namespace ScriptableObj
 {
     /// <summary>
     ///     ステージの情報を保持するScriptableObject
     /// </summary>
-    [CreateAssetMenu(fileName = "ステージ情報", menuName = "ScriptableObj/パラメータ設定/ステージ情報", order = 1)]
+    [CreateAssetMenu(fileName = "ステージ情報", menuName = "ScriptableObj/ステージ情報", order = 1)]
     public class StageData : ScriptableObject
     {
         [Header("ステージID")]
