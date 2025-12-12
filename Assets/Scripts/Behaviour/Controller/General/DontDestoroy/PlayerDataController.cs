@@ -113,6 +113,8 @@ namespace Behaviour.Controller.General.DontDestoroy
             if (!upgradeable) throw new Exception($"{type} is not upgradeable.");
 
             // コスト確認
+            if (curLevel < 0 || curLevel >= upgradeData.Cost.Length)
+                throw new Exception($"Invalid upgrade level {curLevel} for {type}. Cost array length: {upgradeData.Cost.Length}");
             var cost = upgradeData.Cost[curLevel];
             if (PlayerData.CollectedCoinCount < cost)
             {
