@@ -51,7 +51,7 @@ namespace Behaviour.UI.InGame.GravityLimit
             // 既存スプライト削除
             if (_stockImages != null)
                 foreach (var stockSprite in _stockImages)
-                    Destroy(stockSprite);
+                    Destroy(stockSprite.gameObject);
 
             // スプライト配列作成
             _stockImages = new Image[max];
