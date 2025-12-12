@@ -45,12 +45,6 @@ namespace Behaviour.UI.Upgrade
             upgradeMaxOperationsButton.onClick.AddListener(HandlerUpgradeMaxOperations);
             enablePlayerGravChangeButton.onClick.AddListener(HandlerPlayerGravChange);
 
-            // 強化可能出ない場合の処理
-            foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
-            {
-                var upgradeable = _playerDataController.IsUpgradeable(type);
-                if (!upgradeable) DisableButton(type);
-            }
         }
 
         #endregion
@@ -60,16 +54,19 @@ namespace Behaviour.UI.Upgrade
         private void HandlerUpgradeOperationDuration()
         {
             _playerDataController.Upgrade(UpgradeType.OperationDuration);
+            CheckUpgradeable();
         }
 
         private void HandlerUpgradeMaxOperations()
         {
             _playerDataController.Upgrade(UpgradeType.MaxOperationCount);
+            CheckUpgradeable();
         }
 
         private void HandlerPlayerGravChange()
         {
             _playerDataController.Upgrade(UpgradeType.PlayerGravChange);
+            CheckUpgradeable();
         }
 
         #endregion
@@ -89,6 +86,16 @@ namespace Behaviour.UI.Upgrade
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
+            }
+        }
+
+        private void CheckUpgradeable()
+        {
+            // 強化可能出ない場合の処理
+            foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
+            {
+                var upgradeable = _playerDataController.IsUpgradeable(type);
+                if (!upgradeable) DisableButton(type);
             }
         }
     }
