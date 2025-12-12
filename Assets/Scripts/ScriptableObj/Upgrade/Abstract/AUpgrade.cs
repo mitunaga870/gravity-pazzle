@@ -11,7 +11,6 @@ namespace ScriptableObj.Upgrade
 {
     /// <summary>
     ///     アップグレード情報のデータ抽象クラス
-    ///     これのまま使わずに、レベルあるいは飲んレベルの物を使って創こと
     /// </summary>
     public abstract class AUpgrade : ScriptableObject
     {
