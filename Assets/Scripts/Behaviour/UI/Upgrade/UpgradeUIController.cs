@@ -79,13 +79,13 @@ namespace Behaviour.UI.Upgrade
             switch (type)
             {
                 case UpgradeType.OperationDuration:
-                    upgradeOperationDurationButton.enabled = false;
+                    upgradeOperationDurationButton.gameObject.SetActive(false);
                     break;
                 case UpgradeType.MaxOperationCount:
-                    upgradeMaxOperationsButton.enabled = false;
+                    upgradeMaxOperationsButton.gameObject.SetActive(false);
                     break;
                 case UpgradeType.PlayerGravChange:
-                    enablePlayerGravChangeButton.enabled = false;
+                    enablePlayerGravChangeButton.gameObject.SetActive(false);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

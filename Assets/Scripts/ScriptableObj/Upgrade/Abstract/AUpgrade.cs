@@ -48,6 +48,10 @@ namespace ScriptableObj.Upgrade
             var curLevel = playerData.GetLevel(upgradeType);
             var nextLevel = curLevel + 1;
 
+            // コンディションがない場合は問答無用強化
+            if (UpgradeableConditions.Length == 0)
+                return true;
+            
             // nextLevel用のコンディションを取得
             var applyCondition =
                 UpgradeableConditions.First(condition => condition.TargetLevel == nextLevel).ConditionLevels;

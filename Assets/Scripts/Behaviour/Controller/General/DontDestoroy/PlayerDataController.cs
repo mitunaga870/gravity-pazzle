@@ -104,6 +104,7 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         public bool Upgrade(UpgradeType type)
         {
+            var prevPlayerData = PlayerData;
             var upgradeData = GetUpgradeData(type);
             var curLevel = PlayerData.GetLevel(type);
 
@@ -113,7 +114,11 @@ namespace Behaviour.Controller.General.DontDestoroy
 
             // コスト確認
             var cost = upgradeData.Cost[curLevel];
-            if (PlayerData.CollectedCoinCount < cost) return false;
+            if (PlayerData.CollectedCoinCount < cost)
+            {
+                Debug.Log($"Upgrade for {type} is denied for coin. playerData: {PlayerData}");
+                return false;
+            }
 
             // アップグレードの実処理
             if (upgradeData is ParamUpgrade paramUpgrade)
@@ -132,6 +137,8 @@ namespace Behaviour.Controller.General.DontDestoroy
 
             // コイン使用処理
             PlayerData = PlayerData.UseCoin(cost);
+
+            Debug.Log($"Upgraded {prevPlayerData} to {PlayerData}");
 
             return true;
         }
