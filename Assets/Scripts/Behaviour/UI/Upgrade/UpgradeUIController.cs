@@ -72,18 +72,18 @@ namespace Behaviour.UI.Upgrade
 
         #endregion
 
-        private void DisableButton(UpgradeType type)
+        private void SetActiveButton(UpgradeType type, bool enable)
         {
             switch (type)
             {
                 case UpgradeType.OperationDuration:
-                    upgradeOperationDurationButton.gameObject.SetActive(false);
+                    upgradeOperationDurationButton.gameObject.SetActive(enable);
                     break;
                 case UpgradeType.MaxOperationCount:
-                    upgradeMaxOperationsButton.gameObject.SetActive(false);
+                    upgradeMaxOperationsButton.gameObject.SetActive(enable);
                     break;
                 case UpgradeType.PlayerGravChange:
-                    enablePlayerGravChangeButton.gameObject.SetActive(false);
+                    enablePlayerGravChangeButton.gameObject.SetActive(enable);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);
@@ -96,7 +96,7 @@ namespace Behaviour.UI.Upgrade
             foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
             {
                 var upgradeable = _playerDataController.IsUpgradeable(type);
-                if (!upgradeable) DisableButton(type);
+                SetActiveButton(type, upgradeable);
             }
         }
     }
