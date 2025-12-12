@@ -1,11 +1,13 @@
 ﻿#region
 
 using Lib.DataClass.PlayData;
+using UnityEngine;
 
 #endregion
 
 namespace ScriptableObj.Upgrade
 {
+    [CreateAssetMenu(fileName = "強化情報", menuName = "ScriptableObj/強化情報/アクション強化")]
     public class ActionUpgrade : AUpgrade
     {
         public override UpgradeCategory UpgradeCategory => UpgradeCategory.Action;
