@@ -128,7 +128,7 @@ namespace Behaviour.Controller.General.DontDestoroy
                 var nextParam = paramUpgrade.UpgradedParams[curLevel];
                 PlayerData = PlayerData.LevelUpParamUpgrade(type, curLevel + 1, nextParam);
             }
-            else if (upgradeData is ActionUpgrade actionUpgrade)
+            else if (upgradeData is ActionUpgrade)
             {
                 PlayerData = PlayerData.LevelUpActionUpgrade(type);
             }
