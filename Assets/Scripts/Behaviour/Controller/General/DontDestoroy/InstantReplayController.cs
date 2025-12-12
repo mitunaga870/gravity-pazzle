@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using InstantReplay;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 #endregion
 
@@ -59,17 +60,22 @@ namespace Behaviour.Controller.General.DontDestoroy
             instance = this;
             DontDestroyOnLoad(gameObject);
 
+            // 初期化処理
             try
             {
                 _session = RealtimeInstantReplaySession.CreateDefault();
 
                 // ログをテキストに表示
                 Application.logMessageReceived += UpdateDebugLog;
+
+                // 開発ログを非表示にする
+                SceneManager.sceneLoaded += (_, _) => { Debug.developerConsoleVisible = false; };
             }
             catch (Exception e)
             {
                 Debug.LogError($"Failed to initialize InstantReplaySettings: {e}");
             }
+
         }
 
         private void FixedUpdate()
