@@ -82,7 +82,6 @@ namespace Behaviour.UI.InGame.GravityLimit
             // ストック画像を更新
             for (var i = 0; i < _stockImages.Length; i++)
             {
-                
                 // インデックスが残り個数未満なら満タン、それ以上なら空
                 if (i < remainingCount)
                 {
