@@ -45,6 +45,7 @@ namespace Behaviour.UI.Upgrade
             upgradeMaxOperationsButton.onClick.AddListener(HandlerUpgradeMaxOperations);
             enablePlayerGravChangeButton.onClick.AddListener(HandlerPlayerGravChange);
 
+            CheckUpgradeable();
         }
 
         #endregion
