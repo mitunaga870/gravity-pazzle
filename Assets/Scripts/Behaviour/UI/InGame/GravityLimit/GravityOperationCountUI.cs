@@ -32,7 +32,6 @@ namespace Behaviour.UI.InGame.GravityLimit
         private Sprite stockEmptySprite;
 
         private Image[] _stockImages;
-        
 
         private void Start()
         {
