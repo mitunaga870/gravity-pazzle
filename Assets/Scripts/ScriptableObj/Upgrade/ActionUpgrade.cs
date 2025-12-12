@@ -1,6 +1,7 @@
 ﻿#region
 
 using Lib.DataClass.PlayData;
+using ScriptableObj.Upgrade.Abstract;
 using UnityEngine;
 
 #endregion

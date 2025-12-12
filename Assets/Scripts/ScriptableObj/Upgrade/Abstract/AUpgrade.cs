@@ -7,7 +7,7 @@ using UnityEngine;
 
 #endregion
 
-namespace ScriptableObj.Upgrade
+namespace ScriptableObj.Upgrade.Abstract
 {
     /// <summary>
     ///     アップグレード情報のデータ抽象クラス

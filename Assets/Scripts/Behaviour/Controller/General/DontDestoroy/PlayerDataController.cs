@@ -5,6 +5,7 @@ using Lib.DataClass.PlayData;
 using Lib.Logic.General;
 using ScriptableObj;
 using ScriptableObj.Upgrade;
+using ScriptableObj.Upgrade.Abstract;
 using UnityEngine;
 
 #endregion

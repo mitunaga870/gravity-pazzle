@@ -2,6 +2,7 @@
 
 using System;
 using ScriptableObj.Upgrade;
+using ScriptableObj.Upgrade.Abstract;
 
 #endregion
 
