@@ -46,7 +46,7 @@ namespace Behaviour.Player
             if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
 
-            // プレイヤー重力鉛鉱が可能か
+            // プレイヤー重力変更が可能か
             var playerDataController = PlayerDataController.Instance;
             if (playerDataController == null) throw new Exception("PlayerDataController.Instance is not assigned.");
             var playerData = playerDataController.PlayerData;

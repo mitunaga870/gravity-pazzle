@@ -114,6 +114,8 @@ namespace Behaviour.Controller.General.DontDestoroy
             if (!upgradeable) throw new Exception($"{type} is not upgradeable.");
 
             // コスト確認
+            if (curLevel < 0 || curLevel >= upgradeData.Cost.Length)
+                throw new Exception($"Invalid upgrade level {curLevel} for {type}. Cost array length: {upgradeData.Cost.Length}");
             var cost = upgradeData.Cost[curLevel];
             if (PlayerData.CollectedCoinCount < cost)
             {
@@ -129,7 +131,7 @@ namespace Behaviour.Controller.General.DontDestoroy
                 var nextParam = paramUpgrade.UpgradedParams[curLevel];
                 PlayerData = PlayerData.LevelUpParamUpgrade(type, curLevel + 1, nextParam);
             }
-            else if (upgradeData is ActionUpgrade actionUpgrade)
+            else if (upgradeData is ActionUpgrade)
             {
                 PlayerData = PlayerData.LevelUpActionUpgrade(type);
             }
