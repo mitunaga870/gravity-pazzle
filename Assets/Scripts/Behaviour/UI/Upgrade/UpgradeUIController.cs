@@ -92,7 +92,7 @@ namespace Behaviour.UI.Upgrade
 
         private void CheckUpgradeable()
         {
-            // 強化可能出ない場合の処理
+            // 強化可能でない場合の処理
             foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
             {
                 var upgradeable = _playerDataController.IsUpgradeable(type);

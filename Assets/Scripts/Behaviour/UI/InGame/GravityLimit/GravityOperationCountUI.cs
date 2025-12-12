@@ -78,8 +78,6 @@ namespace Behaviour.UI.InGame.GravityLimit
             // テキスト表示を更新
             var remainingCount = maxCount - activeCount;
             countText.text = $"{remainingCount}/{maxCount}";
-
-            // 
             
             // ストック画像を更新
             for (var i = 0; i < _stockImages.Length; i++)
