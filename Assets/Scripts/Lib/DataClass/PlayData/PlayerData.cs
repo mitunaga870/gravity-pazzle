@@ -158,8 +158,8 @@ namespace Lib.DataClass.PlayData
                     nextPlayerData = nextPlayerData.DeserveOperationDuration(nextParam);
                     break;
                 case UpgradeType.MaxOperationCount:
-                    nextPlayerData = DeserveMaxOperationCountLevel(MaxCurrentOperations);
-                    nextPlayerData = nextPlayerData.DeserveMaxOperationCount(MaxCurrentOperations);
+                    nextPlayerData = DeserveMaxOperationCountLevel(nextLevel);
+                    nextPlayerData = nextPlayerData.DeserveMaxOperationCount((int)nextParam);
                     break;
                 default:
                     throw new ArgumentOutOfRangeException(nameof(type), type, null);

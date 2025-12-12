@@ -1,23 +1,28 @@
+#region
+
 using Behaviour.Gravity;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Behaviour.UI
+#endregion
+
+namespace Behaviour.UI.InGame.GravityLimit
 {
     /// <summary>
     /// 重力操作の残り可能回数を表示するUIコンポーネント
     /// テキスト表示とストック画像の両方で視覚的に表現する
     /// </summary>
+    [DefaultExecutionOrder(1)]
     public class GravityOperationCountUI : MonoBehaviour
     {
         [Header("テキスト表示")]
         [SerializeField]
         private TextMeshProUGUI countText;
 
-        [Header("ストック画像")]
+        [Header("ストック画像プレファブ")]
         [SerializeField]
-        private Image[] stockImages;
+        private Image stockPrefab;
 
         [Header("ストックスプライト")]
         [SerializeField]
@@ -25,6 +30,9 @@ namespace Behaviour.UI
 
         [SerializeField]
         private Sprite stockEmptySprite;
+
+        private Image[] _stockImages;
+        
 
         private void Start()
         {
@@ -34,7 +42,21 @@ namespace Behaviour.UI
             manager.OnOperationCountChanged += OnOperationCountChanged;
 
             // 初期状態を設定
+            Initialize(manager.MaxConcurrentOperations);
             UpdateUI(0, manager.MaxConcurrentOperations);
+        }
+
+        private void Initialize(int max)
+        {
+            // 既存スプライト削除
+            if (_stockImages != null)
+                foreach (var stockSprite in _stockImages)
+                    Destroy(stockSprite);
+
+            // スプライト配列作成
+            _stockImages = new Image[max];
+            for (var i = 0; i < max; i++)
+                _stockImages[i] = Instantiate(stockPrefab, transform);
         }
 
         /// <summary>
@@ -50,21 +72,27 @@ namespace Behaviour.UI
         /// </summary>
         private void UpdateUI(int activeCount, int maxCount)
         {
+            if (maxCount != _stockImages.Length)
+                Initialize(maxCount);
+            
             // テキスト表示を更新
             var remainingCount = maxCount - activeCount;
             countText.text = $"{remainingCount}/{maxCount}";
 
+            // 
+            
             // ストック画像を更新
-            for (int i = 0; i < stockImages.Length; i++)
+            for (var i = 0; i < _stockImages.Length; i++)
             {
+                
                 // インデックスが残り個数未満なら満タン、それ以上なら空
                 if (i < remainingCount)
                 {
-                    stockImages[i].sprite = stockFullSprite; // 満タン
+                    _stockImages[i].sprite = stockFullSprite; // 満タン
                 }
                 else
                 {
-                    stockImages[i].sprite = stockEmptySprite; // 空
+                    _stockImages[i].sprite = stockEmptySprite; // 空
                 }
             }
         }
