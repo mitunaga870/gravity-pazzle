@@ -12,17 +12,14 @@ namespace ScriptableObj.Upgrade
     {
         public override UpgradeCategory UpgradeCategory => UpgradeCategory.Action;
 
-        public override bool IsUpgradeable(PlayerData playerData)
+        protected override bool IsUpgradeableForCategory(PlayerData playerData)
         {
             var curLevel = playerData.GetLevel(UpgradeType);
 
             // アクションは0か１しかないので0の時だけ可能
             var allowLevel = curLevel == 0;
 
-            // コンディションも確認
-            var allowCondition = IsUpgradeableCondition(playerData);
-
-            return allowCondition && allowLevel;
+            return allowLevel;
         }
     }
 }

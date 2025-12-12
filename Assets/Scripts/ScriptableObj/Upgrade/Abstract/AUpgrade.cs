@@ -38,12 +38,11 @@ namespace ScriptableObj.Upgrade
         public abstract UpgradeCategory UpgradeCategory { get; }
 
         /// <summary>
-        ///     設定したアップグレード可能バージョンに対応しているか確認する
-        ///     対応レベルかどうかの判断はそれぞれのカテゴリでやること
+        ///     アップグレード可能か判断する.
         /// </summary>
         /// <param name="playerData"></param>
         /// <returns></returns>
-        protected bool IsUpgradeableCondition(PlayerData playerData)
+        public bool IsUpgradeable(PlayerData playerData)
         {
             var curLevel = playerData.GetLevel(upgradeType);
             var nextLevel = curLevel + 1;
@@ -62,18 +61,29 @@ namespace ScriptableObj.Upgrade
                 var otherLevel = playerData.GetLevel(type);
                 var borderLevel = applyCondition[type];
 
-                if (otherLevel < borderLevel) return false;
+                if (otherLevel < borderLevel)
+                {
+                    Debug.Log($"Upgrade for {upgradeType} dont meet condition for {type}: {otherLevel}");
+                    return false;
+                }
+            }
+
+            // カテゴリ独自のチェック
+            if (!IsUpgradeableForCategory(playerData))
+            {
+                Debug.Log($"Upgrade for {upgradeType} was failed Category Check.");
+                return false;
             }
 
             return true;
         }
 
         /// <summary>
-        ///     アップグレード可能か判断する
+        /// アップグレード可能かをそれぞれのカテゴリごとに判別する
         /// </summary>
         /// <param name="playerData"></param>
         /// <returns></returns>
-        public abstract bool IsUpgradeable(PlayerData playerData);
+        protected abstract bool IsUpgradeableForCategory(PlayerData playerData);
     }
 
     public enum UpgradeCategory

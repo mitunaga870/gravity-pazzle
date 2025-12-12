@@ -21,7 +21,7 @@ namespace ScriptableObj.Upgrade
 
         public float[] UpgradedParams => upgradedParams;
 
-        public override bool IsUpgradeable(PlayerData playerData)
+        protected override bool IsUpgradeableForCategory(PlayerData playerData)
         {
             var nextLevel = playerData.GetLevel(UpgradeType) + 1;
 
