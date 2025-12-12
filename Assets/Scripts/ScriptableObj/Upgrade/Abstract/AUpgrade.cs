@@ -47,24 +47,24 @@ namespace ScriptableObj.Upgrade
             var curLevel = playerData.GetLevel(upgradeType);
             var nextLevel = curLevel + 1;
 
-            // コンディションがない場合は問答無用強化
-            if (UpgradeableConditions.Length == 0)
-                return true;
-            
-            // nextLevel用のコンディションを取得
-            var applyCondition =
-                UpgradeableConditions.First(condition => condition.TargetLevel == nextLevel).ConditionLevels;
-
-            // 実際のチェック
-            foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
+            // アップグレードコンディションの確認
+            if (UpgradeableConditions.Length > 0)
             {
-                var otherLevel = playerData.GetLevel(type);
-                var borderLevel = applyCondition[type];
+                // nextLevel用のコンディションを取得
+                var applyCondition =
+                    UpgradeableConditions.First(condition => condition.TargetLevel == nextLevel).ConditionLevels;
 
-                if (otherLevel < borderLevel)
+                // 実際のチェック
+                foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
                 {
-                    Debug.Log($"Upgrade for {upgradeType} dont meet condition for {type}: {otherLevel}");
-                    return false;
+                    var otherLevel = playerData.GetLevel(type);
+                    var borderLevel = applyCondition[type];
+
+                    if (otherLevel < borderLevel)
+                    {
+                        Debug.Log($"Upgrade for {upgradeType} dont meet condition for {type}: {otherLevel}");
+                        return false;
+                    }
                 }
             }
 
