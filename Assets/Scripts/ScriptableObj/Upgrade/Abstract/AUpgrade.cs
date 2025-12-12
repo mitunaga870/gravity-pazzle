@@ -47,13 +47,15 @@ namespace ScriptableObj.Upgrade
             var curLevel = playerData.GetLevel(upgradeType);
             var nextLevel = curLevel + 1;
 
+            // nextLevel用のコンディションを取得
+            var applyConditionClass =
+                UpgradeableConditions.FirstOrDefault(condition => condition.TargetLevel == nextLevel);
+                
             // アップグレードコンディションの確認
-            if (UpgradeableConditions.Length > 0)
+            if (applyConditionClass != null)
             {
-                // nextLevel用のコンディションを取得
-                var applyCondition =
-                    UpgradeableConditions.First(condition => condition.TargetLevel == nextLevel).ConditionLevels;
-
+                var applyCondition = applyConditionClass.ConditionLevels;
+                
                 // 実際のチェック
                 foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
                 {

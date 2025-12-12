@@ -25,6 +25,8 @@ namespace ScriptableObj.Upgrade
         private UpgradeableConditionValue conditionLevels;
 
         public UpgradeableConditionValue ConditionLevels => conditionLevels;
+
+        public int this[UpgradeType type] => throw new NotImplementedException();
     }
 
     /// <summary>
