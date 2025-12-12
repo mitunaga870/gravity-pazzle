@@ -62,7 +62,7 @@ namespace ScriptableObj.Upgrade
 
                     if (otherLevel < borderLevel)
                     {
-                        Debug.Log($"Upgrade for {upgradeType} dont meet condition for {type}: {otherLevel}");
+                        Debug.Log($"Upgrade for {upgradeType} dose not meet condition for {type}: {otherLevel}");
                         return false;
                     }
                 }
