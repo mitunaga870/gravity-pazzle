@@ -13,7 +13,7 @@ namespace Lib.Logic
         {
             return upgradeType switch
             {
-                UpgradeType.OperationDuration or UpgradeType.MaxOperationCount => UpgradeCategory.Pram,
+                UpgradeType.OperationDuration or UpgradeType.MaxOperationCount => UpgradeCategory.Param,
                 UpgradeType.PlayerGravChange => UpgradeCategory.Action,
                 _ => throw new ArgumentOutOfRangeException(nameof(upgradeType), upgradeType, null)
             };

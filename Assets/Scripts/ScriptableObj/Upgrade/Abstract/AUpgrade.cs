@@ -90,7 +90,7 @@ namespace ScriptableObj.Upgrade
 
     public enum UpgradeCategory
     {
-        Pram,
+        Param,
         Action
     }
 }
