@@ -123,6 +123,8 @@ namespace Behaviour.Controller.General.DontDestoroy
             // アップグレードの実処理
             if (upgradeData is ParamUpgrade paramUpgrade)
             {
+                if (curLevel < -1 || curLevel > paramUpgrade.UpgradedParams.Length)
+                    throw new Exception($"Upgrade for {type} is invalid. playerData: {PlayerData}");
                 var nextParam = paramUpgrade.UpgradedParams[curLevel];
                 PlayerData = PlayerData.LevelUpParamUpgrade(type, curLevel + 1, nextParam);
             }
