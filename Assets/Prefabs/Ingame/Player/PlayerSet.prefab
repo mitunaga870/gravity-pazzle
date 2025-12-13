@@ -461,6 +461,10 @@ PrefabInstance:
       propertyPath: m_AABB.m_Extent.z
       value: 0.015805569
       objectReference: {fileID: 0}
+    - target: {fileID: 2335709141799842928, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: d2085175088e2324aa9dfbbf85109084, type: 2}
     - target: {fileID: 2563289230269948231, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
       propertyPath: m_DirtyAABB
       value: 0
@@ -1934,6 +1938,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2208768241884505851, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1297593171023284166}
+    - targetCorrespondingSourceObject: {fileID: 2208768241884505851, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8417165897814375409}
   m_SourcePrefab: {fileID: 100100000, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
 --- !u!1 &2301532473929362949 stripped
 GameObject:
@@ -1953,7 +1960,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerRigidBody: {fileID: 54094475077700751}
-  playerAnimator: {fileID: 2395259155502464142}
   playerCam: {fileID: 5635841674536581256}
   input: {fileID: 0}
   changeableGrav: 1
@@ -2060,11 +2066,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d54d0b516814911841d2f09850d131d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &2395259155502464142 stripped
-Animator:
-  m_CorrespondingSourceObject: {fileID: 2335709141799842928, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
-  m_PrefabInstance: {fileID: 96740067705702654}
+--- !u!114 &8417165897814375409
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2301532473929362949}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 014450892c6d4fa7b8e3d62247b88297, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &5207842911342506549 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5265351303852096203, guid: 32030b9bfe8ce124ca433f05724974fb, type: 3}
