@@ -28,8 +28,4 @@
   <Project Path="UniHumanoid.Editor.Tests.csproj" />
   <Project Path="VRMShaders.VRM.IO.Editor.csproj" />
   <Project Path="UniGLTF.Samples.ScreenSpace.csproj" />
-  <Project Path="Assembly-CSharp.csproj" />
-  <Project Path="lilToon.Editor.csproj" />
-  <Project Path="Assembly-CSharp-Editor.csproj" />
-  <Project Path="lilToon.Editor.External.csproj" />
 </Solution>

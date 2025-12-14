@@ -494,7 +494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 739175621099244446, guid: ccadee3f427d38d4fa06248363a4b268, type: 3}
       propertyPath: m_stiffnessForce
-      value: 1.25
+      value: 1.5
       objectReference: {fileID: 0}
     - target: {fileID: 739175621099244446, guid: ccadee3f427d38d4fa06248363a4b268, type: 3}
       propertyPath: RootBones.Array.size
@@ -1573,7 +1573,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: 
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 0.45
+  m_stiffnessForce: 2.3
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.8
@@ -1600,7 +1600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u30B9\u30AB\u30FC\u30C8"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 1
+  m_stiffnessForce: 1.5
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.4
@@ -1647,10 +1647,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u30EA\u30E5\u30C3\u30AF"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 2
-  m_gravityPower: 0.6
+  m_stiffnessForce: 4
+  m_gravityPower: 2
   m_gravityDir: {x: 0, y: -1, z: 0}
-  m_dragForce: 0.7
+  m_dragForce: 0.5
   m_center: {fileID: 0}
   RootBones:
   - {fileID: 675998722}
@@ -1671,7 +1671,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u8896\u30EA\u30DC\u30F3"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 0.45
+  m_stiffnessForce: 0.6
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.7
@@ -1696,7 +1696,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u4E0A\u7740"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 1
+  m_stiffnessForce: 1.5
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.4
@@ -1726,7 +1726,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u30EA\u30DC\u30F3"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 0.45
+  m_stiffnessForce: 0.6
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.7
@@ -1754,7 +1754,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_comment: "\u30DE\u30F3\u30C8"
   m_gizmoColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
-  m_stiffnessForce: 0.5
+  m_stiffnessForce: 1
   m_gravityPower: 0
   m_gravityDir: {x: 0, y: -1, z: 0}
   m_dragForce: 0.5
