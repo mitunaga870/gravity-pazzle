@@ -54,6 +54,8 @@ namespace Behaviour.Player.Abstract
         protected bool HasCam { get; private set; }
         protected PlayerCam PlayerCam { get; private set; }
 
+        protected Rigidbody PlayerRigidBody => playerRigidBody;
+
         #endregion
 
         #region Private Fields

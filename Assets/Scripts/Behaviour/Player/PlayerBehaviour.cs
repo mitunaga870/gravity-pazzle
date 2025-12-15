@@ -77,6 +77,23 @@ namespace Behaviour.Player
                 if (playerVGrav != null) playerVGrav.UnsetGravAffected();
             }
 
+            // 落下方向速度を取得
+            var velocity = PlayerRigidBody.linearVelocity;
+            var gravDirection = GravUtils.GetGravDirectionUnit(GravBehaviour.GravType);
+            var fallVelocity = Vector3.Dot(velocity, gravDirection);
+            const float fallThreshold = 0.1f;
+            // 重力変更中かどうか
+            var isGravChanging = GravBehaviour.IsGravAdapting;
+            // 接地しているか
+            var isGrounded = Physics.Raycast(transform.position, gravDirection, gravDirection.magnitude);
+            // 落下しているか
+            var isFalling =
+                (fallVelocity > fallThreshold && !isGrounded) ||
+                (!isGrounded && isGravChanging);
+
+            // 落下をアニメーションに通知
+            _animBehaviour.IsFalling(isFalling);
+
             // カメラに位置を通知
             PlayerCam.SetPlayerPosAndGrav(transform, GravBehaviour.GravType);
         }
