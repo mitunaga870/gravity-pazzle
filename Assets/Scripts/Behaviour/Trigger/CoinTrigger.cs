@@ -21,9 +21,11 @@ namespace Behaviour.Trigger
 
         private bool _collected;
 
-        private CoinTrigger()
+        private void OnValidate()
         {
-            coinId = Guid.NewGuid().ToString();
+            // エディタの変更時、IDが空なら作成する
+            if (coinId == "")
+                coinId = Guid.NewGuid().ToString();
         }
 
         private void Awake()
