@@ -83,6 +83,7 @@ namespace Behaviour.Trigger
         public string CoinId => coinId;
     }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(CoinTrigger))]
     public class CoinTriggerGUI : Editor
     {
@@ -98,4 +99,5 @@ namespace Behaviour.Trigger
             }
         }
     }
+#endif
 }
