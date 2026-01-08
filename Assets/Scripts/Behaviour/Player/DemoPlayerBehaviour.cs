@@ -88,7 +88,7 @@ namespace Behaviour.Player
         
         #region APlayerBehaviour Methods
 
-        protected override Vector3 GetMoveDirection(float deltaTime)
+        protected override Vector3 GetMoveSpeed()
         {
             // WASDキーの入力を取得
 
@@ -113,6 +113,7 @@ namespace Behaviour.Player
                 GravBehaviour.GravType
             );            
             // 移動速度を掛けて、時間を掛ける
+            var deltaTime = Time.deltaTime;
             moveDirection *= Speed * deltaTime;
             
             return moveDirection;

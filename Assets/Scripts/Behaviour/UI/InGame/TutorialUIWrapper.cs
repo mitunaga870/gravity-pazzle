@@ -166,7 +166,7 @@ namespace Behaviour.UI
             // チュートリアル状態に応じて条件を満たしている時間を計測
             if (
                 (_currentState == TutorialState.MoveAndCam &&
-                 demoPlayerBehaviour.IsMoved && playerCam.IsMoved) ||
+                 demoPlayerBehaviour.IsFirstMoved && playerCam.IsMoved) ||
                 (_currentState == TutorialState.GravChange &&
                  vGravBehaviour.IsGravChanged) ||
                 (_currentState == TutorialState.TargetGravChange &&

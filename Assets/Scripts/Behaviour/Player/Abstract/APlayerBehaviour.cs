@@ -24,8 +24,6 @@ namespace Behaviour.Player.Abstract
         [SerializeField]
         private Rigidbody playerRigidBody;
         
-        [SerializeField]
-        private Animator playerAnimator;
         
         [SerializeField]
         [Obsolete("カメラはStageDataControllerから取得するようになりました。")]
@@ -41,7 +39,7 @@ namespace Behaviour.Player.Abstract
 
         // チュートリアル用の状態プロパティ
         // プレイヤーが移動したかどうか
-        public bool IsMoved { get; private set; }
+        public bool IsFirstMoved { get; private set; }
 
         // チュートリアル用の状態フィールド
         // ターゲットの重力方向を変更したか
@@ -55,7 +53,17 @@ namespace Behaviour.Player.Abstract
 
         protected bool HasCam { get; private set; }
         protected PlayerCam PlayerCam { get; private set; }
-        
+
+        protected Rigidbody PlayerRigidBody => playerRigidBody;
+
+        #endregion
+
+        #region Private Fields
+
+        private const float AccelerationTime = 0.2f;
+
+        private bool _wasMoved;
+        private float _acceleratedTime;
 
         #endregion
 
@@ -66,8 +74,6 @@ namespace Behaviour.Player.Abstract
             // SerializeFieldで設定されているかを確認
             if (playerRigidBody == null)
                 Debug.LogError("Player Rigidbody is not assigned.");
-            if (playerAnimator == null)
-                Debug.LogError("Player Animator is not assigned.");
             if (input == null)
                 Debug.LogError("InputController is not assigned.");
 
@@ -91,32 +97,22 @@ namespace Behaviour.Player.Abstract
                 return;
             
             // プレイヤーの移動
-            var moveDirection = GetMoveDirection(Time.deltaTime);
-            playerRigidBody.MovePosition(playerRigidBody.position + moveDirection);
+            var moveSpeed = GetMoveSpeed();
+            playerRigidBody.MovePosition(transform.position + moveSpeed * Time.deltaTime);
 
             // 移動したかどうかを更新
-            IsMoved = IsMoved || moveDirection != Vector3.zero;
-            
+            IsFirstMoved = IsFirstMoved || moveSpeed != Vector3.zero;
+
             // 速度があれば、移動方向を向く
-            if (moveDirection != Vector3.zero)
+            if (moveSpeed != Vector3.zero)
             {
                 // 値が小さいとLookRotationでエラーになるため、適当な数をかける
-                var adjustedMoveDirection = moveDirection * 1000f;
+                var adjustedMoveDirection = moveSpeed * 1000f;
                 var upDirection = playerRigidBody.transform.up;
                 var targetRotation = Quaternion.LookRotation(adjustedMoveDirection, upDirection);
 
                 // Sharpを使わず、一発で回転させる
                 playerRigidBody.transform.rotation = targetRotation;
-                
-                // アニメーションの更新
-                playerAnimator.SetBool("Walk", true);
-                playerAnimator.SetBool("Idle", false);
-            }
-            else
-            {
-                // アニメーションの更新
-                playerAnimator.SetBool("Walk", false);
-                playerAnimator.SetBool("Idle", true);
             }
         }
 
@@ -125,6 +121,6 @@ namespace Behaviour.Player.Abstract
         /**
          * 移動ベクトルを取得する
          */
-        protected abstract Vector3 GetMoveDirection(float deltaTime);
+        protected abstract Vector3 GetMoveSpeed();
     }
 }
