@@ -144,7 +144,15 @@ namespace Lib.Logic.General
             var directoryPath = BaseSavePath;
 
             if (Directory.Exists(directoryPath))
-                // Settingsフォルダを除外して削除
+            {
+                // 内部のJsonファイルを削除
+                foreach (var file in Directory.GetFiles(directoryPath))
+                {
+                    File.Delete(file);
+                    Debug.Log($"Deleted save data at {file}");
+                }
+
+                // Settingsフォルダを除外してディレクトリを削除
                 foreach (var dir in Directory.GetDirectories(directoryPath))
                 {
                     if (Path.GetFileName(dir) == "Settings") continue;
@@ -152,6 +160,7 @@ namespace Lib.Logic.General
                     Directory.Delete(dir, true);
                     Debug.Log($"Deleted play data directory at {dir}");
                 }
+            }
             else
                 Debug.LogWarning($"No play data directory found to delete at {directoryPath}");
         }

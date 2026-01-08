@@ -7,7 +7,7 @@ using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Lib.DataClass.PlayData;
 using Lib.Logic.General;
-using ScriptableObj.Setting;
+using ScriptableObj;
 using UnityEngine;
 
 #endregion

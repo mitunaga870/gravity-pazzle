@@ -27,9 +27,6 @@ namespace Behaviour.Player
 
         private PlayerKey PlayerKey => SettingDataController.Instance.PlayerKey;
 
-        [Header("プレイヤー設定")]
-        [SerializeField]
-        private bool changeableGrav = true;
 
         [Header("参照用")]
 
@@ -40,6 +37,8 @@ namespace Behaviour.Player
         private GravType _targetGravType = GravType.XNegative;
         private PlayerAnimBehaviour _animBehaviour;
 
+        private bool _changeableGrav;
+
         #region Unity Methods
 
         private new void Start()
@@ -48,6 +47,14 @@ namespace Behaviour.Player
 
             if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
+
+            // プレイヤー重力変更が可能か
+            var playerDataController = PlayerDataController.Instance;
+            if (playerDataController == null) throw new Exception("PlayerDataController.Instance is not assigned.");
+            var playerData = playerDataController.PlayerData;
+            if (playerData == null) throw new Exception("PlayerDataController.PlayerData is not assigned.");
+            _changeableGrav = playerData.PlayerGravChangeLevel >= 1;
+            
             _animBehaviour = GetComponent<PlayerAnimBehaviour>();
         }
 
@@ -64,14 +71,14 @@ namespace Behaviour.Player
             SetGravDirection();
 
             // スペースキーでプレイヤーの重力を設定済み方向に変更
-            if (input.GetKeyDown(PlayerKey.SetPlayerGravKey) && changeableGrav)
+            if (input.GetKeyDown(PlayerKey.SetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
                 if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);
             }
 
             // 元に戻す
-            if (input.GetKeyDown(PlayerKey.UnsetPlayerGravKey) && changeableGrav)
+            if (input.GetKeyDown(PlayerKey.UnsetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
                 if (playerVGrav != null) playerVGrav.UnsetGravAffected();

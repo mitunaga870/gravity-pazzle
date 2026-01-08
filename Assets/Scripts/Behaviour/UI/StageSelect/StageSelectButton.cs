@@ -2,7 +2,7 @@
 
 using System.Collections.Generic;
 using Coffee.UIEffects;
-using ScriptableObj.Setting;
+using ScriptableObj;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
