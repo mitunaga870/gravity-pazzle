@@ -72,7 +72,7 @@ Camera:
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 32
+    m_Bits: 256
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 8400000, guid: cd2399663be7af24b92652196fba3fc2, type: 2}
   m_TargetDisplay: 0
@@ -175,7 +175,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5666190655380365937, guid: 859ceb47fd349f44eb28c7025c07f6da, type: 3}
       propertyPath: m_Layer
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 6029440304664869559, guid: 859ceb47fd349f44eb28c7025c07f6da, type: 3}
       propertyPath: m_LocalPosition.x
@@ -219,7 +219,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7094517982656191234, guid: 859ceb47fd349f44eb28c7025c07f6da, type: 3}
       propertyPath: m_Layer
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 9136937491963786108, guid: 859ceb47fd349f44eb28c7025c07f6da, type: 3}
       propertyPath: m_Name
@@ -227,7 +227,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9136937491963786108, guid: 859ceb47fd349f44eb28c7025c07f6da, type: 3}
       propertyPath: m_Layer
-      value: 5
+      value: 8
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
