@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 8206529474041302942}
   - component: {fileID: 1100010641362099812}
   - component: {fileID: 6048198544833964703}
+  - component: {fileID: 94683924922980222}
   m_Layer: 5
   m_Name: Row Temp
   m_TagString: Untagged
@@ -228,6 +229,20 @@ MonoBehaviour:
   m_DetailTexSpeed: {x: 0, y: 0}
   m_CustomRoot: {fileID: 0}
   m_Flip: 0
+--- !u!114 &94683924922980222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 879860365207560792}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acd2ff8131da450fa771f6ddb6e736df, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  description: 
+  descriptionText: {fileID: 0}
 --- !u!1 &8432896813357973408
 GameObject:
   m_ObjectHideFlags: 0
