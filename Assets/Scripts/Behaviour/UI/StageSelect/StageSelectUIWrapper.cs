@@ -42,9 +42,13 @@ namespace Behaviour.UI.StageSelect
 
         #endregion
 
-        private int _curPage = 0;
+        private int _curPage;
 
-        private List<GameObject> _stageBtnCache = new();
+        private readonly List<GameObject> _stageBtnCache = new();
+
+        public readonly string _defaultStageName = "ステージを選択";
+
+        public readonly string _defaultStageTitle = "どこへ配達しよう";
 
         private void Start()
         {
@@ -55,6 +59,10 @@ namespace Behaviour.UI.StageSelect
             if (nextButtonComponent != null) nextButtonComponent.onClick.AddListener(GoNext);
             var prevButtonComponent = previousButton.GetComponent<Button>();
             if (prevButtonComponent != null) prevButtonComponent.onClick.AddListener(GoPrevious);
+            
+            // デフォルトテキスト適用
+            hoverStageTitleText.text = _defaultStageTitle;
+            hoverStageNameText.text = _defaultStageName;
         }
 
         /// <summary>
@@ -89,7 +97,15 @@ namespace Behaviour.UI.StageSelect
                 
                 var button = child.GetComponent<StageSelectButton>();
                 if (button == null) throw new Exception("Stage Select Button のプレファブにStage Select Buttonがありません");
-                button.Initialize(stage, i + 1, hoverStageNameText, hoverStageTitleText, hoverStageThumbnailImage);
+                button.Initialize(
+                    stage,
+                    i + 1,
+                    hoverStageNameText,
+                    hoverStageTitleText,
+                    hoverStageThumbnailImage,
+                    _defaultStageName,
+                    _defaultStageTitle
+                );
                 
                 // 子要素を取得しずらす
                 switch (i)

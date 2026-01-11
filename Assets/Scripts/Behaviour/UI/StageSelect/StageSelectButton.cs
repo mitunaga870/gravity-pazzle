@@ -60,6 +60,10 @@ namespace Behaviour.UI.StageSelect
         // 渡された情報
         private StageData _stage;
         private int _stageNumber;
+        
+        // ホバー解除時のテキスト
+        private string _defaultStageName;
+        private string _defaultStageTitle;
 
         private void Awake()
         {
@@ -122,8 +126,8 @@ namespace Behaviour.UI.StageSelect
             _stageThumbnail.gameObject.SetActive(false);
 
             // ホバー中のステージ名・説明文をクリア
-            _hoverStageNameText.text = string.Empty;
-            _hoverStageTitleText.text = string.Empty;
+            _hoverStageNameText.text = _defaultStageName;
+            _hoverStageTitleText.text = _defaultStageName;
             
             // 見た目変更
             _backGround.sprite = defaultSprite;
@@ -155,16 +159,20 @@ namespace Behaviour.UI.StageSelect
             int stageNumber,
             TMP_Text hoverStageNameText,
             TMP_Text hoverStageTitleText,
-            Image thumbnailImage
+            Image thumbnailImage,
+            string defaultStageName,
+            string defaultStageTitle
         )
         {
-            stageId.text = $"STG {stageNumber}";
+            stageId.text = $"ステージ {stageNumber}";
             stageTitle.text = stage.DisplayName;
             _stage = stage;
             _stageNumber = stageNumber;
             _hoverStageNameText = hoverStageNameText;
             _hoverStageTitleText = hoverStageTitleText;
             _stageThumbnail = thumbnailImage;
+            _defaultStageName = defaultStageName;
+            _defaultStageTitle = defaultStageTitle;
         }
 
         /// <summary>
