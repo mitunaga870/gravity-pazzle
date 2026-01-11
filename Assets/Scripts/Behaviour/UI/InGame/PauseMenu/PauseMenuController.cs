@@ -3,7 +3,7 @@
 using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
-using Behaviour.UI.Settings;
+using Behaviour.UI.General.Settings;
 using Lib.State.Scene;
 using UnityEngine;
 using UnityEngine.UI;
