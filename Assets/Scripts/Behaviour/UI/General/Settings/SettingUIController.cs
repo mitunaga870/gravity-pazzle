@@ -2,13 +2,10 @@
 
 using System;
 using System.Collections.Generic;
-using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Lib.DataClass.Settings.GravSelectMethod;
 using Lib.Logic.General;
-using Lib.State.Scene;
-using ScriptableObj.Setting;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -17,7 +14,7 @@ using Resolution = ScriptableObj.Setting.Resolution;
 
 #endregion
 
-namespace Behaviour.UI.General.Settings
+namespace Behaviour.UI.Settings
 {
     /// <summary>
     ///     設置UIのコントローラー
@@ -31,7 +28,7 @@ namespace Behaviour.UI.General.Settings
         [SerializeField]
         private List<Resolution> resolutions;
 
-        [Header("フォーム要素")]
+        [Header("UI要素")]
         [SerializeField]
         private TMP_Dropdown resolutionDropdown;
 
@@ -53,44 +50,11 @@ namespace Behaviour.UI.General.Settings
         [SerializeField]
         private Button resetButton;
 
-        [Header("概要用ホバー検知オブジェクト")]
-        [SerializeField]
-        private DescriptionLinker resolutionLinker;
-
-        [SerializeField]
-        private DescriptionLinker masterVolLinker;
-
-        [SerializeField]
-        private DescriptionLinker bgmVolLinker;
-
-        [SerializeField]
-        private DescriptionLinker seVolLinker;
-
-        [SerializeField]
-        private DescriptionLinker tutorialLinker;
-
-        [SerializeField]
-        private DescriptionLinker gravSelectMethodLinker;
-
-        [SerializeField]
-        private DescriptionLinker resetButtonLinker;
-
-        [Header("概要要素")]
-        [SerializeField]
-        private TMP_Text descriptionText;
-
-        [SerializeField]
-        private SettingDescription descriptionData;
-        
         #endregion
 
         private static SettingDataController SettingDataController => SettingDataController.Instance;
 
         private List<Resolution> curResolutions = new();
-
-        private InputController _inputController;
-
-        private SceneStateController _sceneStateController;
 
         #region Unity Methods
 
@@ -108,25 +72,6 @@ namespace Behaviour.UI.General.Settings
             // ドロップダウンの初期化
             SetupResolutionDropdown();
             SetupGravSelectMethodDropdown();
-
-            // 概要のリンク
-            resolutionLinker.Setup(descriptionData.ResolutionDescription, descriptionText);
-            masterVolLinker.Setup(descriptionData.MasterVolumeDescription, descriptionText);
-            bgmVolLinker.Setup(descriptionData.BgmVolumeDescription, descriptionText);
-            seVolLinker.Setup(descriptionData.SeVolumeDescription, descriptionText);
-            tutorialLinker.Setup(descriptionData.TutorialToggleDescription, descriptionText);
-            gravSelectMethodLinker.Setup(descriptionData.GravSelectMethodDescription, descriptionText);
-            resetButtonLinker.Setup(descriptionData.ResetDescription, descriptionText);
-
-            _inputController = InputController.Instance;
-            _sceneStateController = SceneStateController.Instance;
-        }
-
-        private void Update()
-        {
-            // ESCで閉じる
-            if (_inputController.GetKey(KeyCode.Escape, SceneState.Setting))
-                HideSettings();
         }
 
         #endregion
@@ -263,18 +208,12 @@ namespace Behaviour.UI.General.Settings
         {
             gameObject.SetActive(true);
 
-            // ステート変更
-            _sceneStateController.ChangeSceneState(SceneState.Setting);
-
             // 現在の設定をUIに反映
             LoadCurrentSettings();
         }
 
         public void HideSettings()
         {
-            // ステート変更
-            _sceneStateController.ReturnPrevSceneState();
-            
             gameObject.SetActive(false);
         }
 

@@ -13,24 +13,15 @@ namespace Behaviour.Controller.General
     ///     ゲーム状況とかでキー判定するために処理を集約する。
     ///     状態操作も必須とする
     /// </summary>
+    [RequireComponent(typeof(SceneStateController))]
     public class InputController : MonoBehaviour
     {
-        public static InputController Instance { get; private set; }
-
-        private void Awake()
-        {
-            if (Instance != null)
-            {
-                Destroy(gameObject);
-                return;
-            }
-
-            Instance = this;
-        }
+        [SerializeField]
+        private SceneStateController sceneStateController;
 
         public string InputString => Input.inputString;
 
-        private SceneStateContext StateContext => SceneStateController.Instance.Context;
+        private SceneStateContext StateContext => sceneStateController.Context;
 
         #region GetKey
 

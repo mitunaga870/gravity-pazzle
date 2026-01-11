@@ -67,8 +67,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\u8A2D\u5B9A\u7A2E\u985E"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: be65d05f2a1ea7f4892930b1c96bf1a6, type: 2}
-  m_sharedMaterial: {fileID: -7392836139572363163, guid: be65d05f2a1ea7f4892930b1c96bf1a6, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
+  m_sharedMaterial: {fileID: 2405482600420970453, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -92,8 +92,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 26
-  m_fontSizeBase: 26
+  m_fontSize: 48
+  m_fontSizeBase: 48
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18

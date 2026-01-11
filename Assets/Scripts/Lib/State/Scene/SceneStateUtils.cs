@@ -1,10 +1,4 @@
-﻿#region
-
-using System;
-
-#endregion
-
-namespace Lib.State.Scene
+﻿namespace Lib.State.Scene
 {
     public static class SceneStateUtils
     {
@@ -20,8 +14,7 @@ namespace Lib.State.Scene
                 SceneState.InGame => new InGame(),
                 SceneState.Pause => new Pause(),
                 SceneState.Instruction => new Instruction(),
-                SceneState.Setting => new Setting(),
-                _ => throw new NotImplementedException("Unknown scene state")
+                _ => null
             };
         }
     }
