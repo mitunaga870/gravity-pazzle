@@ -91,7 +91,6 @@ namespace Behaviour.Player
         protected override Vector3 GetMoveDirection(float deltaTime)
         {
             // WASDキーの入力を取得
-
             var xInput = input.GetKey(PlayerKey.MoveForwardKey, SceneState.InGame);
             var zInput = input.GetKey(PlayerKey.MoveBackwardKey, SceneState.InGame);
             var yInput = input.GetKey(PlayerKey.MoveLeftKey, SceneState.InGame);

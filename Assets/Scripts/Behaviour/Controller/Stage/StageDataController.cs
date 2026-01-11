@@ -107,6 +107,7 @@ namespace Behaviour.Controller.Stage
 
         public TimeSpan PlayTime { get; set; }
 
+        [NonSerialized]
         public bool DontSaveOnDestroy;
 
         public APlayerBehaviour PlayerBehaviour { get; private set; }
