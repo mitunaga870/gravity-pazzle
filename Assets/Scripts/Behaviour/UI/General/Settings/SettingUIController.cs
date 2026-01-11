@@ -2,11 +2,12 @@
 
 using System;
 using System.Collections.Generic;
+using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
-using Behaviour.UI.General;
 using Lib.DataClass.Settings.GravSelectMethod;
 using Lib.Logic.General;
+using Lib.State.Scene;
 using ScriptableObj.Setting;
 using TMPro;
 using UnityEngine;
@@ -16,7 +17,7 @@ using Resolution = ScriptableObj.Setting.Resolution;
 
 #endregion
 
-namespace Behaviour.UI.Settings
+namespace Behaviour.UI.General.Settings
 {
     /// <summary>
     ///     設置UIのコントローラー
@@ -25,6 +26,13 @@ namespace Behaviour.UI.Settings
     public class SettingUIController : MonoBehaviour
     {
         #region Serialized Fields
+
+        [Header("必要コントローラー")]
+        [SerializeField]
+        private SceneStateController sceneStateController;
+
+        [SerializeField]
+        private InputController inputController;
 
         [Header("解像度プリセット")]
         [SerializeField]
@@ -112,6 +120,13 @@ namespace Behaviour.UI.Settings
             tutorialLinker.Setup(descriptionData.TutorialToggleDescription, descriptionText);
             gravSelectMethodLinker.Setup(descriptionData.GravSelectMethodDescription, descriptionText);
             resetButtonLinker.Setup(descriptionData.ResetDescription, descriptionText);
+        }
+
+        private void Update()
+        {
+            // ESCで閉じる
+            if (inputController.GetKey(KeyCode.Escape, SceneState.Setting))
+                HideSettings();
         }
 
         #endregion
@@ -248,12 +263,18 @@ namespace Behaviour.UI.Settings
         {
             gameObject.SetActive(true);
 
+            // ステート変更
+            sceneStateController.ChangeSceneState(SceneState.Setting);
+
             // 現在の設定をUIに反映
             LoadCurrentSettings();
         }
 
         public void HideSettings()
         {
+            // ステート変更
+            sceneStateController.ReturnPrevSceneState();
+            
             gameObject.SetActive(false);
         }
 

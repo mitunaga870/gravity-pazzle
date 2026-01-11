@@ -20,6 +20,8 @@ namespace Behaviour.Controller.General
         [SerializeField]
         private SceneState initialState;
 
+        private ISceneState _prev;
+        
         #region Unity Methods
 
         private void Awake()
@@ -42,8 +44,19 @@ namespace Behaviour.Controller.General
         {
             Context ??= new SceneStateContext(
                 SceneStateUtils.GenerateState(initialState));
+
+            _prev = Context.CurrentState;
             // 状態を変更する
             Context.Change(SceneStateUtils.GenerateState(next), forceChange);
+        }
+
+        /// <summary>
+        ///     一個前のシーンに遷移する
+        /// </summary>
+        public void ReturnPrevSceneState(bool forceChange = false)
+        {
+            Context ??= new SceneStateContext(SceneStateUtils.GenerateState(initialState));
+            Context.Change(_prev, forceChange);
         }
 
         #endregion
