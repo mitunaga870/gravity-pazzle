@@ -9,6 +9,8 @@ namespace Behaviour.Controller.General
 {
     public class SceneStateController : MonoBehaviour
     {
+        public static SceneStateController Instance { get; private set; }
+
         /// <summary>
         ///     状態操作コンストラクタ
         /// </summary>
@@ -21,11 +23,19 @@ namespace Behaviour.Controller.General
         private SceneState initialState;
 
         private ISceneState _prev;
-        
+
         #region Unity Methods
 
         private void Awake()
         {
+            if (Instance != null)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+
             // コンテキストの初期化
             Context = new SceneStateContext(
                 SceneStateUtils.GenerateState(initialState));

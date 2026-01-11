@@ -27,13 +27,6 @@ namespace Behaviour.UI.General.Settings
     {
         #region Serialized Fields
 
-        [Header("必要コントローラー")]
-        [SerializeField]
-        private SceneStateController sceneStateController;
-
-        [SerializeField]
-        private InputController inputController;
-
         [Header("解像度プリセット")]
         [SerializeField]
         private List<Resolution> resolutions;
@@ -95,6 +88,10 @@ namespace Behaviour.UI.General.Settings
 
         private List<Resolution> curResolutions = new();
 
+        private InputController _inputController;
+
+        private SceneStateController _sceneStateController;
+
         #region Unity Methods
 
         private void Awake()
@@ -120,12 +117,15 @@ namespace Behaviour.UI.General.Settings
             tutorialLinker.Setup(descriptionData.TutorialToggleDescription, descriptionText);
             gravSelectMethodLinker.Setup(descriptionData.GravSelectMethodDescription, descriptionText);
             resetButtonLinker.Setup(descriptionData.ResetDescription, descriptionText);
+
+            _inputController = InputController.Instance;
+            _sceneStateController = SceneStateController.Instance;
         }
 
         private void Update()
         {
             // ESCで閉じる
-            if (inputController.GetKey(KeyCode.Escape, SceneState.Setting))
+            if (_inputController.GetKey(KeyCode.Escape, SceneState.Setting))
                 HideSettings();
         }
 
@@ -264,7 +264,7 @@ namespace Behaviour.UI.General.Settings
             gameObject.SetActive(true);
 
             // ステート変更
-            sceneStateController.ChangeSceneState(SceneState.Setting);
+            _sceneStateController.ChangeSceneState(SceneState.Setting);
 
             // 現在の設定をUIに反映
             LoadCurrentSettings();
@@ -273,7 +273,7 @@ namespace Behaviour.UI.General.Settings
         public void HideSettings()
         {
             // ステート変更
-            sceneStateController.ReturnPrevSceneState();
+            _sceneStateController.ReturnPrevSceneState();
             
             gameObject.SetActive(false);
         }
