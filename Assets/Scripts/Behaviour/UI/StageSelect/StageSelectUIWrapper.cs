@@ -125,7 +125,7 @@ namespace Behaviour.UI.StageSelect
             }
             
             // 次・前があるか確認
-            var hasNext = stages.Count > offset + pageSize;
+            var hasNext = environmentSetting.Stages.Count > offset + pageSize;
             nextButton.SetActive(hasNext);
             var hasPrev = pageNum > 0;
             previousButton.SetActive(hasPrev);
