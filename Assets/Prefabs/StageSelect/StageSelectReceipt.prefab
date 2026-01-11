@@ -453,8 +453,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "STG-\uFF11"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 0c8027117e1453b4ca07218a3c1e9b27, type: 2}
-  m_sharedMaterial: {fileID: -3777616180279259808, guid: 0c8027117e1453b4ca07218a3c1e9b27, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
+  m_sharedMaterial: {fileID: 2405482600420970453, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
