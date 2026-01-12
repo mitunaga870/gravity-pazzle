@@ -28,10 +28,14 @@ namespace Behaviour.UI.Upgrade
         # endregion 
         
         # region Private Field
+
+        private const string DefaultTitle = "強化項目を選択";
         
         private string _title;
         
         private TMP_Text _titleText;
+
+        private const string DefaultDescription = "何を強化しよう...";
         
         private string _description;
         
@@ -87,6 +91,10 @@ namespace Behaviour.UI.Upgrade
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            _titleText.text = DefaultTitle;
+            _descriptionText.text = DefaultDescription;
+            _contentText.text = string.Empty;
+            _hovCostText.text = string.Empty;
         }
     }
 }
