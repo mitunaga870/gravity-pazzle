@@ -41,7 +41,7 @@ namespace Behaviour.UI.Upgrade
         
         private TMP_Text _contentText;
         
-        private int _cost;
+        private string _cost;
         
         private TMP_Text _hovCostText;
         
@@ -71,8 +71,10 @@ namespace Behaviour.UI.Upgrade
             _titleText = titleText;
             _description = description;
             _descriptionText = descriptionText;
-            _content = content;
+            _content = $"効果：{content}";
             _contentText = contentText;
+            _cost = $"コスト：{cost}";
+            _hovCostText = hovCostText;
         }
         
         public void OnPointerEnter(PointerEventData eventData)
@@ -80,7 +82,7 @@ namespace Behaviour.UI.Upgrade
             _titleText.text = _title;
             _descriptionText.text = _description;
             _contentText.text = _content;
-            _hovCostText.text = _hovCostText.text;
+            _hovCostText.text = _cost;
         }
 
         public void OnPointerExit(PointerEventData eventData)

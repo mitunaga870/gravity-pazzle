@@ -3,10 +3,8 @@
 using System;
 using Behaviour.Controller.General.DontDestoroy;
 using ScriptableObj.Upgrade;
-using ScriptableObj.Upgrade.Abstract;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 #endregion
 
