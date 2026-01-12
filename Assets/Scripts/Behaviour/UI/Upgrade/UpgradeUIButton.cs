@@ -92,14 +92,17 @@ namespace Behaviour.UI.Upgrade
             int cost,
             TMP_Text hovCostText)
         {
+            // 強化イベント実装
             var btn = gameObject.GetComponent<Button>();
             btn.onClick.RemoveAllListeners();
             btn.onClick.AddListener(onclick);
             
+            // ボタンのテキスト設定
             curLevelText.text = curLevel.ToString("D2");
             nextLevelText.text = (curLevel + 1).ToString("D2");
             costText.text = cost.ToString("D2");
             
+            // ホバー時のテキスト設定
             _title = title;
             _titleText = titleText;
             _description = description;

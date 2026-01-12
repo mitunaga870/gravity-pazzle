@@ -69,18 +69,21 @@ namespace Behaviour.UI.Upgrade
         private void HandlerUpgradeOperationDuration()
         {
             _playerDataController.Upgrade(UpgradeType.OperationDuration);
+            InitButton(UpgradeType.OperationDuration);
             CheckUpgradeable();
         }
 
         private void HandlerUpgradeMaxOperations()
         {
             _playerDataController.Upgrade(UpgradeType.MaxOperationCount);
+            InitButton(UpgradeType.MaxOperationCount);
             CheckUpgradeable();
         }
 
         private void HandlerPlayerGravChange()
         {
             _playerDataController.Upgrade(UpgradeType.PlayerGravChange);
+            InitButton(UpgradeType.PlayerGravChange);
             CheckUpgradeable();
         }
 
@@ -123,6 +126,9 @@ namespace Behaviour.UI.Upgrade
 
         private void SetActiveButton(UpgradeType type, bool enable)
         {
+            // ボタン初期化
+            if (enable) InitButton(type);
+            
             switch (type)
             {
                 case UpgradeType.OperationDuration:
