@@ -276,6 +276,13 @@ MonoBehaviour:
   curLevelText: {fileID: 352681928402460683}
   nextLevelText: {fileID: 5845889962217953450}
   costText: {fileID: 8353154681695029947}
+  costSubText: {fileID: 8328062590503906438}
+  defaultSprite: {fileID: 21300000, guid: e47325d7c48a64747bf7bf99fd98b5f6, type: 3}
+  hovSprite: {fileID: 21300000, guid: c255cf2b46a4b7d43b9ea5bc2c43b021, type: 3}
+  defaultMainColor: {r: 1, g: 1, b: 1, a: 1}
+  defaultAccentColor: {r: 0.9019608, g: 0.11372549, b: 0.30980393, a: 1}
+  hovMainColor: {r: 0.18039216, g: 0.18039216, b: 0.18039216, a: 1}
+  hovAccentColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &4113594537275988022
 GameObject:
   m_ObjectHideFlags: 0

@@ -13,6 +13,7 @@ namespace Behaviour.UI.Upgrade
     /// アップグレードそれぞれのボタン用UI
     /// </summary>
     [RequireComponent(typeof(Button))]
+    [RequireComponent(typeof(Image))]
     public class UpgradeUIButton : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         # region Serialize Field
@@ -21,13 +22,36 @@ namespace Behaviour.UI.Upgrade
         
         [SerializeField]
         private TMP_Text nextLevelText;
-        
+
         [SerializeField]
         private TMP_Text costText;
+        
+        [SerializeField]
+        private TMP_Text costSubText;
+        
+        [SerializeField]
+        private Sprite defaultSprite;
+
+        [SerializeField]
+        private Sprite hovSprite;
+        
+        [SerializeField]
+        private Color defaultMainColor = Color.white;
+        
+        [SerializeField]
+        private Color defaultAccentColor = new (230, 29, 79);
+        
+        [SerializeField]
+        private Color hovMainColor = new (46, 46, 46);
+        
+        [SerializeField]
+        private Color hovAccentColor = Color.white;
         
         # endregion 
         
         # region Private Field
+        
+        private Image _background;
 
         private const string DefaultTitle = "強化項目を選択";
         
@@ -50,6 +74,11 @@ namespace Behaviour.UI.Upgrade
         private TMP_Text _hovCostText;
         
         #endregion
+
+        private void Start()
+        {
+            _background = GetComponent<Image>();
+        }
 
         public void Init(
             UnityAction onclick,
@@ -83,18 +112,34 @@ namespace Behaviour.UI.Upgrade
         
         public void OnPointerEnter(PointerEventData eventData)
         {
+            // テキスト設定
             _titleText.text = _title;
             _descriptionText.text = _description;
             _contentText.text = _content;
             _hovCostText.text = _cost;
+            
+            // 背景変更・文字色変更
+            _background.sprite = hovSprite;
+            curLevelText.color = hovMainColor;
+            nextLevelText.color = hovAccentColor;
+            costText.color = hovMainColor;
+            costSubText.color = hovMainColor;
         }
 
         public void OnPointerExit(PointerEventData eventData)
         {
+            // テキスト設定
             _titleText.text = DefaultTitle;
             _descriptionText.text = DefaultDescription;
             _contentText.text = string.Empty;
             _hovCostText.text = string.Empty;
+            
+            // 背景変更・文字色変更
+            _background.sprite = defaultSprite;
+            curLevelText.color = defaultMainColor;
+            nextLevelText.color = defaultAccentColor;
+            costText.color = defaultMainColor;
+            costSubText.color = defaultMainColor;
         }
     }
 }
