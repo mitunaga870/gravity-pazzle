@@ -1,10 +1,12 @@
 ﻿#region
 
 using System;
+using System.Diagnostics;
 using Behaviour.Controller.General.DontDestoroy;
 using ScriptableObj.Upgrade;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Events;
 
 #endregion
 
@@ -52,49 +54,10 @@ namespace Behaviour.UI.Upgrade
             // PlayerDataController取得
             _playerDataController = PlayerDataController.Instance;
             if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
-
-            // ハンドラー登録
-            var durationUpgradeData = GetUpgradeData(UpgradeType.OperationDuration);
-            upgradeOperationDurationButton.Init(
-                HandlerUpgradeOperationDuration,
-                durationUpgradeData.curLevel,
-                durationUpgradeData.title,
-                hovTitle,
-                durationUpgradeData.description,
-                hovDescription,
-                durationUpgradeData.content,
-                hovContent,
-                durationUpgradeData.cost,
-                hovCost
-                );
-
-            var maxOperationsUpgradeData = GetUpgradeData(UpgradeType.MaxOperationCount);
-            upgradeMaxOperationsButton.Init(
-                HandlerUpgradeMaxOperations,
-                maxOperationsUpgradeData.curLevel,
-                maxOperationsUpgradeData.title,
-                hovTitle,
-                maxOperationsUpgradeData.description,
-                hovDescription,
-                maxOperationsUpgradeData.content,
-                hovContent,
-                maxOperationsUpgradeData.cost,
-                hovCost
-            );
-
-            var gravChangeUpgradeData = GetUpgradeData(UpgradeType.PlayerGravChange);
-            enablePlayerGravChangeButton.Init(
-                HandlerPlayerGravChange,
-                gravChangeUpgradeData.curLevel,
-                gravChangeUpgradeData.title,
-                hovTitle,
-                gravChangeUpgradeData.description,
-                hovDescription,
-                gravChangeUpgradeData.content,
-                hovContent,
-                gravChangeUpgradeData.cost,
-                hovCost
-            );
+            
+            InitButton(UpgradeType.OperationDuration);
+            InitButton(UpgradeType.MaxOperationCount);
+            InitButton(UpgradeType.PlayerGravChange);
 
             CheckUpgradeable();
         }
@@ -184,6 +147,43 @@ namespace Behaviour.UI.Upgrade
                 var upgradeable = _playerDataController.IsUpgradeable(type);
                 SetActiveButton(type, upgradeable);
             }
+        }
+
+        private void InitButton(UpgradeType type)
+        {
+            // アップグレード可能か判別
+            var upgradeable = _playerDataController.IsUpgradeable(type);
+            if(!upgradeable) return;
+            
+            // 情報取得
+            var upgradeData = GetUpgradeData(type);
+            var button = type switch
+            {
+                UpgradeType.OperationDuration => upgradeOperationDurationButton,
+                UpgradeType.MaxOperationCount => upgradeMaxOperationsButton,
+                UpgradeType.PlayerGravChange => enablePlayerGravChangeButton,
+                _ => throw new NotImplementedException()
+            };
+            UnityAction onClick = type switch
+            {
+                UpgradeType.OperationDuration => HandlerUpgradeOperationDuration,
+                UpgradeType.MaxOperationCount => HandlerUpgradeMaxOperations,
+                UpgradeType.PlayerGravChange => HandlerPlayerGravChange,
+                _ => throw new NotImplementedException()
+            };
+            
+            button.Init(
+                onClick,
+                upgradeData.curLevel,
+                upgradeData.title,
+                hovTitle,
+                upgradeData.description,
+                hovDescription,
+                upgradeData.content,
+                hovContent,
+                upgradeData.cost,
+                hovCost
+                );
         }
     }
 }
