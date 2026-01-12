@@ -2194,6 +2194,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 770060837756565331, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 3aa90473988681149b2b255ec647334d, type: 3}
+    - target: {fileID: 984281336821959059, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 124
+      objectReference: {fileID: 0}
+    - target: {fileID: 984281336821959059, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 85
+      objectReference: {fileID: 0}
     - target: {fileID: 1087572553900378267, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -2226,9 +2238,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2582537300516446506, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 5e7434bad57499b4babc077ece6e7d9d, type: 3}
     - target: {fileID: 2645819257441951945, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
       propertyPath: m_Name
       value: UpgradeUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652641158244605930, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_SizeDelta.x
+      value: 114
+      objectReference: {fileID: 0}
+    - target: {fileID: 2652641158244605930, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 125
       objectReference: {fileID: 0}
     - target: {fileID: 2769459529424019170, guid: 59ebb0a34cec4cd45b1a743ed6a4102d, type: 3}
       propertyPath: m_AnchorMax.y
