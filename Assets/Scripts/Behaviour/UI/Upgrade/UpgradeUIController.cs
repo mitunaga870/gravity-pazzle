@@ -3,6 +3,8 @@
 using System;
 using Behaviour.Controller.General.DontDestoroy;
 using ScriptableObj.Upgrade;
+using ScriptableObj.Upgrade.Abstract;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,16 +15,29 @@ namespace Behaviour.UI.Upgrade
     public class UpgradeUIController : MonoBehaviour
     {
         #region Serialized Fields
+        
+        [Header("UI要素：概要")]
+        [SerializeField]
+        private TMP_Text hovTitle;
+        
+        [SerializeField]
+        private TMP_Text hovDescription;
+
+        [SerializeField]
+        private TMP_Text hovContent;
+        
+        [SerializeField]
+        private TMP_Text hovPrice;
 
         [Header("UI要素：各強化要素の強化ボタン")]
         [SerializeField]
-        private Button upgradeOperationDurationButton;
+        private UpgradeUIButton upgradeOperationDurationButton;
 
         [SerializeField]
-        private Button upgradeMaxOperationsButton;
+        private UpgradeUIButton upgradeMaxOperationsButton;
 
         [SerializeField]
-        private Button enablePlayerGravChangeButton;
+        private UpgradeUIButton enablePlayerGravChangeButton;
 
         #endregion
 
@@ -41,9 +56,41 @@ namespace Behaviour.UI.Upgrade
             if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
 
             // ハンドラー登録
-            upgradeOperationDurationButton.onClick.AddListener(HandlerUpgradeOperationDuration);
-            upgradeMaxOperationsButton.onClick.AddListener(HandlerUpgradeMaxOperations);
-            enablePlayerGravChangeButton.onClick.AddListener(HandlerPlayerGravChange);
+            var durationUpgradeData = GetUpgradeData(UpgradeType.OperationDuration);
+            upgradeOperationDurationButton.Init(
+                HandlerUpgradeOperationDuration,
+                durationUpgradeData.curLevel,
+                durationUpgradeData.title,
+                hovTitle,
+                durationUpgradeData.description,
+                hovDescription,
+                durationUpgradeData.content,
+                hovContent
+                );
+
+            var maxOperationsUpgradeData = GetUpgradeData(UpgradeType.MaxOperationCount);
+            upgradeMaxOperationsButton.Init(
+                HandlerUpgradeMaxOperations,
+                maxOperationsUpgradeData.curLevel,
+                maxOperationsUpgradeData.title,
+                hovTitle,
+                maxOperationsUpgradeData.description,
+                hovDescription,
+                maxOperationsUpgradeData.content,
+                hovContent
+            );
+
+            var gravChangeUpgradeData = GetUpgradeData(UpgradeType.PlayerGravChange);
+            enablePlayerGravChangeButton.Init(
+                HandlerPlayerGravChange,
+                gravChangeUpgradeData.curLevel,
+                gravChangeUpgradeData.title,
+                hovTitle,
+                gravChangeUpgradeData.description,
+                hovDescription,
+                gravChangeUpgradeData.content,
+                hovContent
+            );
 
             CheckUpgradeable();
         }
@@ -71,6 +118,41 @@ namespace Behaviour.UI.Upgrade
         }
 
         #endregion
+
+        private (int curLevel, string title, string description, string content) GetUpgradeData(UpgradeType type)
+        {
+            var playerData = _playerDataController.PlayerData;
+            var curLevel = playerData.GetLevel(type);
+
+            var upgradeData = _playerDataController.GetUpgradeData(type);
+            var title = upgradeData.DisplayName;
+            var description = upgradeData.Description;
+            var category = upgradeData.UpgradeCategory;
+
+            string content;
+            switch (upgradeData)
+            {
+                case ParamUpgrade paramUpgrade:
+                {
+                    var unit = paramUpgrade.Unit;
+                    var param = paramUpgrade.UpgradedParams;
+
+                    var cur = param[curLevel];
+                    var next = param[curLevel + 1];
+                    var diff = next -cur;
+
+                    content = $"{cur}{unit} →　{next}{unit}(↑{diff})";
+                    break;
+                }
+                case ActionUpgrade actionUpgrade:
+                    content = actionUpgrade.Content;
+                    break;
+                default:
+                    throw new NotImplementedException();
+            }
+
+            return (curLevel, title, description, content);
+        }
 
         private void SetActiveButton(UpgradeType type, bool enable)
         {

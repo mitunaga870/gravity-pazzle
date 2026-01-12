@@ -21,6 +21,11 @@ namespace ScriptableObj.Upgrade
         private float[] upgradedParams;
 
         public float[] UpgradedParams => upgradedParams;
+        
+        [SerializeField]
+        private string unit;
+        
+        public string Unit => unit;
 
         protected override bool IsUpgradeableForCategory(PlayerData playerData)
         {
