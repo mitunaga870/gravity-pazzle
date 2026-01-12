@@ -22,6 +22,9 @@ namespace Behaviour.UI.Upgrade
         [SerializeField]
         private TMP_Text nextLevelText;
         
+        [SerializeField]
+        private TMP_Text costText;
+        
         # endregion 
         
         # region Private Field
@@ -38,6 +41,10 @@ namespace Behaviour.UI.Upgrade
         
         private TMP_Text _contentText;
         
+        private int _cost;
+        
+        private TMP_Text _hovCostText;
+        
         #endregion
 
         public void Init(
@@ -48,7 +55,9 @@ namespace Behaviour.UI.Upgrade
             string description,
             TMP_Text descriptionText,
             string content,
-            TMP_Text contentText)
+            TMP_Text contentText, 
+            int cost,
+            TMP_Text hovCostText)
         {
             var btn = gameObject.GetComponent<Button>();
             btn.onClick.RemoveAllListeners();
@@ -56,6 +65,7 @@ namespace Behaviour.UI.Upgrade
             
             curLevelText.text = curLevel.ToString("D2");
             nextLevelText.text = (curLevel + 1).ToString("D2");
+            costText.text = cost.ToString("D2");
             
             _title = title;
             _titleText = titleText;
@@ -70,6 +80,7 @@ namespace Behaviour.UI.Upgrade
             _titleText.text = _title;
             _descriptionText.text = _description;
             _contentText.text = _content;
+            _hovCostText.text = _hovCostText.text;
         }
 
         public void OnPointerExit(PointerEventData eventData)

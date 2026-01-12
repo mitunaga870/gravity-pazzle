@@ -27,7 +27,7 @@ namespace Behaviour.UI.Upgrade
         private TMP_Text hovContent;
         
         [SerializeField]
-        private TMP_Text hovPrice;
+        private TMP_Text hovCost;
 
         [Header("UI要素：各強化要素の強化ボタン")]
         [SerializeField]
@@ -65,7 +65,9 @@ namespace Behaviour.UI.Upgrade
                 durationUpgradeData.description,
                 hovDescription,
                 durationUpgradeData.content,
-                hovContent
+                hovContent,
+                durationUpgradeData.cost,
+                hovCost
                 );
 
             var maxOperationsUpgradeData = GetUpgradeData(UpgradeType.MaxOperationCount);
@@ -77,7 +79,9 @@ namespace Behaviour.UI.Upgrade
                 maxOperationsUpgradeData.description,
                 hovDescription,
                 maxOperationsUpgradeData.content,
-                hovContent
+                hovContent,
+                maxOperationsUpgradeData.cost,
+                hovCost
             );
 
             var gravChangeUpgradeData = GetUpgradeData(UpgradeType.PlayerGravChange);
@@ -89,7 +93,9 @@ namespace Behaviour.UI.Upgrade
                 gravChangeUpgradeData.description,
                 hovDescription,
                 gravChangeUpgradeData.content,
-                hovContent
+                hovContent,
+                gravChangeUpgradeData.cost,
+                hovCost
             );
 
             CheckUpgradeable();
@@ -119,7 +125,7 @@ namespace Behaviour.UI.Upgrade
 
         #endregion
 
-        private (int curLevel, string title, string description, string content) GetUpgradeData(UpgradeType type)
+        private (int curLevel, string title, string description, string content, int cost) GetUpgradeData(UpgradeType type)
         {
             var playerData = _playerDataController.PlayerData;
             var curLevel = playerData.GetLevel(type);
@@ -127,7 +133,7 @@ namespace Behaviour.UI.Upgrade
             var upgradeData = _playerDataController.GetUpgradeData(type);
             var title = upgradeData.DisplayName;
             var description = upgradeData.Description;
-            var category = upgradeData.UpgradeCategory;
+            var cost = upgradeData.Cost[curLevel];
 
             string content;
             switch (upgradeData)
@@ -151,7 +157,7 @@ namespace Behaviour.UI.Upgrade
                     throw new NotImplementedException();
             }
 
-            return (curLevel, title, description, content);
+            return (curLevel, title, description, content, cost);
         }
 
         private void SetActiveButton(UpgradeType type, bool enable)
