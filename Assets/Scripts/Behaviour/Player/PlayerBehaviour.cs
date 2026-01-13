@@ -20,6 +20,7 @@ namespace Behaviour.Player
     ///     プレイヤー用の挙動クラス
     ///     プレイヤー移動とカメラへのプレイヤー位置の通知を行う
     /// </summary>
+    [RequireComponent(typeof(PlayerAnimBehaviour))]
     public class PlayerBehaviour : APlayerBehaviour
     {
         private const float Speed = 5f;
@@ -34,6 +35,7 @@ namespace Behaviour.Player
 
 
         private GravType _targetGravType = GravType.XNegative;
+        private PlayerAnimBehaviour _animBehaviour;
 
         private bool _changeableGrav;
 
@@ -45,6 +47,8 @@ namespace Behaviour.Player
 
             if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
+            
+            _animBehaviour = GetComponent<PlayerAnimBehaviour>();
 
             // プレイヤー重力変更が可能か
             var playerDataController = PlayerDataController.Instance;
@@ -80,6 +84,23 @@ namespace Behaviour.Player
                 if (playerVGrav != null) playerVGrav.UnsetGravAffected();
             }
 
+            // 落下方向速度を取得
+            var velocity = PlayerRigidBody.linearVelocity;
+            var gravDirection = GravUtils.GetGravDirectionUnit(GravBehaviour.GravType);
+            var fallVelocity = Vector3.Dot(velocity, gravDirection);
+            const float fallThreshold = 0.1f;
+            // 重力変更中かどうか
+            var isGravChanging = GravBehaviour.IsGravAdapting;
+            // 接地しているか
+            var isGrounded = Physics.Raycast(transform.position, gravDirection, gravDirection.magnitude);
+            // 落下しているか
+            var isFalling =
+                (fallVelocity > fallThreshold && !isGrounded) ||
+                (!isGrounded && isGravChanging);
+
+            // 落下をアニメーションに通知
+            _animBehaviour.IsFalling(isFalling);
+
             // カメラに位置を通知
             PlayerCam.SetPlayerPosAndGrav(transform, GravBehaviour.GravType);
         }
@@ -88,7 +109,7 @@ namespace Behaviour.Player
 
         #region APlayerBehaviour Methods
 
-        protected override Vector3 GetMoveDirection(float deltaTime)
+        protected override Vector3 GetMoveSpeed()
         {
             // WASDキーの入力を取得
             var xInput = input.GetKey(PlayerKey.MoveForwardKey, SceneState.InGame);
@@ -98,7 +119,10 @@ namespace Behaviour.Player
 
             // 負荷軽減のため、入力がない場合は移動しない
             if (!xInput && !zInput && !yInput && !wInput)
+            {
+                _animBehaviour.UpdateSpeed(0);
                 return Vector3.zero;
+            }
 
             // 入力方向を計算
             var camTransform = PlayerCam.transform;
@@ -111,10 +135,15 @@ namespace Behaviour.Player
                 camTransform.right,
                 GravBehaviour.GravType
             );
-            // 移動速度を掛けて、時間を掛ける
-            moveDirection *= Speed * deltaTime;
 
-            return moveDirection;
+            // 移動速度を掛けて、時間を掛けlる
+            var moveSpeed = moveDirection * Speed;
+
+            // アニメーターに移動量を0~1に正規化して出力
+            var speed = Math.Clamp(moveDirection.magnitude, 0f, 1f);
+            _animBehaviour.UpdateSpeed(speed);
+
+            return moveSpeed;
         }
 
         #endregion
@@ -218,7 +247,7 @@ namespace Behaviour.Player
                 )
                 {
                     // 移動方向から最大軸を取得
-                    var moveDirection = GetMoveDirection(1f);
+                    var moveDirection = GetMoveSpeed();
                     _targetGravType = GravUtils.GetMaxDirection(moveDirection);
                 }
                 else if (input.GetKeyDown(PlayerKey.ChangeGravDirectionToTopKey, SceneState.InGame))
