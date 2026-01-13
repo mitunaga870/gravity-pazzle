@@ -3,6 +3,8 @@
 using System;
 using System.Diagnostics;
 using Behaviour.Controller.General.DontDestoroy;
+using LitMotion;
+using LitMotion.Extensions;
 using ScriptableObj.Upgrade;
 using TMPro;
 using UnityEngine;
@@ -68,26 +70,52 @@ namespace Behaviour.UI.Upgrade
 
         private void HandlerUpgradeOperationDuration()
         {
-            _playerDataController.Upgrade(UpgradeType.OperationDuration);
-            InitButton(UpgradeType.OperationDuration);
-            CheckUpgradeable();
+            HandlerUpgradeExe(UpgradeType.OperationDuration);
         }
 
         private void HandlerUpgradeMaxOperations()
         {
-            _playerDataController.Upgrade(UpgradeType.MaxOperationCount);
-            InitButton(UpgradeType.MaxOperationCount);
-            CheckUpgradeable();
+            HandlerUpgradeExe(UpgradeType.MaxOperationCount);
         }
 
         private void HandlerPlayerGravChange()
         {
-            _playerDataController.Upgrade(UpgradeType.PlayerGravChange);
-            InitButton(UpgradeType.PlayerGravChange);
-            CheckUpgradeable();
+            HandlerUpgradeExe(UpgradeType.PlayerGravChange);
+        }
+
+        private void HandlerUpgradeExe(UpgradeType type)
+        {
+            var result = _playerDataController.Upgrade(type);
+            
+            if (result)
+            {
+                // 強化成功時の初期化
+                InitButton(UpgradeType.PlayerGravChange);
+                CheckUpgradeable();
+            }
+            else
+            {
+                // 失敗時は揺らす
+                var button = GetButton(type);
+                var rectTransform = button.GetComponent<RectTransform>();
+                LMotion.Shake.Create(rectTransform.position, new Vector3(5, 0), 0.5f)
+                    .BindToPosition(rectTransform)
+                    .AddTo(button);
+            }
         }
 
         #endregion
+
+        private UpgradeUIButton GetButton(UpgradeType type)
+        {
+            return type switch
+            {
+                UpgradeType.OperationDuration => upgradeOperationDurationButton,
+                UpgradeType.MaxOperationCount => upgradeMaxOperationsButton,
+                UpgradeType.PlayerGravChange => enablePlayerGravChangeButton,
+                _ => throw new ArgumentOutOfRangeException(nameof(type), type, null)
+            };
+        }
 
         private (int curLevel, string title, string description, string content, int cost) GetUpgradeData(UpgradeType type)
         {
@@ -128,7 +156,7 @@ namespace Behaviour.UI.Upgrade
         {
             // ボタン初期化
             if (enable) InitButton(type);
-            
+
             switch (type)
             {
                 case UpgradeType.OperationDuration:
@@ -160,16 +188,10 @@ namespace Behaviour.UI.Upgrade
             // アップグレード可能か判別
             var upgradeable = _playerDataController.IsUpgradeable(type);
             if(!upgradeable) return;
-            
+
             // 情報取得
             var upgradeData = GetUpgradeData(type);
-            var button = type switch
-            {
-                UpgradeType.OperationDuration => upgradeOperationDurationButton,
-                UpgradeType.MaxOperationCount => upgradeMaxOperationsButton,
-                UpgradeType.PlayerGravChange => enablePlayerGravChangeButton,
-                _ => throw new NotImplementedException()
-            };
+            var button = GetButton(type);
             UnityAction onClick = type switch
             {
                 UpgradeType.OperationDuration => HandlerUpgradeOperationDuration,
