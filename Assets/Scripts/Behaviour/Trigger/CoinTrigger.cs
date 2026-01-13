@@ -3,6 +3,7 @@
 using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
+using UnityEditor;
 using UnityEngine;
 
 #endregion
@@ -16,9 +17,16 @@ namespace Behaviour.Trigger
     public class CoinTrigger : MonoBehaviour
     {
         [SerializeField]
-        private string coinId = Guid.NewGuid().ToString();
+        private string coinId;
 
         private bool _collected;
+
+        private void OnValidate()
+        {
+            // エディタの変更時、IDが空なら作成する
+            if (coinId == "")
+                coinId = Guid.NewGuid().ToString();
+        }
 
         private void Awake()
         {
@@ -67,6 +75,27 @@ namespace Behaviour.Trigger
             gameObject.SetActive(false);
         }
 
+        public void GenerateCoinId()
+        {
+            coinId = Guid.NewGuid().ToString();
+        }
+
         public string CoinId => coinId;
+    }
+
+    [CustomEditor(typeof(CoinTrigger))]
+    public class CoinTriggerGUI : Editor
+    {
+        public override void OnInspectorGUI()
+        {
+            base.OnInspectorGUI();
+
+            // IDを初期化するボタンを創
+            if (GUILayout.Button("IDを生成"))
+            {
+                var trigger = (CoinTrigger)target;
+                trigger.GenerateCoinId();
+            }
+        }
     }
 }
