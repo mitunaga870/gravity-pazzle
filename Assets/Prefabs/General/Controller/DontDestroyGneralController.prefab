@@ -666,3 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72abd597c176403497414a9034e61c39, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  initPlayerData: {fileID: 11400000, guid: b228fe7fe3eb7fc41a0598f8e0435c51, type: 2}
+  operationDurationData: {fileID: 11400000, guid: f2b9c6eb18204b14ca12ad24d711977b, type: 2}
+  maxOperationCountData: {fileID: 11400000, guid: b74db0de43ca3824fa75664b0dfdf970, type: 2}
+  playerGravChangeData: {fileID: 11400000, guid: 46183be140999ab42a2e37367982d876, type: 2}

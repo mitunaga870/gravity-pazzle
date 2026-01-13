@@ -33,6 +33,7 @@
     {
         InGame,
         Pause,
-        Instruction
+        Instruction,
+        Setting
     }
 }

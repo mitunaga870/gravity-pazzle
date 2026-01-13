@@ -5,7 +5,7 @@ using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Behaviour.Trigger;
 using Lib.Logic;
-using ScriptableObj.Setting;
+using ScriptableObj;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;

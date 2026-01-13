@@ -23,5 +23,10 @@ namespace Lib.DataClass.Interface
 
             return JsonConvert.SerializeObject(this, serializerSettings);
         }
+
+        public override string ToString()
+        {
+            return ToJson();
+        }
     }
 }

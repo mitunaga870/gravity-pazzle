@@ -1,7 +1,11 @@
 ﻿#region
 
+using System;
 using Lib.DataClass.PlayData;
 using Lib.Logic.General;
+using ScriptableObj;
+using ScriptableObj.Upgrade;
+using ScriptableObj.Upgrade.Abstract;
 using UnityEngine;
 
 #endregion
@@ -20,6 +24,24 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         #endregion
 
+        #region Serilized Fields
+
+        [Header("初期セーブデータ")]
+        [SerializeField]
+        private InitPlayerData initPlayerData;
+
+        [Header("強化情報")]
+        [SerializeField]
+        private ParamUpgrade operationDurationData;
+
+        [SerializeField]
+        private ParamUpgrade maxOperationCountData;
+
+        [SerializeField]
+        private ActionUpgrade playerGravChangeData;
+
+        #endregion
+        
         #region Data Fields
 
         public PlayerData PlayerData { get; private set; }
@@ -56,7 +78,8 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void LoadPlayerData()
         {
             var isPlayerDataLoaded = SaveUtils.LoadData<PlayerData>(SaveDataType.PlayerData, out var loadedData);
-            PlayerData = isPlayerDataLoaded ? loadedData : new PlayerData();
+            PlayerData =
+                isPlayerDataLoaded ? loadedData : new PlayerData(initPlayerData);
         }
 
         private void SavePlayerData()
@@ -66,6 +89,8 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         #endregion
 
+        #region Coin Methods
+        
         /// <summary>
         ///     コインを収集したときに呼び出すメソッド
         /// </summary>
@@ -74,6 +99,74 @@ namespace Behaviour.Controller.General.DontDestoroy
             PlayerData = PlayerData.AddCollectedCoinCount(amount);
         }
 
+        #endregion
+
+        #region Upgrade Methods
+
+        public bool Upgrade(UpgradeType type)
+        {
+            var prevPlayerData = PlayerData;
+            var upgradeData = GetUpgradeData(type);
+            var curLevel = PlayerData.GetLevel(type);
+
+            // UIでも隠す予定だが、間違ってアップグレードされないよう処理
+            var upgradeable = upgradeData.IsUpgradeable(PlayerData);
+            if (!upgradeable) throw new Exception($"{type} is not upgradeable.");
+
+            // コスト確認
+            if (curLevel < 0 || curLevel >= upgradeData.Cost.Length)
+                throw new Exception($"Invalid upgrade level {curLevel} for {type}. Cost array length: {upgradeData.Cost.Length}");
+            var cost = upgradeData.Cost[curLevel];
+            if (PlayerData.CollectedCoinCount < cost)
+            {
+                Debug.Log($"Upgrade for {type} is denied for coin. playerData: {PlayerData}");
+                return false;
+            }
+
+            // アップグレードの実処理
+            if (upgradeData is ParamUpgrade paramUpgrade)
+            {
+                if (curLevel < -1 || curLevel > paramUpgrade.UpgradedParams.Length)
+                    throw new Exception($"Upgrade for {type} is invalid. playerData: {PlayerData}");
+                var nextParam = paramUpgrade.UpgradedParams[curLevel];
+                PlayerData = PlayerData.LevelUpParamUpgrade(type, curLevel + 1, nextParam);
+            }
+            else if (upgradeData is ActionUpgrade)
+            {
+                PlayerData = PlayerData.LevelUpActionUpgrade(type);
+            }
+            else
+            {
+                throw new Exception($"{type} is not upgradeable.");
+            }
+
+            // コイン使用処理
+            PlayerData = PlayerData.UseCoin(cost);
+
+            Debug.Log($"Upgraded {prevPlayerData} to {PlayerData}");
+
+            return true;
+        }
+
+        public bool IsUpgradeable(UpgradeType type)
+        {
+            var upgradeData = GetUpgradeData(type);
+            return upgradeData.IsUpgradeable(PlayerData);
+        }
+
+        private AUpgrade GetUpgradeData(UpgradeType type)
+        {
+            return type switch
+            {
+                UpgradeType.OperationDuration => operationDurationData,
+                UpgradeType.MaxOperationCount => maxOperationCountData,
+                UpgradeType.PlayerGravChange => playerGravChangeData,
+                _ => null
+            };
+        }
+
+        #endregion
+        
 
         /// <summary>
         ///     全てのデータをリロードする
