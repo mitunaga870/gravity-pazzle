@@ -1,7 +1,6 @@
 ﻿#region
 
 using System;
-using System.Diagnostics;
 using Behaviour.Controller.General.DontDestoroy;
 using LitMotion;
 using LitMotion.Extensions;
@@ -44,8 +43,11 @@ namespace Behaviour.UI.Upgrade
         #endregion
 
         #region Private Fields
-
+        
         private PlayerDataController _playerDataController;
+
+        private const string CompletedTitle = "強化完了！";
+        private const string CompletedDescription = "これ以上は強化できない...！";
 
         #endregion
 
@@ -175,11 +177,24 @@ namespace Behaviour.UI.Upgrade
 
         private void CheckUpgradeable()
         {
+            var hasUpgrade = false;
+            
             // 強化可能でない場合の処理
             foreach (UpgradeType type in Enum.GetValues(typeof(UpgradeType)))
             {
                 var upgradeable = _playerDataController.IsUpgradeable(type);
                 SetActiveButton(type, upgradeable);
+
+                hasUpgrade = hasUpgrade || upgradeable;
+            }
+
+            // 強化可能がない場合はテキストへんこう
+            if (!hasUpgrade)
+            {
+                hovTitle.text = CompletedTitle;
+                hovDescription.text = CompletedDescription;
+                hovCost.text = string.Empty;
+                hovContent.text = string.Empty;
             }
         }
 
