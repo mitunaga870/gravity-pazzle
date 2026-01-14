@@ -99,5 +99,10 @@ namespace Behaviour.UI.Upgrade
                 SetActiveButton(type, upgradeable);
             }
         }
+
+        public void ShowUpgradeUI()
+        {
+            gameObject.SetActive(true);
+        }
     }
 }
