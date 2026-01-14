@@ -1,7 +1,9 @@
 ﻿#region
 
 using System;
+using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
+using Lib.State.Scene;
 using ScriptableObj.Upgrade;
 using UnityEngine;
 using UnityEngine.UI;
@@ -30,6 +32,10 @@ namespace Behaviour.UI.Upgrade
 
         private PlayerDataController _playerDataController;
 
+        private SceneStateController _sceneStateController;
+
+        private InputController _inputController;
+
         #endregion
 
         #region Unity Methods
@@ -40,12 +46,25 @@ namespace Behaviour.UI.Upgrade
             _playerDataController = PlayerDataController.Instance;
             if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
 
+            // SceneStateController取得
+            _sceneStateController = SceneStateController.Instance;
+            if (_sceneStateController == null) throw new Exception("SceneStateController is not assigned.");
+
+            // InputController取得
+            _inputController = InputController.Instance;
+            if (_inputController == null) throw new Exception("InputController is not assigned.");
+
             // ハンドラー登録
             upgradeOperationDurationButton.onClick.AddListener(HandlerUpgradeOperationDuration);
             upgradeMaxOperationsButton.onClick.AddListener(HandlerUpgradeMaxOperations);
             enablePlayerGravChangeButton.onClick.AddListener(HandlerPlayerGravChange);
 
             CheckUpgradeable();
+        }
+
+        private void Update()
+        {
+            if (_inputController.GetKey(KeyCode.Escape, SceneState.Upgrade)) HideUpgradeUI();
         }
 
         #endregion
@@ -103,6 +122,13 @@ namespace Behaviour.UI.Upgrade
         public void ShowUpgradeUI()
         {
             gameObject.SetActive(true);
+            _sceneStateController.ChangeSceneState(SceneState.Upgrade);
+        }
+
+        private void HideUpgradeUI()
+        {
+            _sceneStateController.ReturnPrevSceneState();
+            gameObject.SetActive(false);
         }
     }
 }

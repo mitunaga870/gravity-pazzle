@@ -90,10 +90,10 @@ namespace Behaviour.UI.InGame.PauseMenu
             if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
             // Escキーが押されたらポーズメニューをトグル
-            if (_isOpen)
-                HidePauseMenu();
-            else
+            if (Input.GetKeyDown(KeyCode.Escape, SceneState.InGame) && !_isOpen)
                 ShowPauseMenu();
+            else if (Input.GetKeyDown(KeyCode.Escape, SceneState.Pause) && _isOpen)
+                HidePauseMenu();
         }
 
         /// <summary>
