@@ -3,8 +3,10 @@
 using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
-using UnityEditor;
 using UnityEngine;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 #endregion
 
@@ -21,18 +23,11 @@ namespace Behaviour.Trigger
 
         private bool _collected;
 
-        private void OnValidate()
-        {
-            // エディタの変更時、IDが空なら作成する
-            if (coinId == "")
-                coinId = Guid.NewGuid().ToString();
-        }
-
         private void Awake()
         {
             // IDが設定されていない場合は、GameObjectのInstanceIDを使用
             if (string.IsNullOrEmpty(coinId))
-                coinId = gameObject.GetInstanceID().ToString();
+                GenerateCoinId();
         }
 
         private void Start()
@@ -83,6 +78,7 @@ namespace Behaviour.Trigger
         public string CoinId => coinId;
     }
 
+#if UNITY_EDITOR
     [CustomEditor(typeof(CoinTrigger))]
     public class CoinTriggerGUI : Editor
     {
@@ -94,8 +90,11 @@ namespace Behaviour.Trigger
             if (GUILayout.Button("IDを生成"))
             {
                 var trigger = (CoinTrigger)target;
+                Undo.RecordObject(trigger, "Generate Coin ID");
                 trigger.GenerateCoinId();
+                EditorUtility.SetDirty(trigger);
             }
         }
     }
+#endif
 }
