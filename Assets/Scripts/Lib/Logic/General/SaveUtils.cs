@@ -146,7 +146,7 @@ namespace Lib.Logic.General
             if (Directory.Exists(directoryPath))
             {
                 // 内部のJsonファイルを削除
-                foreach (var file in Directory.GetFiles(directoryPath))
+                foreach (var file in Directory.GetFiles(directoryPath, "*.json"))
                 {
                     File.Delete(file);
                     Debug.Log($"Deleted save data at {file}");
