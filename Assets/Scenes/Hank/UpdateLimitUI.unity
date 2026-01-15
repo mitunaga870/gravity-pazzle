@@ -19999,6 +19999,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GravityLimitUI
       objectReference: {fileID: 0}
+    - target: {fileID: 2933877200612047919, guid: c759c3b6bd0871e4888d2104b886ef67, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: fe90c7fe14a1b714cb23d1281d99f76a, type: 3}
     - target: {fileID: 3233783182440658106, guid: c759c3b6bd0871e4888d2104b886ef67, type: 3}
       propertyPath: targetCamera
       value: 
