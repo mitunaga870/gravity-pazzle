@@ -34,7 +34,8 @@ namespace Behaviour.Camera
         #region Private Fields 
         private const float Threshold = 0.01f;
         private const float Sensitivity = 5f;
-        private const float MaxPitch = 85f;
+        private const float MaxPitch = 60f;
+        private const float MinPitch = -85f;
 
         private Transform? _playerTrans;
         private GravType? _gravType;
@@ -144,7 +145,7 @@ namespace Behaviour.Camera
                 // ピッチを積算
                 var unClampedPitch = _pitch + mouseY;
                 // ピッチを制限
-                _pitch = Mathf.Clamp(unClampedPitch, MaxPitch * -1, MaxPitch);
+                _pitch = Mathf.Clamp(unClampedPitch, MinPitch, MaxPitch);
                 // 超えた場合、その分を引く
                 var excessPitch = unClampedPitch - _pitch;
                 // 変化量計算
