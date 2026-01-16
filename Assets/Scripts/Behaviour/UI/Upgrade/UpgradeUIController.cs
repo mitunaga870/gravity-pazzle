@@ -1,9 +1,11 @@
 ﻿#region
 
 using System;
+using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using LitMotion;
 using LitMotion.Extensions;
+using Lib.State.Scene;
 using ScriptableObj.Upgrade;
 using TMPro;
 using UnityEngine;
@@ -46,6 +48,10 @@ namespace Behaviour.UI.Upgrade
         
         private PlayerDataController _playerDataController;
 
+        private SceneStateController _sceneStateController;
+
+        private InputController _inputController;
+
         private const string CompletedTitle = "強化完了！";
         private const string CompletedDescription = "これ以上は強化できない...！";
 
@@ -53,17 +59,10 @@ namespace Behaviour.UI.Upgrade
 
         #region Unity Methods
 
-        private void Start()
-        {
-            // PlayerDataController取得
-            _playerDataController = PlayerDataController.Instance;
-            if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
-            
-            InitButton(UpgradeType.OperationDuration);
-            InitButton(UpgradeType.MaxOperationCount);
-            InitButton(UpgradeType.PlayerGravChange);
 
-            CheckUpgradeable();
+        private void Update()
+        {
+            if (_inputController.GetKey(KeyCode.Escape, SceneState.Upgrade)) HideUpgradeUI();
         }
 
         #endregion
@@ -107,6 +106,27 @@ namespace Behaviour.UI.Upgrade
         }
 
         #endregion
+        
+        private void Init()
+        {
+            // PlayerDataController取得
+            _playerDataController = PlayerDataController.Instance;
+            if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
+
+            // SceneStateController取得
+            _sceneStateController = SceneStateController.Instance;
+            if (_sceneStateController == null) throw new Exception("SceneStateController is not assigned.");
+
+            // InputController取得
+            _inputController = InputController.Instance;
+            if (_inputController == null) throw new Exception("InputController is not assigned.");
+
+            InitButton(UpgradeType.OperationDuration);
+            InitButton(UpgradeType.MaxOperationCount);
+            InitButton(UpgradeType.PlayerGravChange);
+
+            CheckUpgradeable();
+        }
 
         private UpgradeUIButton GetButton(UpgradeType type)
         {
@@ -196,6 +216,19 @@ namespace Behaviour.UI.Upgrade
                 hovCost.text = string.Empty;
                 hovContent.text = string.Empty;
             }
+        }
+
+        public void ShowUpgradeUI()
+        {
+            Init();
+            _sceneStateController.ChangeSceneState(SceneState.Upgrade);
+            gameObject.SetActive(true);
+        }
+
+        public void HideUpgradeUI()
+        {
+            _sceneStateController.ReturnPrevSceneState();
+            gameObject.SetActive(false);
         }
 
         private void InitButton(UpgradeType type)
