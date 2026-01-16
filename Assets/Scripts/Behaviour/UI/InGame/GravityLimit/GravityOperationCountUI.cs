@@ -1,7 +1,6 @@
 #region
 
 using Behaviour.Gravity;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -25,11 +24,14 @@ namespace Behaviour.UI.InGame.GravityLimit
         [SerializeField]
         private Image stockPrefab;
 
-        [Header("ストック画像のコンテナ")]
+        [Header("ストックスプライト")]
         [SerializeField]
-        private Transform stockContainer;
+        private Sprite stockFullSprite;
 
-        private readonly List<Image> _stockImages = new List<Image>();
+        [SerializeField]
+        private Sprite stockEmptySprite;
+
+        private Image[] _stockImages;
 
         private void Start()
         {
@@ -39,7 +41,21 @@ namespace Behaviour.UI.InGame.GravityLimit
             manager.OnOperationCountChanged += OnOperationCountChanged;
 
             // 初期状態を設定
+            Initialize(manager.MaxConcurrentOperations);
             UpdateUI(0, manager.MaxConcurrentOperations);
+        }
+
+        private void Initialize(int max)
+        {
+            // 既存スプライト削除
+            if (_stockImages != null)
+                foreach (var stockSprite in _stockImages)
+                    Destroy(stockSprite.gameObject);
+
+            // スプライト配列作成
+            _stockImages = new Image[max];
+            for (var i = 0; i < max; i++)
+                _stockImages[i] = Instantiate(stockPrefab, transform);
         }
 
         /// <summary>
@@ -55,27 +71,25 @@ namespace Behaviour.UI.InGame.GravityLimit
         /// </summary>
         private void UpdateUI(int activeCount, int maxCount)
         {
-            // 残り操作可能数を計算
-            var remainingCount = maxCount - activeCount;
+            if (maxCount != _stockImages.Length)
+                Initialize(maxCount);
             
             // テキスト表示を更新
+            var remainingCount = maxCount - activeCount;
             countText.text = $"{remainingCount}/{maxCount}";
             
-            // 現在の画像数と残り操作可能数の差分を調整
-            while (_stockImages.Count < remainingCount)
+            // ストック画像を更新
+            for (var i = 0; i < _stockImages.Length; i++)
             {
-                // 足りない分を追加
-                var parent = stockContainer != null ? stockContainer : transform;
-                var newStock = Instantiate(stockPrefab, parent);
-                _stockImages.Add(newStock);
-            }
-            
-            while (_stockImages.Count > remainingCount)
-            {
-                // 多い分を削除
-                var lastIndex = _stockImages.Count - 1;
-                Destroy(_stockImages[lastIndex].gameObject);
-                _stockImages.RemoveAt(lastIndex);
+                // インデックスが残り個数未満なら満タン、それ以上なら空
+                if (i < remainingCount)
+                {
+                    _stockImages[i].sprite = stockFullSprite; // 満タン
+                }
+                else
+                {
+                    _stockImages[i].sprite = stockEmptySprite; // 空
+                }
             }
         }
     }
