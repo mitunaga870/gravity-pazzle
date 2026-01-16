@@ -59,26 +59,6 @@ namespace Behaviour.UI.Upgrade
 
         #region Unity Methods
 
-        private void Start()
-        {
-            // PlayerDataController取得
-            _playerDataController = PlayerDataController.Instance;
-            if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
-
-            // SceneStateController取得
-            _sceneStateController = SceneStateController.Instance;
-            if (_sceneStateController == null) throw new Exception("SceneStateController is not assigned.");
-
-            // InputController取得
-            _inputController = InputController.Instance;
-            if (_inputController == null) throw new Exception("InputController is not assigned.");
-
-            InitButton(UpgradeType.OperationDuration);
-            InitButton(UpgradeType.MaxOperationCount);
-            InitButton(UpgradeType.PlayerGravChange);
-
-            CheckUpgradeable();
-        }
 
         private void Update()
         {
@@ -126,6 +106,27 @@ namespace Behaviour.UI.Upgrade
         }
 
         #endregion
+        
+        private void Init()
+        {
+            // PlayerDataController取得
+            _playerDataController = PlayerDataController.Instance;
+            if (_playerDataController == null) throw new Exception("PlayerDataController is not assigned.");
+
+            // SceneStateController取得
+            _sceneStateController = SceneStateController.Instance;
+            if (_sceneStateController == null) throw new Exception("SceneStateController is not assigned.");
+
+            // InputController取得
+            _inputController = InputController.Instance;
+            if (_inputController == null) throw new Exception("InputController is not assigned.");
+
+            InitButton(UpgradeType.OperationDuration);
+            InitButton(UpgradeType.MaxOperationCount);
+            InitButton(UpgradeType.PlayerGravChange);
+
+            CheckUpgradeable();
+        }
 
         private UpgradeUIButton GetButton(UpgradeType type)
         {
@@ -219,11 +220,12 @@ namespace Behaviour.UI.Upgrade
 
         public void ShowUpgradeUI()
         {
-            gameObject.SetActive(true);
+            Init();
             _sceneStateController.ChangeSceneState(SceneState.Upgrade);
+            gameObject.SetActive(true);
         }
 
-        private void HideUpgradeUI()
+        public void HideUpgradeUI()
         {
             _sceneStateController.ReturnPrevSceneState();
             gameObject.SetActive(false);
