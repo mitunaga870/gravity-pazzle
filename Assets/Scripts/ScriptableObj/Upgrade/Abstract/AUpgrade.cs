@@ -18,6 +18,10 @@ namespace ScriptableObj.Upgrade.Abstract
         private string displayName;
 
         public string DisplayName => displayName;
+        
+        [SerializeField]
+        private string description;
+        public string Description => description;
 
         [SerializeField]
         private UpgradeType upgradeType;
