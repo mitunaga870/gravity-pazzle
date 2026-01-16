@@ -34,6 +34,7 @@
         InGame,
         Pause,
         Instruction,
-        Setting
+        Setting,
+        Upgrade
     }
 }

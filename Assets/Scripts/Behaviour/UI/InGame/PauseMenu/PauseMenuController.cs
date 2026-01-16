@@ -4,6 +4,7 @@ using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Behaviour.UI.General.Settings;
+using Behaviour.UI.Upgrade;
 using Lib.State.Scene;
 using UnityEngine;
 using UnityEngine.UI;
@@ -31,6 +32,9 @@ namespace Behaviour.UI.InGame.PauseMenu
 
         [SerializeField]
         private SceneSelectButton quitStageButton;
+        
+        [SerializeField]
+        private Button goToUpgradeButton;
 
         [Header("シーンない参照")]
         [SerializeField]
@@ -41,6 +45,9 @@ namespace Behaviour.UI.InGame.PauseMenu
         
         [SerializeField]
         private SettingUIController settingUIController;
+        
+        [SerializeField]
+        private UpgradeUIController upigradeUIController;
 
         #endregion
         
@@ -66,12 +73,16 @@ namespace Behaviour.UI.InGame.PauseMenu
                 SettingDataController.Instance.EnvironmentSetting.TitleScene);
             quitStageButton.SetTargetScene(
                 SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
-            goToSettingsButton.onClick.AddListener(() =>
-                settingUIController.ShowSettings());
+            goToSettingsButton.onClick.AddListener(settingUIController.ShowSettings);
+            if(upigradeUIController != null)
+                goToUpgradeButton.onClick.AddListener(upigradeUIController.ShowUpgradeUI);
 
-            // ステージじゃない場合はあきらめるボタンを非表示
             var stageDataController = FindObjectsByType<StageDataController>(FindObjectsSortMode.None);
-            if (stageDataController.Length == 0) quitStageButton.gameObject.SetActive(false);
+            var isStage = stageDataController.Length > 0;
+            // ステージじゃない場合はあきらめるボタンを非表示
+            quitStageButton.gameObject.SetActive(isStage);
+            // ステージでは強化ボタンを非表示
+            goToUpgradeButton.gameObject.SetActive(!isStage);
         }
 
         private void Update()
@@ -79,10 +90,10 @@ namespace Behaviour.UI.InGame.PauseMenu
             if (!Input.GetKeyDown(KeyCode.Escape)) return;
 
             // Escキーが押されたらポーズメニューをトグル
-            if (_isOpen)
-                HidePauseMenu();
-            else
+            if (Input.GetKeyDown(KeyCode.Escape, SceneState.InGame) && !_isOpen)
                 ShowPauseMenu();
+            else if (Input.GetKeyDown(KeyCode.Escape, SceneState.Pause) && _isOpen)
+                HidePauseMenu();
         }
 
         /// <summary>
