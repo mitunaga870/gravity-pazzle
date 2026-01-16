@@ -13,6 +13,11 @@ namespace ScriptableObj.Upgrade
     {
         public override UpgradeCategory UpgradeCategory => UpgradeCategory.Action;
 
+        [SerializeField]
+        private string content;
+        
+        public string Content => content;
+
         protected override bool IsUpgradeableForCategory(PlayerData playerData)
         {
             var curLevel = playerData.GetLevel(UpgradeType);
