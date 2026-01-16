@@ -71,10 +71,12 @@ namespace Behaviour.ObjectFeature
         {
             if (!_hasRigidbody) return;
 
-            // 位置をクリーンにリセットし、既存の動きを停止させるために、一時的にRigidbodyをkinematicにする
-            _rigidbody.isKinematic = true;
+            // 既存の動きを停止させる
             _rigidbody.linearVelocity = Vector3.zero;
             _rigidbody.angularVelocity = Vector3.zero;
+
+            // 位置をクリーンにリセットするために、一時的にRigidbodyをkinematicにする
+            _rigidbody.isKinematic = true;
 
             // 少し遅延させてからRigidbodyのkinematicを解除する
             var coroutine =

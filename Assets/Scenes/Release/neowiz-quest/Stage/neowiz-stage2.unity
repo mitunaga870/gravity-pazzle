@@ -5682,6 +5682,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1017114157}
   - component: {fileID: 1017114156}
+  - component: {fileID: 1017114158}
   m_Layer: 0
   m_Name: PlayArea
   m_TagString: Untagged
@@ -5708,7 +5709,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 49.920025, y: 49.533607, z: 49.837357}
+  m_Size: {x: 90, y: 70, z: 60}
   m_Center: {x: -10.4725895, y: 24.266804, z: -4.0738106}
 --- !u!4 &1017114157
 Transform:
@@ -5725,6 +5726,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1017114158
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1017114155}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 462f2b4c9802457ba381daaa94cbafaf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!43 &1030724535
 Mesh:
   m_ObjectHideFlags: 0
