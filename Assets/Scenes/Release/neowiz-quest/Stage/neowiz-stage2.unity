@@ -563,7 +563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6055878537783464824, guid: 5c0b4ead0e45aee4fb0d55aba24037d9, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -19.94
+      value: -18.78
       objectReference: {fileID: 0}
     - target: {fileID: 6055878537783464824, guid: 5c0b4ead0e45aee4fb0d55aba24037d9, type: 3}
       propertyPath: m_LocalRotation.w
@@ -12599,14 +12599,6 @@ PrefabInstance:
       propertyPath: _playerCamera
       value: 
       objectReference: {fileID: 665133466}
-    - target: {fileID: 2737782996333696743, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
-      propertyPath: m_sharedMaterial
-      value: 
-      objectReference: {fileID: 2405482600420970453, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
-    - target: {fileID: 2737782996333696743, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
-      propertyPath: m_hasFontAssetChanged
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4460892947857358179, guid: 5217e11fdc0162d419b6ecce1032c933, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -12687,10 +12679,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5341555981280385585, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6828967618227305470, guid: 5217e11fdc0162d419b6ecce1032c933, type: 3}
       propertyPath: m_Name
       value: MainUI
@@ -12733,6 +12721,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8513705221022668767, guid: 5217e11fdc0162d419b6ecce1032c933, type: 3}
       propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2737782996333696743, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: 2405482600420970453, guid: 7162c0bbaeefa504abdff2ac5e75b0fa, type: 2}
+    - target: {fileID: 2737782996333696743, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5341555981280385585, guid: f4756f6c09cb9e44a8a339c98280085e, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
