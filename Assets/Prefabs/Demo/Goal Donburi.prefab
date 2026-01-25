@@ -179,7 +179,7 @@ GameObject:
   - component: {fileID: 1750866378144508695}
   - component: {fileID: 8278222097210758794}
   m_Layer: 0
-  m_Name: 001_Donburi
+  m_Name: Goal Donburi
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

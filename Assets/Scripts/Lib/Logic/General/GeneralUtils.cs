@@ -58,5 +58,17 @@ namespace Lib.Logic
         {
             return timeSpan.Milliseconds / 10; // コンマ秒を取得
         }
+
+        /// <summary>
+        /// ゲームを終了する
+        /// </summary>
+        public static void QuitGame()
+        {
+            #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+            #else
+            Application.Quit();
+            #endif
+        }
     }
 }

@@ -1,6 +1,7 @@
 ﻿#region
 
 using Behaviour.Controller.General.DontDestoroy;
+using Lib.Logic;
 using ScriptableObj.Setting;
 using UnityEngine;
 
@@ -40,6 +41,11 @@ namespace Behaviour.UI.Title
 
             startButton.SetTargetScene(stageSelectScene);
             creditButton.SetTargetScene(creditScene);
+        }
+        
+        public void QuitGame()
+        {
+            GeneralUtils.QuitGame();
         }
     }
 }
