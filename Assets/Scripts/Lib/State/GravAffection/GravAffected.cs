@@ -67,6 +67,10 @@ namespace Lib.State.GravAffection
             if (next == null)
                 return false;
             
+            // 同じ重力方向なら変更不可
+            if (next.GravType == _gravType) 
+                return false;
+            
             return true;
         }
 
