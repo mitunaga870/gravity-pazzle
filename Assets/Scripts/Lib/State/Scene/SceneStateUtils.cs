@@ -21,6 +21,7 @@ namespace Lib.State.Scene
                 SceneState.Pause => new Pause(),
                 SceneState.Instruction => new Instruction(),
                 SceneState.Setting => new Setting(),
+                SceneState.Upgrade => new Upgrade(),
                 _ => throw new NotImplementedException("Unknown scene state")
             };
         }

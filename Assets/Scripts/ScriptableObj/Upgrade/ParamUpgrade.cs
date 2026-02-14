@@ -21,12 +21,17 @@ namespace ScriptableObj.Upgrade
         private float[] upgradedParams;
 
         public float[] UpgradedParams => upgradedParams;
+        
+        [SerializeField]
+        private string unit;
+        
+        public string Unit => unit;
 
         protected override bool IsUpgradeableForCategory(PlayerData playerData)
         {
             var nextLevel = playerData.GetLevel(UpgradeType) + 1;
 
-            return nextLevel <= upgradedParams.Length;
+            return nextLevel < upgradedParams.Length;
         }
     }
 }

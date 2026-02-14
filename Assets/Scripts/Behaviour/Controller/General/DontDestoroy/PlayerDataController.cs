@@ -154,7 +154,7 @@ namespace Behaviour.Controller.General.DontDestoroy
             return upgradeData.IsUpgradeable(PlayerData);
         }
 
-        private AUpgrade GetUpgradeData(UpgradeType type)
+        public AUpgrade GetUpgradeData(UpgradeType type)
         {
             return type switch
             {
