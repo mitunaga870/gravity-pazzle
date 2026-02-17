@@ -56,6 +56,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4579366071918838393, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
+      propertyPath: mesh
+      value: 
+      objectReference: {fileID: 4300000, guid: cf029f74ab243b24c8f7b7d9ee14fb33, type: 2}
     - target: {fileID: 5384479057148018371, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
       propertyPath: m_Material
       value: 
@@ -64,10 +68,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 7007259920982633869, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
-      propertyPath: m_Mesh
-      value: 
-      objectReference: {fileID: 4300000, guid: cf029f74ab243b24c8f7b7d9ee14fb33, type: 2}
     - target: {fileID: 7651295946946069998, guid: d7280f77e54596c42927ad2190fbcb92, type: 3}
       propertyPath: m_Name
       value: VGravCube
