@@ -82,6 +82,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   colorBoxRenderer: {fileID: 7180781044111246425}
+  rotationTarget: {fileID: 8850422867938777759}
+  floatAmplitude: 0.12
+  floatCycleDuration: 2.2
+  rotationCycleDuration: 9
 --- !u!1 &8953148696291958397
 GameObject:
   m_ObjectHideFlags: 0
