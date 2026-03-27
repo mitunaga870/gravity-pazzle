@@ -13,6 +13,7 @@ namespace Behaviour.UI.General
 
         // デバッグ用マウス追従モードフラグ
         [SerializeField] private bool isMouseFollowMode;
+        [SerializeField, Range(0.05f, 1f)] private float maxHighlightRadius = 0.45f;
         
         // 反転マスクオブジェクト
         private Material _material;
@@ -101,6 +102,7 @@ namespace Behaviour.UI.General
 
             // 角から最大距離を計算
             radius = MaxDistanceFromScreenCorners(corners, centerShader, WorldToScreenPointForTarget);
+            radius = Mathf.Min(radius, maxHighlightRadius);
             return true;
         }
 
@@ -134,8 +136,9 @@ namespace Behaviour.UI.General
                 var sp = worldToScreen(corner);
                 if (sp.z < 0f)
                     continue;
-                var u = sp.x / Screen.width;
-                var v = sp.y / Screen.height;
+                // 画面外へ飛んだ投影点をそのまま使うと半径が暴走するため、画面端でクランプする
+                var u = Mathf.Clamp01(sp.x / Screen.width);
+                var v = Mathf.Clamp01(sp.y / Screen.height);
                 var p = new Vector2(u * aspect, v);
                 var d = Vector2.Distance(p, centerShader);
                 if (d > maxDist)
@@ -143,7 +146,8 @@ namespace Behaviour.UI.General
             }
 
             // 最大距離を返す
-            return maxDist > 0f ? maxDist : 0.2f;
+            var fallback = Mathf.Min(0.2f, maxHighlightRadius);
+            return maxDist > 0f ? Mathf.Min(maxDist, maxHighlightRadius) : fallback;
         }
 
         #region Unity Method
@@ -199,7 +203,7 @@ namespace Behaviour.UI.General
             {
                 var targetPos = Input.mousePosition;
                 uvPos = new Vector2(targetPos.x / Screen.width, targetPos.y / Screen.height);
-                radius = 0.2f;
+                radius = Mathf.Min(0.2f, maxHighlightRadius);
             }
             else
             {
