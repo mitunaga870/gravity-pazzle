@@ -9,6 +9,8 @@ namespace Behaviour.UI.General
     [RequireComponent(typeof(Image))]
     public class HighlightController : MonoBehaviour
     {
+        public static HighlightController Instance { get; private set; }
+
         // デバッグ用マウス追従モードフラグ
         [SerializeField] private bool isMouseFollowMode;
         
@@ -24,7 +26,25 @@ namespace Behaviour.UI.General
         private GameObject _target;
 
         #region Unity Method
-        
+
+        private void Awake()
+        {
+            if (Instance != null && Instance != this)
+            {
+                Destroy(gameObject);
+                return;
+            }
+
+            Instance = this;
+
+            // UI の Graphic は Renderer と違い material が共有アセットのまま返る。
+            // SetVector 等で直接書き換えると .mat アセットが汚れるのでランタイム用に複製する。
+            // Start より前に用意しておく（OnEnable 等で SetHighlight された直後の Update でも反映できるようにする）。
+            var image = GetComponent<Image>();
+            _material = new Material(image.material);
+            image.material = _material;
+        }
+
         private void Start()
         {
             _mainCamera = UnityEngine.Camera.main;
@@ -35,22 +55,22 @@ namespace Behaviour.UI.General
                 gameObject.SetActive(false);
                 return;
             }
-            
-            // UI の Graphic は Renderer と違い material が共有アセットのまま返る。
-            // SetVector 等で直接書き換えると .mat アセットが汚れるのでランタイム用に複製する。
-            var image = GetComponent<Image>();
-            _material = new Material(image.material);
-            image.material = _material;
         }
 
         private void OnDestroy()
         {
+            if (Instance == this)
+                Instance = null;
+
             if (_material != null)
                 Destroy(_material);
         }
 
-        private void Update()
+        private void LateUpdate()
         {
+            if (_material == null)
+                return;
+
             Vector2 targetPos;
             // デバッグ関連処理
             if (isMouseFollowMode && Debug.isDebugBuild)
