@@ -26,37 +26,82 @@ namespace Behaviour.UI.General
         private GameObject _target;
 
         /// <summary>
-        /// Highlight.shader の距離計算と同じ座標系（x に画面アスペクトを反映）で、中心からバウンディングまでの最大距離を返す。
+        /// シェーダー用の中心（UV）と半径。中心はバウンディングの幾何中心（ピボットではない）に揃え、円の半径はその中心から角までの距離の最大値とする。
         /// </summary>
-        private float ComputeHighlightRadius(GameObject target, Vector2 centerUv)
+        private bool TryGetHighlightCircle(GameObject target, out Vector2 uvCenter, out float radius)
         {
+            uvCenter = default;
+            radius = 0.2f;
             if (target == null || _mainCamera == null)
-                return 0.2f;
+                return false;
 
-            var aspect = (float)Screen.width / Screen.height;
-            var centerShader = new Vector2(centerUv.x * aspect, centerUv.y);
+            // UI は子に Renderer 等が付いていても矩形を正とする（子の巨大 bounds に引っ張られない）
+            var rect = target.GetComponent<RectTransform>();
+            if (rect != null)
+            {
+                // 中心をワールド座標に変換
+                var centerWorld = rect.TransformPoint(rect.rect.center);
+                var screen = WorldToScreenPointForTarget(centerWorld);
+                if (screen.z < 0f)
+                    return false;
+                uvCenter = new Vector2(screen.x / Screen.width, screen.y / Screen.height);
+                
+                // シェーダー用の中心（UV）を計算
+                var aspect = (float)Screen.width / Screen.height;
+                var centerShader = new Vector2(uvCenter.x * aspect, uvCenter.y);
+                
+                // 角から最大距離を計算
+                var corners = new Vector3[4];
+                rect.GetWorldCorners(corners);
+                radius = MaxDistanceFromScreenCorners(corners, centerShader, WorldToScreenPointForTarget);
+
+                return true;
+            }
 
             // レンダラーから最大距離を計算
             var renderer = target.GetComponentInChildren<Renderer>();
             if (renderer != null)
-                return MaxDistanceFromBoundsCorners(renderer.bounds, centerShader, WorldToScreenPointForTarget);
+                return TryGetHighlightCircleFromBounds(renderer.bounds, out uvCenter, out radius);
 
             // コライダーから最大距離を計算
             var collider = target.GetComponentInChildren<Collider>();
             if (collider != null)
-                return MaxDistanceFromBoundsCorners(collider.bounds, centerShader, WorldToScreenPointForTarget);
+                return TryGetHighlightCircleFromBounds(collider.bounds, out uvCenter, out radius);
 
-            // UIから最大距離を計算
-            var rect = target.GetComponent<RectTransform>();
-            if (rect != null)
-            {
-                var corners = new Vector3[4];
-                rect.GetWorldCorners(corners);
-                return MaxDistanceFromScreenCorners(corners, centerShader, WorldToScreenPointForTarget);
-            }
+            var screenPivot = WorldToScreenPointForTarget(target.transform.position);
+            if (screenPivot.z < 0f)
+                return false;
+            uvCenter = new Vector2(screenPivot.x / Screen.width, screenPivot.y / Screen.height);
+            radius = 0.2f;
+            return true;
+        }
 
-            // デフォルト値
-            return 0.2f;
+        private bool TryGetHighlightCircleFromBounds(Bounds bounds, out Vector2 uvCenter, out float radius)
+        {
+            uvCenter = default;
+            radius = 0.2f;
+            var aspect = (float)Screen.width / Screen.height;
+
+            // 中心をスクリーン座標に変換
+            var screen = WorldToScreenPointForTarget(bounds.center);
+            if (screen.z < 0f)
+                return false;
+            uvCenter = new Vector2(screen.x / Screen.width, screen.y / Screen.height);
+            var centerShader = new Vector2(uvCenter.x * aspect, uvCenter.y);
+
+            // 角から最大距離を計算
+            var c = bounds.center;
+            var e = bounds.extents;
+            var corners = new Vector3[8];
+            var i = 0;
+            for (var ix = -1; ix <= 1; ix += 2)
+            for (var iy = -1; iy <= 1; iy += 2)
+            for (var iz = -1; iz <= 1; iz += 2)
+                corners[i++] = c + new Vector3(ix * e.x, iy * e.y, iz * e.z);
+
+            // 角から最大距離を計算
+            radius = MaxDistanceFromScreenCorners(corners, centerShader, WorldToScreenPointForTarget);
+            return true;
         }
 
         /// <summary>
@@ -72,27 +117,6 @@ namespace Behaviour.UI.General
             // 対象がオブジェクトの場合
             var cam = canvas != null && canvas.worldCamera != null ? canvas.worldCamera : _mainCamera;
             return cam != null ? cam.WorldToScreenPoint(worldPoint) : RectTransformUtility.WorldToScreenPoint(null, worldPoint);
-        }
-
-        /// <summary>
-        /// 対象のバウンディングボックスの角から最大距離を計算する
-        /// </summary>
-        private float MaxDistanceFromBoundsCorners(Bounds bounds, Vector2 centerShader, System.Func<Vector3, Vector3> worldToScreen)
-        {
-            // 対象のバウンディングボックスの中心とサイズを取得
-            var center = bounds.center;
-            var extents = bounds.extents;
-            
-            // 対象のバウンディングボックスの角を取得
-            var corners = new Vector3[8];
-            var i = 0;
-            for (var ix = -1; ix <= 1; ix += 2)
-            for (var iy = -1; iy <= 1; iy += 2)
-            for (var iz = -1; iz <= 1; iz += 2)
-                corners[i++] = center + new Vector3(ix * extents.x, iy * extents.y, iz * extents.z);
-
-            // 対象のバウンディングボックスの角から最大距離を計算
-            return MaxDistanceFromScreenCorners(corners, centerShader, worldToScreen);
         }
 
         /// <summary>
@@ -168,32 +192,32 @@ namespace Behaviour.UI.General
             if (_material == null)
                 return;
 
-            Vector2 targetPos;
-            // デバッグ関連処理
+            Vector2 uvPos;
+            float radius;
+
             if (isMouseFollowMode && Debug.isDebugBuild)
             {
-                targetPos = Input.mousePosition;
+                var targetPos = Input.mousePosition;
+                uvPos = new Vector2(targetPos.x / Screen.width, targetPos.y / Screen.height);
+                radius = 0.2f;
             }
             else
             {
-                // 対象オブジェクトの位置を取得
                 if (_target == null) return;
-                targetPos = _mainCamera.WorldToScreenPoint(_target.transform.position);
+                if (!TryGetHighlightCircle(_target, out uvPos, out radius))
+                    return;
             }
-            
-            // カメラの外であるかどうかを判定
-            var outOfCamera = 
-                targetPos.x < 0 ||
-                targetPos.x > Screen.width ||
-                targetPos.y < 0 ||
-                targetPos.y > Screen.height;
+
+            var targetPixel = new Vector2(uvPos.x * Screen.width, uvPos.y * Screen.height);
+            var outOfCamera =
+                targetPixel.x < 0 ||
+                targetPixel.x > Screen.width ||
+                targetPixel.y < 0 ||
+                targetPixel.y > Screen.height;
 
             // カメラの外なら反転マスクをなし
             if (outOfCamera) return;
-            
-            // カメラの内なら反転マスクをターゲットの位置に移動(uv座標系で)
-            var uvPos = new Vector2(targetPos.x / Screen.width, targetPos.y / Screen.height);
-            var radius = ComputeHighlightRadius(_target, uvPos);
+
             _material.SetFloat(Radius, radius);
             _material.SetVector(Center, uvPos);
         }
