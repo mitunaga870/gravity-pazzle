@@ -209,7 +209,10 @@ namespace Behaviour.UI.General
             {
                 if (_target == null) return;
                 if (!TryGetHighlightCircle(_target, out uvPos, out radius))
+                {
+                    _material.SetFloat(Radius, 0f);
                     return;
+                }
             }
 
             var targetPixel = new Vector2(uvPos.x * Screen.width, uvPos.y * Screen.height);
@@ -220,7 +223,11 @@ namespace Behaviour.UI.General
                 targetPixel.y > Screen.height;
 
             // カメラの外なら反転マスクをなし
-            if (outOfCamera) return;
+            if (outOfCamera)
+            {
+                _material.SetFloat(Radius, 0f);
+                return;
+            }
 
             _material.SetFloat(Radius, radius);
             _material.SetVector(Center, uvPos);
