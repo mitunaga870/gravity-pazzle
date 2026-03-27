@@ -258,6 +258,11 @@ namespace Behaviour.UI.General
             _target = highlightTarget;
         }
 
+        public void ClearHighlightIfCurrent()
+        {
+            _target = null;
+        }
+
         #endregion
     }
 }

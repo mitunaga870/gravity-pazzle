@@ -8,10 +8,6 @@ namespace Behaviour.ObjectFeature.Demo
     /// </summary>
     public class DemoHighlightTarget : MonoBehaviour
     {
-        [SerializeField]
-        [Tooltip("破棄時にハイライト対象を解除する（シーン上のマスク状態を残さない）")]
-        private bool clearHighlightOnDestroy = true;
-
         private void OnEnable()
         {
             RegisterAsHighlightTarget();
@@ -36,11 +32,14 @@ namespace Behaviour.ObjectFeature.Demo
 
         private void OnDestroy()
         {
-            if (!clearHighlightOnDestroy)
-                return;
-
             if (HighlightController.Instance != null)
-                HighlightController.Instance.SetHighlight(null);
+                HighlightController.Instance.ClearHighlightIfCurrent();
+        }
+
+        private void OnDisable()
+        {
+            if (HighlightController.Instance != null)
+                HighlightController.Instance.ClearHighlightIfCurrent();
         }
     }
 }
