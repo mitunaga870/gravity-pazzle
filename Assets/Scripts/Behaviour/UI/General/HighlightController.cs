@@ -16,6 +16,7 @@ namespace Behaviour.UI.General
         [SerializeField, Range(0.05f, 1f)] private float maxHighlightRadius = 0.45f;
         
         // 反転マスクオブジェクト
+        private Image _maskImage;
         private Material _material;
         private static readonly int Radius = Shader.PropertyToID("_Radius");
         private static readonly int Center = Shader.PropertyToID("_Center");
@@ -25,6 +26,12 @@ namespace Behaviour.UI.General
         
         // highlightさせたいオブジェクト
         private GameObject _target;
+
+        private void SetMaskVisible(bool visible)
+        {
+            if (_maskImage != null && _maskImage.enabled != visible)
+                _maskImage.enabled = visible;
+        }
 
         /// <summary>
         /// シェーダー用の中心（UV）と半径。中心はバウンディングの幾何中心（ピボットではない）に揃え、円の半径はその中心から角までの距離の最大値とする。
@@ -165,9 +172,10 @@ namespace Behaviour.UI.General
             // UI の Graphic は Renderer と違い material が共有アセットのまま返る。
             // SetVector 等で直接書き換えると .mat アセットが汚れるのでランタイム用に複製する。
             // Start より前に用意しておく（OnEnable 等で SetHighlight された直後の Update でも反映できるようにする）。
-            var image = GetComponent<Image>();
-            _material = new Material(image.material);
-            image.material = _material;
+            _maskImage = GetComponent<Image>();
+            _material = new Material(_maskImage.material);
+            _maskImage.material = _material;
+            SetMaskVisible(false);
         }
 
         private void Start()
@@ -204,15 +212,22 @@ namespace Behaviour.UI.General
                 var targetPos = Input.mousePosition;
                 uvPos = new Vector2(targetPos.x / Screen.width, targetPos.y / Screen.height);
                 radius = Mathf.Min(0.2f, maxHighlightRadius);
+                SetMaskVisible(true);
             }
             else
             {
-                if (_target == null) return;
+                if (_target == null)
+                {
+                    SetMaskVisible(false);
+                    return;
+                }
                 if (!TryGetHighlightCircle(_target, out uvPos, out radius))
                 {
+                    SetMaskVisible(true);
                     _material.SetFloat(Radius, 0f);
                     return;
                 }
+                SetMaskVisible(true);
             }
 
             var targetPixel = new Vector2(uvPos.x * Screen.width, uvPos.y * Screen.height);
@@ -225,6 +240,7 @@ namespace Behaviour.UI.General
             // カメラの外なら反転マスクをなし
             if (outOfCamera)
             {
+                SetMaskVisible(true);
                 _material.SetFloat(Radius, 0f);
                 return;
             }
