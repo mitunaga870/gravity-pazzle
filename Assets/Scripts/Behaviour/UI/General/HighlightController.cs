@@ -1,4 +1,3 @@
-﻿using lilToon;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -37,9 +36,17 @@ namespace Behaviour.UI.General
                 return;
             }
             
-            // イメージの
+            // UI の Graphic は Renderer と違い material が共有アセットのまま返る。
+            // SetVector 等で直接書き換えると .mat アセットが汚れるのでランタイム用に複製する。
             var image = GetComponent<Image>();
-            _material = image.material;
+            _material = new Material(image.material);
+            image.material = _material;
+        }
+
+        private void OnDestroy()
+        {
+            if (_material != null)
+                Destroy(_material);
         }
 
         private void Update()
