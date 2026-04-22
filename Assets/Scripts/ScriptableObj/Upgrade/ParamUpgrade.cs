@@ -31,7 +31,7 @@ namespace ScriptableObj.Upgrade
         {
             var nextLevel = playerData.GetLevel(UpgradeType) + 1;
 
-            return nextLevel < upgradedParams.Length;
+            return nextLevel <= upgradedParams.Length;
         }
     }
 }

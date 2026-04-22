@@ -85,7 +85,7 @@ namespace Behaviour.UI
                 return;
 
             var currentLevel = playerDataController.PlayerData.GetLevel(UpgradeType.OperationDuration);
-            var maxLevel = upgradeData.UpgradedParams.Length - 1;
+            var maxLevel = upgradeData.UpgradedParams.Length;
             if (maxLevel <= 0)
                 return;
 
