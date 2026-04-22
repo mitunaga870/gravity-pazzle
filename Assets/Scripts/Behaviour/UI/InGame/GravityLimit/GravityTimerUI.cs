@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using Behaviour.Gravity;
+using Behaviour.Controller.General.DontDestoroy;
+using ScriptableObj.Upgrade;
 
 namespace Behaviour.UI
 {
@@ -12,18 +14,41 @@ namespace Behaviour.UI
         [SerializeField]
         private Image fillGauge; // Fill Amountで制御するゲージ
 
+        [SerializeField]
+        private Image secondLoopGauge; // 二周目用ゲージ
+
         private GravityOperationManager _manager;
+
+        private float _secondLoopMaxFill;
+
+        private float _totalGaugeCapacity = 1f;
 
         private void Start()
         {
             _manager = GravityOperationManager.Instance;
+            if (_manager == null)
+            {
+                Debug.LogError("GravityOperationManager が取得できません。");
+                return;
+            }
+
+            InitializeSecondLoopCapacity();
             
             // 残り時間割合の変更イベントを購読
             _manager.OnOperationRemainingRatioChanged += OnTimerChanged;
             _manager.OnOperationCountChanged += OnOperationCountChanged;
             
             // 初期状態ではゲージをマックスにする
-            fillGauge.fillAmount = 1f;
+            ApplyGaugeByRatio(1f);
+        }
+
+        private void OnDestroy()
+        {
+            if (_manager == null)
+                return;
+
+            _manager.OnOperationRemainingRatioChanged -= OnTimerChanged;
+            _manager.OnOperationCountChanged -= OnOperationCountChanged;
         }
 
         /// <summary>
@@ -31,8 +56,7 @@ namespace Behaviour.UI
         /// </summary>
         private void OnTimerChanged(VGravBehaviour target, float ratio)
         {
-            // Fill Amount を更新
-            fillGauge.fillAmount = ratio;
+            ApplyGaugeByRatio(ratio);
         }
 
         /// <summary>
@@ -43,8 +67,54 @@ namespace Behaviour.UI
             // 操作中でなければゲージをマックスにする
             if (activeCount == 0)
             {
-                fillGauge.fillAmount = 1f;
+                ApplyGaugeByRatio(1f);
             }
+        }
+
+        private void InitializeSecondLoopCapacity()
+        {
+            _secondLoopMaxFill = 0f;
+            _totalGaugeCapacity = 1f;
+
+            var playerDataController = PlayerDataController.Instance;
+            if (playerDataController == null)
+                return;
+
+            var upgradeData = playerDataController.GetUpgradeData(UpgradeType.OperationDuration) as ParamUpgrade;
+            if (upgradeData == null)
+                return;
+
+            var currentLevel = playerDataController.PlayerData.GetLevel(UpgradeType.OperationDuration);
+            var maxLevel = upgradeData.UpgradedParams.Length - 1;
+            if (maxLevel <= 0)
+                return;
+
+            _secondLoopMaxFill = Mathf.Clamp01((float)currentLevel / maxLevel);
+            _totalGaugeCapacity = 1f + _secondLoopMaxFill;
+        }
+
+        private void ApplyGaugeByRatio(float ratio)
+        {
+            var clampedRatio = Mathf.Clamp01(ratio);
+
+            if (fillGauge == null)
+                return;
+
+            if (secondLoopGauge == null)
+            {
+                fillGauge.fillAmount = clampedRatio;
+                return;
+            }
+
+            var totalRemaining = clampedRatio * _totalGaugeCapacity;
+
+            // 二周目が先に減り、二周目が尽きたら一周目を減らす
+            var secondLoopFill = Mathf.Clamp(totalRemaining - 1f, 0f, _secondLoopMaxFill);
+            var firstLoopFill = Mathf.Clamp01(Mathf.Min(totalRemaining, 1f));
+
+            secondLoopGauge.fillAmount = secondLoopFill;
+            secondLoopGauge.gameObject.SetActive(_secondLoopMaxFill > 0f);
+            fillGauge.fillAmount = firstLoopFill;
         }
     }
 }
