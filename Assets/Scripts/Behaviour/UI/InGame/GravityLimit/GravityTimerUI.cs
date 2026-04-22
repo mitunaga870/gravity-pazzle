@@ -25,10 +25,18 @@ namespace Behaviour.UI
 
         private void Start()
         {
+            if (fillGauge == null)
+            {
+                Debug.LogError("fillGauge が未設定です。", this);
+                enabled = false;
+                return;
+            }
+
             _manager = GravityOperationManager.Instance;
             if (_manager == null)
             {
                 Debug.LogError("GravityOperationManager が取得できません。");
+                enabled = false;
                 return;
             }
 
@@ -96,9 +104,6 @@ namespace Behaviour.UI
         private void ApplyGaugeByRatio(float ratio)
         {
             var clampedRatio = Mathf.Clamp01(ratio);
-
-            if (fillGauge == null)
-                return;
 
             if (secondLoopGauge == null)
             {
