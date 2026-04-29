@@ -35,6 +35,11 @@ namespace ScriptableObj.Setting
         [Obsolete("EndCardSceneはデモ版専用のため、今後廃止予定です。")]
         private SceneObj endCardScene;
 
+        [Header("サウンド設定")]
+        [SerializeField]
+        [Min(0f)]
+        private float sceneTransitionDelaySeconds = 1f;
+
         public bool IsDevelopmentBuild => isDevelopmentBuild;
 
         public SceneObj TitleScene => titleScene;
@@ -45,6 +50,8 @@ namespace ScriptableObj.Setting
 
         [Obsolete("StageSelectSceneは今後廃止予定です。")]
         public SceneObj EndCardScene => endCardScene;
+
+        public float SceneTransitionDelaySeconds => sceneTransitionDelaySeconds;
 
         public (StageData, int) GetFromCurScene()
         {

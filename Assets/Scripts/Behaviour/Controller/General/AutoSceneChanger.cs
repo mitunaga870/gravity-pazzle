@@ -42,7 +42,7 @@ namespace Behaviour.Controller.General
 
         private System.Collections.IEnumerator LoadNextSceneWithSceneTransitionSe()
         {
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
 
             SceneManager.LoadScene(nextSceneName.SceneName);
         }

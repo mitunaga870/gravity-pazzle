@@ -194,7 +194,7 @@ namespace Behaviour.UI.StageSelect
                 soundController.PlaySe("SceneTransition");
             }
 
-            yield return new WaitForSeconds(1.0f);
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
 
             SceneManager.LoadScene(_stage.StageScene);
         }

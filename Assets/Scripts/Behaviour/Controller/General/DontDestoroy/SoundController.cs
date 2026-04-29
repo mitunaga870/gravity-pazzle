@@ -218,6 +218,16 @@ namespace Behaviour.Controller.General.DontDestoroy
         }
 
         /// <summary>
+        ///     シーン遷移SE再生後の待機秒数を環境設定から取得する
+        /// </summary>
+        public static float GetSceneTransitionDelaySeconds()
+        {
+            var settingController = SettingDataController.Instance;
+            var environmentSetting = settingController != null ? settingController.EnvironmentSetting : null;
+            return environmentSetting != null ? environmentSetting.SceneTransitionDelaySeconds : 0f;
+        }
+
+        /// <summary>
         ///     AudioMixer の露出 float パラメータを線形 0〜1 から dB に変換して設定する（SettingDataController と同じ換算）
         /// </summary>
         public void SetMixerVolumeLinear(string exposedParameterName, float linearVolume)
