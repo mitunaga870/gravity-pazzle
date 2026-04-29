@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -79,5 +79,13 @@ namespace ScriptableObj.Setting
         StageSelect,
         Credit,
         Stage
+    }
+
+    public enum EventBgmType
+    {
+        Unknown,
+        BossAppear,
+        StageClear,
+        GameOver
     }
 }

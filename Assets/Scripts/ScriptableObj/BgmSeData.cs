@@ -23,9 +23,15 @@ namespace ScriptableObj
         [SerializeField]
         private List<SeClipData> seList = new();
 
+        [Header("イベントBGM一覧")]
+        [SerializeField]
+        private List<EventBgmClipData> eventBgmList = new();
+
         public IReadOnlyList<BgmClipData> BgmList => bgmList;
 
         public IReadOnlyList<SeClipData> SeList => seList;
+
+        public IReadOnlyList<EventBgmClipData> EventBgmList => eventBgmList;
 
         private void OnValidate()
         {
@@ -80,6 +86,21 @@ namespace ScriptableObj
             if (string.IsNullOrEmpty(id)) return null;
 
             foreach (var item in seList)
+            {
+                if (item != null && item.Id == id) return item.Clip;
+            }
+
+            return null;
+        }
+
+        /// <summary>
+        ///     識別子に一致するイベントBGMのクリップを返す
+        /// </summary>
+        public AudioClip GetEventBgmClip(EventBgmType id)
+        {
+            if (id == EventBgmType.Unknown) return null;
+
+            foreach (var item in eventBgmList)
             {
                 if (item != null && item.Id == id) return item.Clip;
             }

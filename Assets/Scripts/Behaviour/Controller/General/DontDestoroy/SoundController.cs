@@ -1,7 +1,8 @@
 #region
 
+using System;
+using System.Collections.Generic;
 using ScriptableObj;
-using Lib.DataClass.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
@@ -17,6 +18,19 @@ namespace Behaviour.Controller.General.DontDestoroy
     /// </summary>
     public class SoundController : AudioMixerControllerBase
     {
+        [Serializable]
+        private class EventBgmEntry
+        {
+            [SerializeField]
+            private EventBgmType id = EventBgmType.Unknown;
+
+            [SerializeField]
+            private AudioClip clip;
+
+            public EventBgmType Id => id;
+            public AudioClip Clip => clip;
+        }
+
         #region Singleton Implementation
 
         public static SoundController Instance { get; private set; }
@@ -31,6 +45,9 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         [SerializeField]
         private BgmSeData bgmSeData;
+
+        [SerializeField]
+        private List<EventBgmEntry> eventBgmList = new();
 
         #endregion
 
@@ -152,6 +169,42 @@ namespace Behaviour.Controller.General.DontDestoroy
         }
 
         /// <summary>
+        ///     イベント識別子に対応するBGMを再生する
+        /// </summary>
+        public void PlayEventBgm(EventBgmType eventType, bool loop = false)
+        {
+            if (bgmSeData == null || _bgmSource == null || eventType == EventBgmType.Unknown) return;
+
+            var eventBgmClip = ResolveEventBgmClip(eventType);
+            if (eventBgmClip == null)
+            {
+                Debug.LogWarning($"SoundController: EventBgmType '{eventType}' に対応するクリップが見つかりません。");
+                return;
+            }
+
+            if (_bgmSource.isPlaying && _bgmSource.clip == eventBgmClip && _bgmSource.loop == loop) return;
+
+            _bgmSource.clip = eventBgmClip;
+            _bgmSource.loop = loop;
+            _bgmSource.Play();
+        }
+
+        /// <summary>
+        ///     現在のシーン種別に対応するBGMへ戻す
+        /// </summary>
+        public void ResumeSceneBgm()
+        {
+            if (_settingDataController == null)
+            {
+                _settingDataController = SettingDataController.Instance;
+                if (_settingDataController == null) return;
+            }
+
+            _currentEnvironmentSceneType = _settingDataController.EnvironmentSetting.GetCurrentEnvironmentSceneType();
+            PlayBgm(_currentEnvironmentSceneType);
+        }
+
+        /// <summary>
         ///     任意のクリップを SE 用バスでワンショット再生する
         /// </summary>
         public void PlaySeClip(AudioClip clip)
@@ -215,6 +268,20 @@ namespace Behaviour.Controller.General.DontDestoroy
             _seSource.loop = false;
             _seSource.spatialBlend = 0f;
             if (seGroup != null) _seSource.outputAudioMixerGroup = seGroup;
+        }
+
+        private AudioClip ResolveEventBgmClip(EventBgmType eventType)
+        {
+            if (eventType == EventBgmType.Unknown) return null;
+
+            if (eventBgmList == null) return null;
+
+            foreach (var eventBgmData in eventBgmList)
+            {
+                if (eventBgmData != null && eventBgmData.Id == eventType) return eventBgmData.Clip;
+            }
+
+            return null;
         }
 
         /// <summary>
