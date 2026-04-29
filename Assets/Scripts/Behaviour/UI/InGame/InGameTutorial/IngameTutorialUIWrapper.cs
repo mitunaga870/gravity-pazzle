@@ -5,11 +5,14 @@ using System.Linq;
 using Behaviour.Camera;
 using Behaviour.Controller;
 using Behaviour.Controller.General;
+using Behaviour.Gimmick.CheckPoints;
 using Behaviour.Gravity;
 using Behaviour.ObjectFeature.RideableObjectBehaviours;
 using Behaviour.Player;
 using Behaviour.Player.Abstract;
+using Behaviour.Trigger;
 using Behaviour.UI.General;
+using Behaviour.UI.InGame.PauseMenu;
 using Lib.DataClass;
 using Lib.Logic;
 using Lib.State.Scene;
@@ -48,6 +51,18 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         [Tooltip("重力変更の制限UIチュートリアル対象")]
         private GameObject _gravChangeLimitUI;
+
+        [SerializeField]
+        [Tooltip("チェックポイントチュートリアル対象")]
+        private CheckPoint _checkPoint;
+        
+        [SerializeField]
+        [Tooltip("ポーズチュートリアル対象")]
+        private PauseMenuController _pauseMenuController;
+        
+        [SerializeField]
+        [Tooltip("ゴールチュートリアル対象")]
+        private GoalTrigger _goalTrigger;
 
         [Header("UI")]
 
@@ -132,7 +147,7 @@ namespace Behaviour.UI.InGame
             {
                 ui.UI.SetActive(false);
             }
-            
+
             if (_currentState == TutorialState.None) return;
 
             GetTutorialUI(_currentState).UI.SetActive(true);
@@ -171,6 +186,15 @@ namespace Behaviour.UI.InGame
                     break;
                 case TutorialState.GravChangeLimit:
                     CheckGravChangeLimitTutorial();
+                    break;
+                case TutorialState.CheckPoint:
+                    CheckCheckPointTutorial();
+                    break;
+                case TutorialState.Pause:
+                    CheckPauseTutorial();
+                    break;
+                case TutorialState.Goal:
+                    CheckGoalTutorial();
                     break;
             }
         }
@@ -332,36 +356,9 @@ namespace Behaviour.UI.InGame
                 _highlightController.ClearHighlightIfCurrent();
                 _highlightController.gameObject.SetActive(false);
 
-                StartResetWithGravObjTutorial();
-
+                StartTargetGravChangeTutorial();
             });
             StartCoroutine(Coroutine);
-        }
-
-        #endregion
-
-        #region Reset With GravObj Tutorial
-
-        private void StartResetWithGravObjTutorial()
-        {
-            _currentState = TutorialState.ResetWithGravObj;
-            _uiDisplayTimer = 0f;
-
-            // リセットの表示フラグを元に戻す
-            _globalEventController.IsResetCalled = false;
-        }
-
-        private void CheckResetWithGravObjTutorial()
-        {
-            if (_globalEventController.IsResetCalled)
-            {
-                EndResetWithGravObjTutorial();
-            }
-        }
-
-        private void EndResetWithGravObjTutorial()
-        {
-            StartTargetGravChangeTutorial();
         }
 
         #endregion
@@ -434,7 +431,7 @@ namespace Behaviour.UI.InGame
             _highlightController.SetHighlight(_gravChangeLimitUI.gameObject);
 
             // ゲーム時間をとめる
-            _sceneStateController.ChangeSceneState(SceneState.Instruction);
+            _sceneStateController.ChangeSceneState(SceneState.Pause);
         }
 
         private void CheckGravChangeLimitTutorial()
@@ -449,18 +446,106 @@ namespace Behaviour.UI.InGame
         {
             // ゲーム時間を再開
             _sceneStateController.ChangeSceneState(SceneState.InGame);
-            
+
             // ハイライト解除
             _highlightController.gameObject.SetActive(false);
 
+            StartResetWithGravObjTutorial();
+        }
+
+        #endregion
+
+        #region Reset With GravObj Tutorial
+
+        private void StartResetWithGravObjTutorial()
+        {
+            _currentState = TutorialState.ResetWithGravObj;
+            _uiDisplayTimer = 0f;
+
+            // リセットの表示フラグを元に戻す
+            _globalEventController.IsResetCalled = false;
+        }
+
+        private void CheckResetWithGravObjTutorial()
+        {
+            if (_globalEventController.IsResetCalled)
+            {
+                EndResetWithGravObjTutorial();
+            }
+        }
+
+        private void EndResetWithGravObjTutorial()
+        {
+            StartCheckPointTutorial();
+        }
+
+        #endregion
+
+        #region Check Point Tutorial
+        private void StartCheckPointTutorial()
+        {
+            _currentState = TutorialState.CheckPoint;
+            _uiDisplayTimer = 0f;
+
+            // チェックポイントを表示
+            _highlightController.gameObject.SetActive(true);
+            _highlightController.SetHighlight(_checkPoint.gameObject);
+        }
+
+        private void CheckCheckPointTutorial()
+        {
+            if (_checkPoint.IsActive)
+            {
+                EndCheckPointTutorial();
+            }
+        }
+        private void EndCheckPointTutorial()
+        {
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
+
+            StartPauseTutorial();
+        }
+
+
+        #endregion
+        
+        #region Pause Tutorial
+        private void StartPauseTutorial()
+        {
+            _currentState = TutorialState.Pause;
+            _uiDisplayTimer = 0f;
+        }
+        
+        private void CheckPauseTutorial()
+        {
+            if (_pauseMenuController.IsMenuOpened)
+                EndPauseTutorial();
+        }
+        private void EndPauseTutorial()
+        {
+            StartGoalTutorial();
+        }
+        #endregion
+
+        #region Goal Tutorial
+        private void StartGoalTutorial()
+        {
+            _currentState = TutorialState.Goal;
+            _uiDisplayTimer = 0f;
+        }
+
+        private void CheckGoalTutorial()
+        {
+            if (Input.anyKeyDown)
+                EndGoalTutorial();
+        }
+        private void EndGoalTutorial()
+        {
             EndTutorial();
         }
         
         #endregion
-    }
-
-    internal class HighLightObject
-    {
     }
 
     public enum TutorialState
@@ -476,6 +561,9 @@ namespace Behaviour.UI.InGame
         TargetGravChange_End,
         RideGravObj,
         GravChangeLimit,
+        CheckPoint,
+        Pause,
+        Goal,
     }
 
     public enum TutorialType
