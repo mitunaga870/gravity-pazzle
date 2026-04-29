@@ -85,6 +85,7 @@ GameObject:
   - component: {fileID: 8346438649846329638}
   - component: {fileID: 4579366071918838393}
   - component: {fileID: 8348064036501069471}
+  - component: {fileID: 4318877393651338780}
   m_Layer: 0
   m_Name: VGravCube
   m_TagString: Untagged
@@ -372,6 +373,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d5709ee7b37949f28f48f670beb01251, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &4318877393651338780
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2360032088580834611}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c312eacb89641308cf11914a3010db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &4129429482687437538
