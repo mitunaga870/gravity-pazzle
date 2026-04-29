@@ -39,6 +39,11 @@ namespace Behaviour.Controller.General.DontDestoroy
         private AudioSource _bgmSource;
         private AudioSource _seSource;
         private AudioSource _loopSeSource;
+        private float _loopSeDefaultVolume = 1f;
+        private bool _isLoopSeFadingOut;
+        private float _loopSeFadeElapsedSeconds;
+        private float _loopSeFadeDurationSeconds;
+        private float _loopSeFadeStartVolume;
         
         private SettingDataController _settingDataController;
         private EnvironmentSceneType _currentEnvironmentSceneType = EnvironmentSceneType.Unknown;
@@ -91,6 +96,28 @@ namespace Behaviour.Controller.General.DontDestoroy
         private void OnDisable()
         {
             SceneManager.sceneLoaded -= OnSceneLoaded;
+        }
+
+        private void Update()
+        {
+            if (!_isLoopSeFadingOut || _loopSeSource == null) return;
+
+            if (!_loopSeSource.isPlaying)
+            {
+                ResetLoopSeFadeState();
+                return;
+            }
+
+            _loopSeFadeElapsedSeconds += Time.unscaledDeltaTime;
+            var t = Mathf.Clamp01(_loopSeFadeElapsedSeconds / _loopSeFadeDurationSeconds);
+            _loopSeSource.volume = Mathf.Lerp(_loopSeFadeStartVolume, 0f, t);
+
+            if (t < 1f) return;
+
+            _loopSeSource.Stop();
+            _loopSeSource.clip = null;
+            _loopSeSource.volume = _loopSeDefaultVolume;
+            ResetLoopSeFadeState();
         }
 
         #endregion
@@ -188,8 +215,11 @@ namespace Behaviour.Controller.General.DontDestoroy
                 return;
             }
 
+            ResetLoopSeFadeState();
+
             if (_loopSeSource.isPlaying && _loopSeSource.clip == seClip) return;
 
+            _loopSeSource.volume = _loopSeDefaultVolume;
             _loopSeSource.clip = seClip;
             _loopSeSource.loop = true;
             _loopSeSource.Play();
@@ -202,14 +232,37 @@ namespace Behaviour.Controller.General.DontDestoroy
         {
             if (_loopSeSource == null || !_loopSeSource.isPlaying) return;
 
+            ResetLoopSeFadeState();
+
             _loopSeSource.Stop();
             _loopSeSource.clip = null;
+            _loopSeSource.volume = _loopSeDefaultVolume;
+        }
+
+        /// <summary>
+        ///     ループ再生中のSEをフェードアウトして停止する
+        /// </summary>
+        public void StopLoopSeWithFade(float fadeOutSeconds = 0.2f)
+        {
+            if (_loopSeSource == null || !_loopSeSource.isPlaying) return;
+
+            if (fadeOutSeconds <= 0f)
+            {
+                StopLoopSe();
+                return;
+            }
+
+            _isLoopSeFadingOut = true;
+            _loopSeFadeElapsedSeconds = 0f;
+            _loopSeFadeDurationSeconds = fadeOutSeconds;
+            _loopSeFadeStartVolume = _loopSeSource.volume;
         }
 
         /// <summary>
         ///     ループSEが再生中かどうか
         /// </summary>
         public bool IsLoopSePlaying => _loopSeSource != null && _loopSeSource.isPlaying;
+        public bool IsLoopSeFadingOut => _isLoopSeFadingOut;
 
         /// <summary>
         ///     任意のクリップを BGM 用バスでループ再生する
@@ -348,7 +401,16 @@ namespace Behaviour.Controller.General.DontDestoroy
             _loopSeSource.playOnAwake = false;
             _loopSeSource.loop = true;
             _loopSeSource.spatialBlend = 0f;
+            _loopSeDefaultVolume = _loopSeSource.volume;
             if (seGroup != null) _loopSeSource.outputAudioMixerGroup = seGroup;
+        }
+
+        private void ResetLoopSeFadeState()
+        {
+            _isLoopSeFadingOut = false;
+            _loopSeFadeElapsedSeconds = 0f;
+            _loopSeFadeDurationSeconds = 0f;
+            _loopSeFadeStartVolume = _loopSeDefaultVolume;
         }
 
         private AudioClip ResolveEventBgmClip(EventBgmType eventType)

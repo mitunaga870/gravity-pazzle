@@ -63,8 +63,11 @@ namespace Behaviour.Player.Abstract
 
         private const float AccelerationTime = 0.2f;
         private const string FootstepsSeId = "Footsteps";
+        private const string FallSeId = "Fall";
+        private const float FallSeFadeOutSeconds = 0.2f;
 
         private bool _wasMoved;
+        private bool _isFalling;
         private float _acceleratedTime;
 
         #endregion
@@ -131,14 +134,48 @@ namespace Behaviour.Player.Abstract
          */
         protected abstract Vector3 GetMoveSpeed();
 
+        public void SetFallingState(bool isFalling)
+        {
+            if (_isFalling == isFalling) return;
+            _isFalling = isFalling;
+
+            var soundController = SoundController.Instance;
+            if (soundController == null) return;
+
+            if (_isFalling)
+            {
+                if (soundController.IsLoopSePlaying)
+                    soundController.StopLoopSe();
+                soundController.PlayLoopSe(FallSeId);
+                _wasMoved = false;
+                return;
+            }
+
+            if (soundController.IsLoopSePlaying)
+                soundController.StopLoopSeWithFade(FallSeFadeOutSeconds);
+        }
+
         private void HandleFootstepsSe(bool isMoving)
         {
+            if (_isFalling)
+            {
+                _wasMoved = false;
+                return;
+            }
+
             if (_wasMoved == isMoving) return;
 
             var soundController = SoundController.Instance;
             if (soundController == null)
             {
                 _wasMoved = isMoving;
+                return;
+            }
+
+            // Fall SE のフェードアウト中は Footsteps の再生開始を遅らせる
+            if (isMoving && soundController.IsLoopSeFadingOut)
+            {
+                _wasMoved = false;
                 return;
             }
 
