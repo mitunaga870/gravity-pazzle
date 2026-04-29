@@ -449,6 +449,9 @@ namespace Behaviour.UI.InGame
         {
             // ゲーム時間を再開
             _sceneStateController.ChangeSceneState(SceneState.InGame);
+            
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
 
             EndTutorial();
         }
