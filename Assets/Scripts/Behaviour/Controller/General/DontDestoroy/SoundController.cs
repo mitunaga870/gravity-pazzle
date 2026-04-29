@@ -38,6 +38,7 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private AudioSource _bgmSource;
         private AudioSource _seSource;
+        private AudioSource _loopSeSource;
         
         private SettingDataController _settingDataController;
         private EnvironmentSceneType _currentEnvironmentSceneType = EnvironmentSceneType.Unknown;
@@ -156,6 +157,59 @@ namespace Behaviour.Controller.General.DontDestoroy
 
             _seSource.PlayOneShot(seClip);
         }
+
+        /// <summary>
+        ///     識別子に対応する SE をループ再生する（ミキサー Se 経由）
+        /// </summary>
+        public void PlayLoopSe(string seId)
+        {
+            if (_loopSeSource == null)
+            {
+                Debug.LogError($"SoundController: ループSE用AudioSourceが未初期化のため、SE '{seId}' を再生できません。");
+                return;
+            }
+
+            if (bgmSeData == null)
+            {
+                Debug.LogError($"SoundController: BgmSeData が未設定のため、SE '{seId}' を再生できません。");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(seId))
+            {
+                Debug.LogError("SoundController: 空またはnullのSE IDが指定されました。");
+                return;
+            }
+
+            var seClip = bgmSeData.GetSeClip(seId);
+            if (seClip == null)
+            {
+                Debug.LogError($"SoundController: SE ID '{seId}' に対応するクリップが見つかりません。");
+                return;
+            }
+
+            if (_loopSeSource.isPlaying && _loopSeSource.clip == seClip) return;
+
+            _loopSeSource.clip = seClip;
+            _loopSeSource.loop = true;
+            _loopSeSource.Play();
+        }
+
+        /// <summary>
+        ///     ループ再生中のSEを停止する
+        /// </summary>
+        public void StopLoopSe()
+        {
+            if (_loopSeSource == null || !_loopSeSource.isPlaying) return;
+
+            _loopSeSource.Stop();
+            _loopSeSource.clip = null;
+        }
+
+        /// <summary>
+        ///     ループSEが再生中かどうか
+        /// </summary>
+        public bool IsLoopSePlaying => _loopSeSource != null && _loopSeSource.isPlaying;
 
         /// <summary>
         ///     任意のクリップを BGM 用バスでループ再生する
@@ -289,6 +343,12 @@ namespace Behaviour.Controller.General.DontDestoroy
             _seSource.loop = false;
             _seSource.spatialBlend = 0f;
             if (seGroup != null) _seSource.outputAudioMixerGroup = seGroup;
+
+            _loopSeSource = gameObject.AddComponent<AudioSource>();
+            _loopSeSource.playOnAwake = false;
+            _loopSeSource.loop = true;
+            _loopSeSource.spatialBlend = 0f;
+            if (seGroup != null) _loopSeSource.outputAudioMixerGroup = seGroup;
         }
 
         private AudioClip ResolveEventBgmClip(EventBgmType eventType)

@@ -1,8 +1,9 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Camera;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Behaviour.Gravity.Abstract;
 using UnityEngine;
@@ -61,6 +62,7 @@ namespace Behaviour.Player.Abstract
         #region Private Fields
 
         private const float AccelerationTime = 0.2f;
+        private const string FootstepsSeId = "Footsteps";
 
         private bool _wasMoved;
         private float _acceleratedTime;
@@ -94,17 +96,23 @@ namespace Behaviour.Player.Abstract
         {
             // 重力適応中は移動しない
             if (GravBehaviour.IsGravAdapting)
+            {
+                HandleFootstepsSe(false);
                 return;
+            }
             
             // プレイヤーの移動
             var moveSpeed = GetMoveSpeed();
             playerRigidBody.MovePosition(transform.position + moveSpeed * Time.deltaTime);
+            var isMoving = moveSpeed != Vector3.zero;
 
             // 移動したかどうかを更新
-            IsFirstMoved = IsFirstMoved || moveSpeed != Vector3.zero;
+            IsFirstMoved = IsFirstMoved || isMoving;
+
+            HandleFootstepsSe(isMoving);
 
             // 速度があれば、移動方向を向く
-            if (moveSpeed != Vector3.zero)
+            if (isMoving)
             {
                 // 値が小さいとLookRotationでエラーになるため、適当な数をかける
                 var adjustedMoveDirection = moveSpeed * 1000f;
@@ -122,5 +130,24 @@ namespace Behaviour.Player.Abstract
          * 移動ベクトルを取得する
          */
         protected abstract Vector3 GetMoveSpeed();
+
+        private void HandleFootstepsSe(bool isMoving)
+        {
+            if (_wasMoved == isMoving) return;
+
+            var soundController = SoundController.Instance;
+            if (soundController == null)
+            {
+                _wasMoved = isMoving;
+                return;
+            }
+
+            if (isMoving)
+                soundController.PlayLoopSe(FootstepsSeId);
+            else if (soundController.IsLoopSePlaying)
+                soundController.StopLoopSe();
+
+            _wasMoved = isMoving;
+        }
     }
 }
