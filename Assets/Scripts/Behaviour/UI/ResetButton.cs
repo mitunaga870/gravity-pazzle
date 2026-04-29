@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Lib.Logic.General;
@@ -32,6 +32,12 @@ namespace Behaviour.UI
             if (instance != null) instance.DontSaveOnDestroy = true;
             
             // 現状のシーンを再読み込み
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         }
     }

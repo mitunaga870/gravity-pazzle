@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
@@ -50,6 +50,12 @@ namespace Behaviour.Controller.Demo
 
 
             // シーンに遷移
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
     }

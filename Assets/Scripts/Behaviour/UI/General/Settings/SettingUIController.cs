@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -251,6 +251,12 @@ namespace Behaviour.UI.General.Settings
             // ステージの場合、保存を無効化する
             var instance = StageDataController.Instance;
             if (instance != null) instance.DontSaveOnDestroy = true;
+
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
 
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }

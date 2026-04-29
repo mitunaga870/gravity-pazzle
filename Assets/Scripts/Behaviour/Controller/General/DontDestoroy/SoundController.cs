@@ -76,7 +76,7 @@ namespace Behaviour.Controller.General.DontDestoroy
             
            InitializeBgm();
         }
-        
+
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
             InitializeBgm();
@@ -129,10 +129,30 @@ namespace Behaviour.Controller.General.DontDestoroy
         /// </summary>
         public void PlaySe(string seId)
         {
-            if (bgmSeData == null || _seSource == null) return;
+            if (_seSource == null)
+            {
+                Debug.LogError($"SoundController: SE用AudioSourceが未初期化のため、SE '{seId}' を再生できません。");
+                return;
+            }
+
+            if (bgmSeData == null)
+            {
+                Debug.LogError($"SoundController: BgmSeData が未設定のため、SE '{seId}' を再生できません。");
+                return;
+            }
+
+            if (string.IsNullOrEmpty(seId))
+            {
+                Debug.LogError("SoundController: 空またはnullのSE IDが指定されました。");
+                return;
+            }
 
             var seClip = bgmSeData.GetSeClip(seId);
-            if (seClip == null) return;
+            if (seClip == null)
+            {
+                Debug.LogError($"SoundController: SE ID '{seId}' に対応するクリップが見つかりません。");
+                return;
+            }
 
             _seSource.PlayOneShot(seClip);
         }

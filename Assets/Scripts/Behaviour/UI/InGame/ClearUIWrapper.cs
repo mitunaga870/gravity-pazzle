@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General.DontDestoroy;
@@ -64,7 +64,15 @@ namespace Behaviour.UI.InGame
         private void Update()
         {
             if (_movableToNext && Input.anyKeyDown)
+            {
+                var soundController = SoundController.Instance;
+                if (soundController != null)
+                {
+                    soundController.PlaySe("SceneTransition");
+                }
+
                 SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
+            }
         }
 
         private void OnGoal()

@@ -1,7 +1,8 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.ObjectFeature;
 using Lib.State.Scene;
 using UnityEngine;
@@ -49,6 +50,12 @@ namespace Behaviour.Controller
                 && Input.GetKeyDown(KeyCode.R, SceneState.InGame))
             {
                 // シーン再読み込み
+                var soundController = SoundController.Instance;
+                if (soundController != null)
+                {
+                    soundController.PlaySe("SceneTransition");
+                }
+
                 SceneManager.LoadScene(SceneManager.GetActiveScene().name);
                 IsHardResetCalled = true;
             }

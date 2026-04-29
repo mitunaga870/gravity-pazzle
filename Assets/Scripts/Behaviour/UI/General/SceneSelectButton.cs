@@ -1,9 +1,10 @@
-﻿#region
+#region
 
 using Lib.DataClass.ForInspector;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
+using Behaviour.Controller.General.DontDestoroy;
 
 #endregion
 
@@ -31,7 +32,16 @@ namespace Behaviour.UI
             }
 
             // ボタンにクリックイベントを追加
-            button.onClick.AddListener(() => SceneManager.LoadScene(targetScene));
+            button.onClick.AddListener(() =>
+            {
+                var soundController = SoundController.Instance;
+                if (soundController != null)
+                {
+                    soundController.PlaySe("SceneTransition");
+                }
+
+                SceneManager.LoadScene(targetScene);
+            });
         }
 
         /// <summary>
