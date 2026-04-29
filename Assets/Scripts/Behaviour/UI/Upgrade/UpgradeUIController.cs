@@ -90,6 +90,8 @@ namespace Behaviour.UI.Upgrade
             
             if (result)
             {
+                SoundController.Instance?.PlaySe("Upgraded");
+                
                 // 強化成功時の初期化
                 InitButton(UpgradeType.PlayerGravChange);
                 CheckUpgradeable();
