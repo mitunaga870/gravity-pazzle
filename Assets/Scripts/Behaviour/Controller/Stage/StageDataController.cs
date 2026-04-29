@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using Behaviour.Camera;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Lib.DataClass.PlayData;
@@ -66,6 +67,12 @@ namespace Behaviour.Controller.Stage
         {
             if (DontSaveOnDestroy) return;
             Save();
+        }
+        
+        private void Start()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null) soundController.PlaySe("StageStart");
         }
 
         #endregion
