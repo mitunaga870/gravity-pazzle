@@ -21,7 +21,7 @@ namespace Behaviour.Controller
 
         // チュートリアル用の状態
         // リセットが呼ばれた
-        public bool IsResetCalled { get; private set; }
+        public bool IsResetCalled { get; set; }
 
         // ハードリセットが呼ばれた
         public bool IsHardResetCalled { get; private set; }

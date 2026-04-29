@@ -24,12 +24,14 @@ namespace Behaviour.Gravity
         // 重力を変えられたか
         public bool IsGravChanged { get; private set; }
         
-        # region Unity Methods
+        public bool IsGravResetted { get; private set; }
+        
+        #region Unity Methods
 
         protected override void Start()
         {
             _isFocusCameraNotNull = focusCamera != null;
-            
+
             base.Start();
         }
 
@@ -136,6 +138,8 @@ namespace Behaviour.Gravity
         /// </summary>
         public virtual async Task<bool> UnsetGravAffected()
         {
+            IsGravResetted = true;
+
             // 自分の操作を取得
             var manager = GravityOperationManager.Instance;
             if (!manager) return false;

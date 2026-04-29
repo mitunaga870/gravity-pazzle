@@ -22,6 +22,7 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
         [FormerlySerializedAs("gravitySurface")]
         [SerializeField]
         private AGravBehaviour gravBehaviour;
+        
 
         private void Start()
         {
@@ -62,8 +63,8 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
             // リジットボディを取得
             var rb = other.gameObject.GetComponent<Rigidbody>();
             if (rb == null) return;
-            
-        
+
+
             // 乗ったオブジェクトの速度を消す
             if (gravBehaviour == null)
             {
@@ -76,7 +77,7 @@ namespace Behaviour.ObjectFeature.RideableObjectBehaviours
                 var velocity = rb.linearVelocity;
                 var gravType = gravBehaviour.GravType;
                 var gravDirection = GravUtils.GetGravDirectionUnit(gravType);
-                
+
                 var target =
                     new Vector3(
                         velocity.x * Mathf.Abs(gravDirection.x),

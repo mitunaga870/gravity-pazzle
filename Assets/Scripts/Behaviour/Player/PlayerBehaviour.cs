@@ -34,10 +34,20 @@ namespace Behaviour.Player
         private DirectionUIWrapper directionUIWrapper;
 
 
-        private GravType _targetGravType = GravType.XNegative;
+        private GravType _targetGravType = GravType.XPositive;
         private PlayerAnimBehaviour _animBehaviour;
 
         private bool _changeableGrav;
+
+        
+        #region チュートリアル用のフラグ
+        // オブジェクト重力変更が可能かどうか
+        public bool ChangeableObjGrav { get; set; } = true;
+        
+        // ターゲット重力方向を変更可能かどうか
+        public bool ChangeableTargetGravDirection { get; set; } = true;
+        
+        #endregion
 
         #region Unity Methods
 
@@ -47,7 +57,7 @@ namespace Behaviour.Player
 
             if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
-            
+
             _animBehaviour = GetComponent<PlayerAnimBehaviour>();
 
             // プレイヤー重力変更が可能か
@@ -155,6 +165,8 @@ namespace Behaviour.Player
         /// </summary>
         private void SetGrav()
         {
+            if (!ChangeableObjGrav) return;
+
             if (!input.GetMouseButton((int)PlayerKey.SetObjGravButton, SceneState.InGame)) return;
             
             // カメラの先のオブジェクトを取得
@@ -176,6 +188,8 @@ namespace Behaviour.Player
         /// </summary>
         private void UnsetGrav()
         {
+            if (!ChangeableObjGrav) return;
+
             if (!input.GetMouseButton((int)PlayerKey.UnsetObjGravButton, SceneState.InGame))
                 return;
 
@@ -197,6 +211,8 @@ namespace Behaviour.Player
         {
             var method = SettingDataController.Instance.UserSettings.GravSelectMethod;
             if (method == null) return;
+            
+            if (!ChangeableTargetGravDirection) return;
 
             switch (method)
             {

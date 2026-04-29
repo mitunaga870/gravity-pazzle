@@ -62,13 +62,17 @@ namespace Behaviour.Camera
         // チュートリアル用の状態フィールド
         // カメラが動かされたことがあるか
         public bool IsMoved { get; private set; }
+
+        // チュートリアル用の状態フィールド
+        // カメラがリセットされたことがあるか
+        public bool IsResetCalled { get; private set; }
         
         // カメラを一時的に動かせなくする
         public void TemporarilyDisableMovement(float duration)
         {
             if (!_isMovable)
                 return;
-            
+
             _isMovable = false;
 
             // duration秒後に動かせるようにする
@@ -237,6 +241,7 @@ namespace Behaviour.Camera
          */
         private void ResetCamera()
         {
+            // リセットキーが押されたらリセットする
             var playerKey = SettingDataController.Instance.PlayerKey;
             if (!Input.GetKeyDown(playerKey.CameraResetKey, SceneState.InGame)) return;
 
@@ -285,6 +290,9 @@ namespace Behaviour.Camera
 
             // ピッチをリセット
             _pitch = 0f;
+            
+            // リセットキーが押されたことを記録
+            IsResetCalled = true;
         }
 
         #endregion
