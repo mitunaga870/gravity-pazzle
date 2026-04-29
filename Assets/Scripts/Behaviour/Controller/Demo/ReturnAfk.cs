@@ -49,12 +49,18 @@ namespace Behaviour.Controller.Demo
                 surveyController.ResetDemo();
 
 
-            // シーンに遷移
+            StartCoroutine(ReturnToTitleWithSceneTransitionSe());
+        }
+
+        private System.Collections.IEnumerator ReturnToTitleWithSceneTransitionSe()
+        {
             var soundController = SoundController.Instance;
             if (soundController != null)
             {
                 soundController.PlaySe("SceneTransition");
             }
+
+            yield return new WaitForSeconds(1.0f);
 
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }

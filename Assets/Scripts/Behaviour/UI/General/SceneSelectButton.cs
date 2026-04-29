@@ -32,16 +32,7 @@ namespace Behaviour.UI
             }
 
             // ボタンにクリックイベントを追加
-            button.onClick.AddListener(() =>
-            {
-                var soundController = SoundController.Instance;
-                if (soundController != null)
-                {
-                    soundController.PlaySe("SceneTransition");
-                }
-
-                SceneManager.LoadScene(targetScene);
-            });
+            button.onClick.AddListener(() => { StartCoroutine(LoadSceneWithSceneTransitionSe()); });
         }
 
         /// <summary>
@@ -51,6 +42,19 @@ namespace Behaviour.UI
         public void SetTargetScene(SceneObj scene)
         {
             targetScene = scene;
+        }
+
+        private System.Collections.IEnumerator LoadSceneWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(1.0f);
+
+            SceneManager.LoadScene(targetScene);
         }
     }
 }

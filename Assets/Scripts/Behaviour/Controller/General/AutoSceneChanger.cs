@@ -36,8 +36,15 @@ namespace Behaviour.Controller.General
                         soundController.PlaySe("SceneTransition");
                     }
 
-                    SceneManager.LoadScene(nextSceneName.SceneName);
+                    StartCoroutine(LoadNextSceneWithSceneTransitionSe());
                 }));
+        }
+
+        private System.Collections.IEnumerator LoadNextSceneWithSceneTransitionSe()
+        {
+            yield return new WaitForSeconds(1.0f);
+
+            SceneManager.LoadScene(nextSceneName.SceneName);
         }
     }
 }

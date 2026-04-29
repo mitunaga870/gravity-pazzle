@@ -252,18 +252,25 @@ namespace Behaviour.UI.General.Settings
             var instance = StageDataController.Instance;
             if (instance != null) instance.DontSaveOnDestroy = true;
 
+            StartCoroutine(ReturnToTitleWithSceneTransitionSe());
+        }
+
+        #endregion
+
+        #region Public Methods
+
+        private System.Collections.IEnumerator ReturnToTitleWithSceneTransitionSe()
+        {
             var soundController = SoundController.Instance;
             if (soundController != null)
             {
                 soundController.PlaySe("SceneTransition");
             }
 
+            yield return new WaitForSeconds(1.0f);
+
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
-
-        #endregion
-
-        #region Public Methods
 
         public void ShowSettings()
         {

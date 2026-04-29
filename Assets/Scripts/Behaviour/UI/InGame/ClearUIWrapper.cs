@@ -65,13 +65,7 @@ namespace Behaviour.UI.InGame
         {
             if (_movableToNext && Input.anyKeyDown)
             {
-                var soundController = SoundController.Instance;
-                if (soundController != null)
-                {
-                    soundController.PlaySe("SceneTransition");
-                }
-
-                SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
+                StartCoroutine(ReturnToStageSelectWithSceneTransitionSe());
             }
         }
 
@@ -102,6 +96,19 @@ namespace Behaviour.UI.InGame
             gameObject.SetActive(true);
             var delay = GeneralUtils.DelayCoroutine(1f, () => { _movableToNext = true; });
             StartCoroutine(delay);
+        }
+
+        private System.Collections.IEnumerator ReturnToStageSelectWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(1.0f);
+
+            SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
         }
     }
 }

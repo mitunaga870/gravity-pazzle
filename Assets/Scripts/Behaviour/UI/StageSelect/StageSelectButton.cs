@@ -181,15 +181,22 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void TransitionToStage()
         {
+            StartCoroutine(TransitionToStageWithSceneTransitionSe());
+        }
+
+        #endregion
+
+        private System.Collections.IEnumerator TransitionToStageWithSceneTransitionSe()
+        {
             var soundController = SoundController.Instance;
             if (soundController != null)
             {
                 soundController.PlaySe("SceneTransition");
             }
 
+            yield return new WaitForSeconds(1.0f);
+
             SceneManager.LoadScene(_stage.StageScene);
         }
-
-        #endregion
     }
 }
