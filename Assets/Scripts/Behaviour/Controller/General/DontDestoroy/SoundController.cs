@@ -68,17 +68,17 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private void Start()
         {
-            _settingDataController = SettingDataController.Instance;
-            if (_settingDataController == null) {
-                Debug.LogError("SoundController: SettingDataController が未設定のため、BGMを再生できません。");
-                return;
-            }
-            
-           InitializeBgm();
+            if (!TryResolveSettingDataController()) return;
+
+            SyncMixerVolumeFromSettings();
+            InitializeBgm();
         }
 
         private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
         {
+            if (!TryResolveSettingDataController()) return;
+
+            SyncMixerVolumeFromSettings();
             InitializeBgm();
         }
         
@@ -235,18 +235,26 @@ namespace Behaviour.Controller.General.DontDestoroy
         
         private void InitializeBgm()
         {
-            // SettingDataController が未設定の場合は、SettingDataController を取得する
-            if (_settingDataController == null) {
-                _settingDataController = SettingDataController.Instance;
-                
-                if (_settingDataController == null) {
-                    Debug.LogError("SoundController: SettingDataController が未設定のため、BGMを再生できません。");
-                    return;
-                }
-            }
+            if (!TryResolveSettingDataController()) return;
 
             _currentEnvironmentSceneType = _settingDataController.EnvironmentSetting.GetCurrentEnvironmentSceneType();
             PlayBgm(_currentEnvironmentSceneType);
+        }
+
+        private bool TryResolveSettingDataController()
+        {
+            if (_settingDataController != null) return true;
+
+            _settingDataController = SettingDataController.Instance;
+            if (_settingDataController != null) return true;
+
+            Debug.LogError("SoundController: SettingDataController が未設定のため、BGMを再生できません。");
+            return false;
+        }
+
+        private void SyncMixerVolumeFromSettings()
+        {
+            _settingDataController.ApplySettings();
         }
 
         private void SetupAudioSources()
