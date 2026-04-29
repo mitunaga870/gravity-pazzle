@@ -113,6 +113,9 @@ namespace Behaviour.Gravity
 
             IsGravChanged = true;
 
+            if (previousType != gravType)
+                SoundController.Instance?.PlaySe("ChangeGrav");
+
 
             // 成功を通知し、必要であれば操作枠を開放
             if (registerOperation && manager != null && !manager.IsReverting)
