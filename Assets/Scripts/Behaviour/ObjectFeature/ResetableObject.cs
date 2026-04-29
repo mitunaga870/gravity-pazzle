@@ -3,6 +3,7 @@
 using Behaviour.Camera;
 using Behaviour.Gravity;
 using Lib.Logic;
+using Lib.State.Interface.Gravity;
 using UnityEngine;
 
 #endregion
@@ -15,6 +16,7 @@ namespace Behaviour.ObjectFeature
     public class ResetableObject : MonoBehaviour
     {
         private Vector3 _initialPosition;
+        private GravType _initialGravType;
 
         private bool _hasRigidbody;
         private Rigidbody _rigidbody;
@@ -28,16 +30,18 @@ namespace Behaviour.ObjectFeature
         // リセットのための一時状況を解除させるための遅延時間
         private const float ResetDelay = 0.1f;
 
-        private void Awake()
+        private void Start()
         {
             // 初期位置と必要なコンポーネントをキャッシュする
             _initialPosition = transform.position;
-
+            
             _rigidbody = GetComponent<Rigidbody>();
             _hasRigidbody = _rigidbody != null;
 
             _gravBehaviour = GetComponent<VGravBehaviour>();
             _hasGravBehaviour = _gravBehaviour != null;
+            if (_hasGravBehaviour)
+                _initialGravType = _gravBehaviour.GravType;
 
             _playerCam = GetComponent<PlayerCam>();
             _hasPlayerCam = _playerCam != null;
@@ -56,6 +60,17 @@ namespace Behaviour.ObjectFeature
             // 物理演算が位置変更に干渉しないように、Rigidbodyをkinematicにした後で位置をリセットすることが重要
             transform.position = _initialPosition;
         }
+        
+        public void OverWriteInitialPosition(Vector3 newPosition)
+        {
+            _initialPosition = newPosition;
+        }
+        
+        public void OverWriteInitialGravType(GravType newGravType)
+        {
+            _initialGravType = newGravType;
+        }
+        
 
         #region Private Methods
 
@@ -90,7 +105,7 @@ namespace Behaviour.ObjectFeature
             if (!_hasGravBehaviour) return;
 
             // オブジェクトの重力を初期設定に戻す
-            _gravBehaviour.SetGravAffected(_gravBehaviour.InitialGravType, true, false);
+            _ = _gravBehaviour.SetGravAffected(_initialGravType, true, false);
         }
 
         private void ResetPlayerCamState()
