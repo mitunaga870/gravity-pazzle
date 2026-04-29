@@ -1,8 +1,11 @@
 #region
 
 using ScriptableObj;
+using Lib.DataClass.Audio;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
+using ScriptableObj.Setting;
 
 #endregion
 
@@ -35,6 +38,9 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private AudioSource _bgmSource;
         private AudioSource _seSource;
+        
+        private SettingDataController _settingDataController;
+        private EnvironmentSceneType _currentEnvironmentSceneType = EnvironmentSceneType.Unknown;
 
         #endregion
 
@@ -59,10 +65,31 @@ namespace Behaviour.Controller.General.DontDestoroy
 
             Instance = null;
         }
-        
+
         private void Start()
         {
-            PlayBgm("base");
+            _settingDataController = SettingDataController.Instance;
+            if (_settingDataController == null) {
+                Debug.LogError("SoundController: SettingDataController が未設定のため、BGMを再生できません。");
+                return;
+            }
+            
+           InitializeBgm();
+        }
+        
+        private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            InitializeBgm();
+        }
+        
+        private void OnEnable()
+        {
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
+
+        private void OnDisable()
+        {
+            SceneManager.sceneLoaded -= OnSceneLoaded;
         }
 
         #endregion
@@ -72,11 +99,11 @@ namespace Behaviour.Controller.General.DontDestoroy
         /// <summary>
         ///     識別子に対応する BGM をループ再生する（ミキサー Bgm 経由）
         /// </summary>
-        public void PlayBgm(string bgmId)
+        public void PlayBgm(EnvironmentSceneType targetSceneType)
         {
             if (bgmSeData == null || _bgmSource == null) return;
 
-            var bgmClip = bgmSeData.GetBgmClip(bgmId);
+            var bgmClip = bgmSeData.GetBgmClip(targetSceneType);
             if (bgmClip == null) return;
 
             if (_bgmSource.isPlaying && _bgmSource.clip == bgmClip) return;
@@ -149,6 +176,22 @@ namespace Behaviour.Controller.General.DontDestoroy
         #endregion
 
         #region Private Methods
+        
+        private void InitializeBgm()
+        {
+            // SettingDataController が未設定の場合は、SettingDataController を取得する
+            if (_settingDataController == null) {
+                _settingDataController = SettingDataController.Instance;
+                
+                if (_settingDataController == null) {
+                    Debug.LogError("SoundController: SettingDataController が未設定のため、BGMを再生できません。");
+                    return;
+                }
+            }
+
+            _currentEnvironmentSceneType = _settingDataController.EnvironmentSetting.GetCurrentEnvironmentSceneType();
+            PlayBgm(_currentEnvironmentSceneType);
+        }
 
         private void SetupAudioSources()
         {

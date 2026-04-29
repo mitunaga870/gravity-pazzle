@@ -56,5 +56,28 @@ namespace ScriptableObj.Setting
 
             throw new KeyNotFoundException($"Scene '{curSceneName}' not found in EnvironmentSetting stages.");
         }
+        
+        public EnvironmentSceneType GetCurrentEnvironmentSceneType()
+        {
+            var curSceneName = SceneManager.GetActiveScene().name;
+            if (titleScene.SceneName == curSceneName)
+                return EnvironmentSceneType.Title;
+            if (stageSelectScene.SceneName == curSceneName)
+                return EnvironmentSceneType.StageSelect;
+            if (creditScene.SceneName == curSceneName)
+                return EnvironmentSceneType.Credit;
+            if (stages.Any(stage => stage.StageScene.SceneName == curSceneName))
+                return EnvironmentSceneType.Stage;
+            return EnvironmentSceneType.Unknown;
+        }
+    }
+    
+    public enum EnvironmentSceneType
+    {
+        Unknown,
+        Title,
+        StageSelect,
+        Credit,
+        Stage
     }
 }
