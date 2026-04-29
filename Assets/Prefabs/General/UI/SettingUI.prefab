@@ -1534,8 +1534,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 066bf506d80bae54585543e698ed8ad4, type: 2}
   resolutionDropdown: {fileID: 7076373664579155164}
   masterVolumeSlider: {fileID: 8018865081525626009}
-  bgmVolumeSlider: {fileID: 3646701700911215585}
-  seVolumeSlider: {fileID: 6432704305689565233}
+  bgmVolumeSlider: {fileID: 6432704305689565233}
+  seVolumeSlider: {fileID: 3646701700911215585}
   tutorialToggle: {fileID: 4928798072152284003}
   gravSelectMethodDropdown: {fileID: 7488064283426036594}
   resetButton: {fileID: 1956497383303148542}
@@ -2288,7 +2288,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2749444878294633619, guid: 927c5b2058add4647ad4a728bd8c24ff, type: 3}
       propertyPath: m_Size
-      value: 0.6666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2749444878294633619, guid: 927c5b2058add4647ad4a728bd8c24ff, type: 3}
       propertyPath: m_Value
@@ -2566,7 +2566,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2749444878294633619, guid: 927c5b2058add4647ad4a728bd8c24ff, type: 3}
       propertyPath: m_Size
-      value: 0.6666667
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2749444878294633619, guid: 927c5b2058add4647ad4a728bd8c24ff, type: 3}
       propertyPath: m_Value
