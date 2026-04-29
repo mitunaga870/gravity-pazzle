@@ -1,7 +1,6 @@
 #region
 
 using System;
-using System.Collections.Generic;
 using ScriptableObj;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -18,19 +17,6 @@ namespace Behaviour.Controller.General.DontDestoroy
     /// </summary>
     public class SoundController : AudioMixerControllerBase
     {
-        [Serializable]
-        private class EventBgmEntry
-        {
-            [SerializeField]
-            private EventBgmType id = EventBgmType.Unknown;
-
-            [SerializeField]
-            private AudioClip clip;
-
-            public EventBgmType Id => id;
-            public AudioClip Clip => clip;
-        }
-
         #region Singleton Implementation
 
         public static SoundController Instance { get; private set; }
@@ -45,9 +31,6 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         [SerializeField]
         private BgmSeData bgmSeData;
-
-        [SerializeField]
-        private List<EventBgmEntry> eventBgmList = new();
 
         #endregion
 
@@ -272,16 +255,8 @@ namespace Behaviour.Controller.General.DontDestoroy
 
         private AudioClip ResolveEventBgmClip(EventBgmType eventType)
         {
-            if (eventType == EventBgmType.Unknown) return null;
-
-            if (eventBgmList == null) return null;
-
-            foreach (var eventBgmData in eventBgmList)
-            {
-                if (eventBgmData != null && eventBgmData.Id == eventType) return eventBgmData.Clip;
-            }
-
-            return null;
+            if (bgmSeData == null || eventType == EventBgmType.Unknown) return null;
+            return bgmSeData.GetEventBgmClip(eventType);
         }
 
         /// <summary>
