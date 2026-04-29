@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General;
@@ -96,6 +96,8 @@ namespace Behaviour.UI.Upgrade
             }
             else
             {
+                SoundController.Instance?.PlaySe("Fail");
+
                 // 失敗時は揺らす
                 var button = GetButton(type);
                 var rectTransform = button.GetComponent<RectTransform>();
