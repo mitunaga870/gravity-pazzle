@@ -161,8 +161,13 @@ namespace Behaviour.UI.Upgrade
                     var unit = paramUpgrade.Unit;
                     var param = paramUpgrade.UpgradedParams;
 
-                    var cur = param[curLevel];
-                    var next = param[curLevel + 1];
+                    var cur = type switch
+                    {
+                        UpgradeType.OperationDuration => playerData.OperationDuration,
+                        UpgradeType.MaxOperationCount => playerData.MaxCurrentOperations,
+                        _ => throw new NotImplementedException()
+                    };
+                    var next = param[curLevel];
                     var diff = next -cur;
 
                     content = $"{cur}{unit} →　{next}{unit}(↑{diff})";

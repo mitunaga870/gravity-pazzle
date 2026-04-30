@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 6764889657604463301}
   - component: {fileID: 548150060875176766}
   - component: {fileID: 3357803431742790410}
+  - component: {fileID: 6304067562668256806}
   m_Layer: 2
   m_Name: GravProps
   m_TagString: Untagged
@@ -178,5 +179,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 1d54d0b516814911841d2f09850d131d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &6304067562668256806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 916879625308106458}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c312eacb89641308cf11914a3010db3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

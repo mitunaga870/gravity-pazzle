@@ -2,8 +2,10 @@
 
 using System;
 using System.Collections.Generic;
+using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
 using Lib.State.Interface.Gravity;
+using Lib.State.Scene;
 using UnityEngine;
 
 #endregion
@@ -31,6 +33,8 @@ namespace Behaviour.Gravity
 
         private bool _isReverting; // 自動復帰中フラグ（SetGravAffected の再帰的な登録を防ぐため）
         private float _sharedRemainingTime; // 制限時間
+        
+        private SceneStateController _sceneStateController;
 
         public static GravityOperationManager Instance { get; private set; }
 
@@ -81,6 +85,10 @@ namespace Behaviour.Gravity
 
         private void Start()
         {
+            // SceneStateControllerの取得
+            _sceneStateController = SceneStateController.Instance;
+            if (_sceneStateController == null) throw new Exception("SceneStateControllerを取得出来ません");
+            
             // PlayerData読み込み
             var playerDataController = PlayerDataController.Instance;
             if (playerDataController == null) throw new Exception("プレイヤーデータを取得出来ません");
@@ -92,6 +100,11 @@ namespace Behaviour.Gravity
 
         private void Update()
         {
+            // Ingame中は常に操作状態を監視し、制限時間の管理と操作の自動復帰を行う
+            var currentState = _sceneStateController.Context.CurrentState;
+            if (currentState is not { StateName: SceneState.InGame })
+                return;
+            
             if (_operations.Count == 0)
                 return;
 

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using Behaviour.Camera;
 using Behaviour.Controller.General.DontDestoroy;
+using Behaviour.Gimmick.CheckPoints;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
 using Lib.DataClass.PlayData;
@@ -107,6 +108,9 @@ namespace Behaviour.Controller.Stage
         
         private readonly HashSet<string> _allCoinIds = new();
         private CoinData _coinData;
+        
+        // ==== チェックポイント関連 ====
+        private CheckPoint _activeCheckPoint;
 
         #endregion
 
@@ -121,7 +125,7 @@ namespace Behaviour.Controller.Stage
         public AGravBehaviour PlayerGravBehaviour { get; private set; }
 
         public PlayerCam PlayerCam { get; private set; }
-
+        
         #endregion
 
         #region Accessors
@@ -206,6 +210,19 @@ namespace Behaviour.Controller.Stage
             return _coinData.IsCoinCollected(coinId);
         }
 
+        #endregion
+        
+        #region CheckPoint Management
+        
+        public void ActivateCheckPoint(CheckPoint checkPoint)
+        {
+            // すでにアクティブなチェックポイントがある場合は、必要に応じて処理を行う（例: 前のチェックポイントの無効化など）
+            _activeCheckPoint?.InActiveCheckPoint();
+            
+            // 新しいチェックポイントをアクティブにする
+            _activeCheckPoint = checkPoint;
+        }
+        
         #endregion
     }
 }

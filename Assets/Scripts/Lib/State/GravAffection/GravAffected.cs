@@ -2,8 +2,10 @@
 
 using System;
 using System.Threading.Tasks;
+using Behaviour.Controller.General;
 using Lib.Logic.Gravity;
 using Lib.State.Interface.Gravity;
+using Lib.State.Scene;
 using LitMotion;
 using UnityEngine;
 
@@ -28,12 +30,19 @@ namespace Lib.State.GravAffection
             
             // カメラが指定されているか
             _hasCamera = focusCameraTransform != null;
+            
+            // シーンコントローラー取得
+            _scenecontroller = SceneStateController.Instance;
+            if (_scenecontroller == null)
+                Debug.LogError("SceneStateController not found in GravAffected.");
         }
         
         private readonly Vector3 _gravity;
         private readonly Rigidbody _affectedBody;
         private readonly Transform _focusCameraTransform;
         private readonly GravType _gravType;
+
+        private readonly SceneStateController _scenecontroller;
 
         // 抗力倍率
         private const float ExitDampingMultiplier = 3.0f;
@@ -136,6 +145,11 @@ namespace Lib.State.GravAffection
         public void OnFixedUpdate()
         {
             if (_affectedBody == null)
+                return;
+            
+            // ステートがInGameでない場合は重力の影響を受けない
+            var curState = _scenecontroller.Context.CurrentState;
+            if (curState is not { StateName: SceneState.InGame })
                 return;
 
             // 徐々に加速度を増加させる
