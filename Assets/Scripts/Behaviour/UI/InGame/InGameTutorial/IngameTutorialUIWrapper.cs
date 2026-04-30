@@ -25,10 +25,12 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         private TutorialType _tutorialType;
 
-        [Header("チュートリアル状況取得用")]
+        [Header("共通チュートリアル状況取得用")]
 
         [SerializeField]
         private PlayerBehaviour _playerBehaviour;
+
+        [Header("第一チュートリアル状況取得用")]
 
         [SerializeField]
         private PlayerCam _playerCam;
@@ -39,7 +41,10 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         private GlobalEventController _globalEventController;
 
-        [Header("ハイライト対象")]
+        [Header("第二チュートリアル状況取得用")]
+
+
+        [Header("第一チュートリアル用ハイライト対象")]
         [SerializeField]
         [Tooltip("オブジェクト重力変更チュートリアル対象")]
         private VGravBehaviour _vGravBehaviour;
@@ -55,18 +60,21 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         [Tooltip("チェックポイントチュートリアル対象")]
         private CheckPoint _checkPoint;
-        
+
         [SerializeField]
         [Tooltip("ポーズチュートリアル対象")]
         private PauseMenuController _pauseMenuController;
-        
+
         [SerializeField]
         [Tooltip("ゴールチュートリアル対象")]
         private GoalTrigger _goalTrigger;
-        
+
         [SerializeField]
         [Tooltip("コインチュートリアル対象")]
         private CoinTrigger _coinTrigger;
+
+        [Header("第二チュートリアル用ハイライト対象")]
+
 
         [Header("UI")]
 
@@ -142,7 +150,7 @@ namespace Behaviour.UI.InGame
 
         private void InitSecondTutorial()
         {
-
+            StartPlayerGravChangeTutorial();
         }
 
         private void ShowCurrentUI()
@@ -202,6 +210,12 @@ namespace Behaviour.UI.InGame
                     break;
                 case TutorialState.Goal:
                     CheckGoalTutorial();
+                    break;
+                case TutorialState.PlayerGravChange:
+                    CheckPlayerGravChangeTutorial();
+                    break;
+                case TutorialState.ResetPlayerGravChange:
+                    CheckResetPlayerGravChangeTutorial();
                     break;
             }
         }
@@ -516,14 +530,14 @@ namespace Behaviour.UI.InGame
 
 
         #endregion
-        
+
         #region Pause Tutorial
         private void StartPauseTutorial()
         {
             _currentState = TutorialState.Pause;
             _uiDisplayTimer = 0f;
         }
-        
+
         private void CheckPauseTutorial()
         {
             if (_pauseMenuController.IsMenuOpened)
@@ -540,7 +554,7 @@ namespace Behaviour.UI.InGame
         {
             _currentState = TutorialState.Coin;
             _uiDisplayTimer = 0f;
-            
+
             // ハイライト設定
             _highlightController.gameObject.SetActive(true);
             _highlightController.SetHighlight(_coinTrigger.gameObject);
@@ -575,7 +589,61 @@ namespace Behaviour.UI.InGame
         {
             EndTutorial();
         }
+
+        #endregion
+
+        #region PlayerGravChange Tutorial
+        private void StartPlayerGravChangeTutorial()
+        {
+            _currentState = TutorialState.PlayerGravChange;
+            _uiDisplayTimer = 0f;
+        }
+        private void CheckPlayerGravChangeTutorial()
+        {
+            if (_playerBehaviour.IsPlayerGravChanged)
+                EndPlayerGravChangeTutorial();
+        }
+        private void EndPlayerGravChangeTutorial()
+        {
+            _currentState = TutorialState.PlayerGravChange_End;
+            
+            // ハイライト設定
+            _highlightController.gameObject.SetActive(true);
+            _highlightController.SetHighlight(_gravChangeLimitUI.gameObject);
+            
+            // 時間を止める
+            _sceneStateController.ChangeSceneState(SceneState.Pause);
+
+            // ディレイを設けて、重力変更のチュートリアルが終わったことを確認する
+            var Coroutine = GeneralUtils.DelayCoroutine(1f, () =>
+            {
+                // ハイライト解除
+                _highlightController.gameObject.SetActive(false);
+
+                // 時間を再開
+                _sceneStateController.ChangeSceneState(SceneState.InGame);
+
+                StartResetPlayerGravChangeTutorial();
+            });
+            StartCoroutine(Coroutine);
+        }
+        #endregion
         
+        #region Reset PlayerGravChange Tutorial
+        private void StartResetPlayerGravChangeTutorial()
+        {
+            _currentState = TutorialState.ResetPlayerGravChange;
+            _uiDisplayTimer = 0f;
+        }
+        private void CheckResetPlayerGravChangeTutorial()
+        {
+            if (_playerBehaviour.IsPlayerGravResetted)
+                EndResetPlayerGravChangeTutorial();
+        }
+        private void EndResetPlayerGravChangeTutorial()
+        {
+            EndTutorial();
+        }
         #endregion
     }
 
@@ -596,6 +664,9 @@ namespace Behaviour.UI.InGame
         Pause,
         Coin,
         Goal,
+        PlayerGravChange,
+        PlayerGravChange_End,
+        ResetPlayerGravChange,
     }
 
     public enum TutorialType

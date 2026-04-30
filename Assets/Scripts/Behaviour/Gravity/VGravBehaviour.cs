@@ -100,12 +100,13 @@ namespace Behaviour.Gravity
                 // 実際の状態遷移に失敗した場合は操作登録をロールバック
                 if (registerOperation && manager != null && !manager.IsReverting)
                 {
+                    Debug.LogWarning($"[{name}] 重力操作の上限({manager.MaxConcurrentOperations})に達しているため変更できません。");
+
                     manager.RollbackOperation(this, handle);
                     return false;
                 }
 
             IsGravChanged = true;
-
 
             // 成功を通知し、必要であれば操作枠を開放
             if (registerOperation && manager != null && !manager.IsReverting)

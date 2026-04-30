@@ -26,6 +26,10 @@ namespace Behaviour.Player
         private const float Speed = 5f;
 
         private PlayerKey PlayerKey => SettingDataController.Instance.PlayerKey;
+        
+        [Header("ステージ限定制限解除")]
+        [SerializeField]
+        private bool changeablePlayerGrav = false;
 
 
         [Header("参照用")]
@@ -47,6 +51,12 @@ namespace Behaviour.Player
         // ターゲット重力方向を変更可能かどうか
         public bool ChangeableTargetGravDirection { get; set; } = true;
         
+        // プレイヤー重力変更をしたか
+        public bool IsPlayerGravChanged { get; private set; }
+        
+        // プレイヤー重力変更をリセットしたか
+        public bool IsPlayerGravResetted { get; private set; }
+        
         #endregion
 
         #region Unity Methods
@@ -65,7 +75,7 @@ namespace Behaviour.Player
             if (playerDataController == null) throw new Exception("PlayerDataController.Instance is not assigned.");
             var playerData = playerDataController.PlayerData;
             if (playerData == null) throw new Exception("PlayerDataController.PlayerData is not assigned.");
-            _changeableGrav = playerData.PlayerGravChangeLevel >= 1;
+            _changeableGrav = playerData.PlayerGravChangeLevel >= 1 || changeablePlayerGrav;
         }
 
         private new void Update()
@@ -84,14 +94,24 @@ namespace Behaviour.Player
             if (input.GetKeyDown(PlayerKey.SetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
-                if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);
+                if (playerVGrav != null) {
+                    playerVGrav.SetGravAffected(_targetGravType, changeablePlayerGrav).ContinueWith(task => {
+                            // 重力変更が成功したらフラグを立てる
+                        if (task.Result) IsPlayerGravChanged = true;
+                    });
+                }
             }
 
             // 元に戻す
             if (input.GetKeyDown(PlayerKey.UnsetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
-                if (playerVGrav != null) playerVGrav.UnsetGravAffected();
+                if (playerVGrav != null) {
+                    playerVGrav.UnsetGravAffected().ContinueWith(task => {
+                            // 重力変更が解除されたらフラグを立てる
+                        if (task.Result) IsPlayerGravResetted = true;
+                    });
+                }
             }
 
             // 落下方向速度を取得
