@@ -5,6 +5,7 @@ using System.Linq;
 using Behaviour.Camera;
 using Behaviour.Controller;
 using Behaviour.Controller.General;
+using Behaviour.Gimmick;
 using Behaviour.Gimmick.CheckPoints;
 using Behaviour.Gravity;
 using Behaviour.ObjectFeature.RideableObjectBehaviours;
@@ -41,8 +42,9 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         private GlobalEventController _globalEventController;
 
-        [Header("第二チュートリアル状況取得用")]
-
+        [Header("共通チュートリアル対象")]
+        [SerializeField]
+        private CheckPoint _checkPoint;
 
         [Header("第一チュートリアル用ハイライト対象")]
         [SerializeField]
@@ -58,10 +60,6 @@ namespace Behaviour.UI.InGame
         private GameObject _gravChangeLimitUI;
 
         [SerializeField]
-        [Tooltip("チェックポイントチュートリアル対象")]
-        private CheckPoint _checkPoint;
-
-        [SerializeField]
         [Tooltip("ポーズチュートリアル対象")]
         private PauseMenuController _pauseMenuController;
 
@@ -73,7 +71,9 @@ namespace Behaviour.UI.InGame
         [Tooltip("コインチュートリアル対象")]
         private CoinTrigger _coinTrigger;
 
-        [Header("第二チュートリアル用ハイライト対象")]
+        [Header("第二チュートリアル状況取得用")]
+        [SerializeField]
+        private StaticGravArea _staticGravArea;
 
 
         [Header("UI")]
@@ -214,8 +214,20 @@ namespace Behaviour.UI.InGame
                 case TutorialState.PlayerGravChange:
                     CheckPlayerGravChangeTutorial();
                     break;
+                case TutorialState.PlayerGravChangeLimit:
+                    CheckPlayerGravChangeLimitTutorial();
+                    break;
                 case TutorialState.ResetPlayerGravChange:
                     CheckResetPlayerGravChangeTutorial();
+                    break;
+                case TutorialState.GuidePlayerGravCheckPoint:
+                    CheckGuidePlayerGravCheckPointTutorial();
+                    break;
+                case TutorialState.StaticGravArea:
+                    CheckStaticGravAreaTutorial();
+                    break;
+                case TutorialState.StaticGravAreaLimit:
+                    CheckStaticGravAreaLimitTutorial();
                     break;
             }
         }
@@ -605,30 +617,41 @@ namespace Behaviour.UI.InGame
         }
         private void EndPlayerGravChangeTutorial()
         {
-            _currentState = TutorialState.PlayerGravChange_End;
-            
+            StartPlayerGravChangeLimitTutorial();
+        }
+        #endregion
+
+        #region PlayerGravChangeLimit Tutorial
+
+        private void StartPlayerGravChangeLimitTutorial()
+        {
+            _currentState = TutorialState.PlayerGravChangeLimit;
+            _uiDisplayTimer = 0f;
+
             // ハイライト設定
             _highlightController.gameObject.SetActive(true);
             _highlightController.SetHighlight(_gravChangeLimitUI.gameObject);
-            
+
             // 時間を止める
             _sceneStateController.ChangeSceneState(SceneState.Pause);
+        }
+        private void CheckPlayerGravChangeLimitTutorial()
+        {
+            if (Input.anyKeyDown)
+                EndPlayerGravChangeLimitTutorial();
+        }
+        private void EndPlayerGravChangeLimitTutorial()
+        {
+            // 時間を再開
+            _sceneStateController.ChangeSceneState(SceneState.InGame);
 
-            // ディレイを設けて、重力変更のチュートリアルが終わったことを確認する
-            var Coroutine = GeneralUtils.DelayCoroutine(1f, () =>
-            {
-                // ハイライト解除
-                _highlightController.gameObject.SetActive(false);
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
 
-                // 時間を再開
-                _sceneStateController.ChangeSceneState(SceneState.InGame);
-
-                StartResetPlayerGravChangeTutorial();
-            });
-            StartCoroutine(Coroutine);
+            StartResetPlayerGravChangeTutorial();
         }
         #endregion
-        
+
         #region Reset PlayerGravChange Tutorial
         private void StartResetPlayerGravChangeTutorial()
         {
@@ -642,6 +665,71 @@ namespace Behaviour.UI.InGame
         }
         private void EndResetPlayerGravChangeTutorial()
         {
+            StartGuidePlayerGravCheckPointTutorial();
+        }
+        #endregion
+
+        #region Gide Player Grav CheckPoint Tutorial
+
+        private void StartGuidePlayerGravCheckPointTutorial()
+        {
+            _currentState = TutorialState.GuidePlayerGravCheckPoint;
+            _uiDisplayTimer = 0f;
+        }
+        private void CheckGuidePlayerGravCheckPointTutorial()
+        {
+            if (_checkPoint.IsActive)
+                EndGuidePlayerGravCheckPointTutorial();
+        }
+        private void EndGuidePlayerGravCheckPointTutorial()
+        {
+            StartStaticGravAreaTutorial();
+        }
+        #endregion
+
+        #region StaticGravArea Tutorial
+        private void StartStaticGravAreaTutorial()
+        {
+            _currentState = TutorialState.StaticGravArea;
+            _uiDisplayTimer = 0f;
+            
+            // ハイライト設定
+            _highlightController.gameObject.SetActive(true);
+            _highlightController.SetHighlight(_staticGravArea.gameObject);
+        }
+        private void CheckStaticGravAreaTutorial()
+        {
+            if (_staticGravArea.WasPlayerEntered)
+                EndStaticGravAreaTutorial();
+        }
+        private void EndStaticGravAreaTutorial()
+        {
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
+
+            StartStaticGravAreaLimitTutorial();
+        }
+        #endregion
+
+        #region StaticGravArea Limit Tutorial
+        private void StartStaticGravAreaLimitTutorial()
+        {
+            _currentState = TutorialState.StaticGravAreaLimit;
+            _uiDisplayTimer = 0f;
+            
+            // ハイライト設定
+            _highlightController.gameObject.SetActive(true);
+            _highlightController.SetHighlight(_gravChangeLimitUI.gameObject);
+        }
+        private void CheckStaticGravAreaLimitTutorial()
+        {
+            EndStaticGravAreaLimitTutorial();
+        }
+        private void EndStaticGravAreaLimitTutorial()
+        {
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
+
             EndTutorial();
         }
         #endregion
@@ -665,8 +753,11 @@ namespace Behaviour.UI.InGame
         Coin,
         Goal,
         PlayerGravChange,
-        PlayerGravChange_End,
+        PlayerGravChangeLimit,
         ResetPlayerGravChange,
+        GuidePlayerGravCheckPoint,
+        StaticGravArea,
+        StaticGravAreaLimit,
     }
 
     public enum TutorialType
