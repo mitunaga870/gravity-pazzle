@@ -63,6 +63,10 @@ namespace Behaviour.UI.InGame
         [SerializeField]
         [Tooltip("ゴールチュートリアル対象")]
         private GoalTrigger _goalTrigger;
+        
+        [SerializeField]
+        [Tooltip("コインチュートリアル対象")]
+        private CoinTrigger _coinTrigger;
 
         [Header("UI")]
 
@@ -192,6 +196,9 @@ namespace Behaviour.UI.InGame
                     break;
                 case TutorialState.Pause:
                     CheckPauseTutorial();
+                    break;
+                case TutorialState.Coin:
+                    CheckCoinTutorial();
                     break;
                 case TutorialState.Goal:
                     CheckGoalTutorial();
@@ -524,6 +531,30 @@ namespace Behaviour.UI.InGame
         }
         private void EndPauseTutorial()
         {
+            StartCoinTutorial();
+        }
+        #endregion
+
+        #region Coin Tutorial
+        private void StartCoinTutorial()
+        {
+            _currentState = TutorialState.Coin;
+            _uiDisplayTimer = 0f;
+            
+            // ハイライト設定
+            _highlightController.gameObject.SetActive(true);
+            _highlightController.SetHighlight(_coinTrigger.gameObject);
+        }
+        private void CheckCoinTutorial()
+        {
+            if (_coinTrigger.IsCollected)
+                EndCoinTutorial();
+        }
+        private void EndCoinTutorial()
+        {
+            // ハイライト解除
+            _highlightController.gameObject.SetActive(false);
+
             StartGoalTutorial();
         }
         #endregion
@@ -563,6 +594,7 @@ namespace Behaviour.UI.InGame
         GravChangeLimit,
         CheckPoint,
         Pause,
+        Coin,
         Goal,
     }
 

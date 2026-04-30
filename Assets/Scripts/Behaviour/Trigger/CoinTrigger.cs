@@ -22,6 +22,8 @@ namespace Behaviour.Trigger
         private string coinId;
 
         private bool _collected;
+        
+        public bool IsCollected => _collected;
 
         private void Awake()
         {
