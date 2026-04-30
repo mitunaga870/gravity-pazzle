@@ -46,6 +46,11 @@ namespace Behaviour.Player.Abstract
         // ターゲットの重力方向を変更したか
         public bool IsTargetGravChanged { get; protected set; }
 
+        // チュートリアル用の状態フィールド
+        // プレイヤーが移動可能かどうか、チュートリアル中はfalseにする
+        public bool Movable = true;
+        
+
         #endregion
 
         #region Protected Fields
@@ -97,6 +102,8 @@ namespace Behaviour.Player.Abstract
         
         protected void Update()
         {
+            if (!Movable) return;
+
             // 重力適応中は移動しない
             if (GravBehaviour.IsGravAdapting)
             {

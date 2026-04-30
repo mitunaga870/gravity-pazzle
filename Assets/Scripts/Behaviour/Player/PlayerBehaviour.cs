@@ -26,6 +26,10 @@ namespace Behaviour.Player
         private const float Speed = 5f;
 
         private PlayerKey PlayerKey => SettingDataController.Instance.PlayerKey;
+        
+        [Header("ステージ限定制限解除")]
+        [SerializeField]
+        private bool changeablePlayerGrav = false;
 
 
         [Header("参照用")]
@@ -34,10 +38,26 @@ namespace Behaviour.Player
         private DirectionUIWrapper directionUIWrapper;
 
 
-        private GravType _targetGravType = GravType.XNegative;
+        private GravType _targetGravType = GravType.XPositive;
         private PlayerAnimBehaviour _animBehaviour;
 
         private bool _changeableGrav;
+
+        
+        #region チュートリアル用のフラグ
+        // オブジェクト重力変更が可能かどうか
+        public bool ChangeableObjGrav { get; set; } = true;
+        
+        // ターゲット重力方向を変更可能かどうか
+        public bool ChangeableTargetGravDirection { get; set; } = true;
+        
+        // プレイヤー重力変更をしたか
+        public bool IsPlayerGravChanged { get; private set; }
+        
+        // プレイヤー重力変更をリセットしたか
+        public bool IsPlayerGravResetted { get; private set; }
+        
+        #endregion
 
         #region Unity Methods
 
@@ -47,7 +67,7 @@ namespace Behaviour.Player
 
             if (GravBehaviour == null)
                 Debug.LogError("GravBehaviour is not assigned.");
-            
+
             _animBehaviour = GetComponent<PlayerAnimBehaviour>();
 
             // プレイヤー重力変更が可能か
@@ -55,7 +75,7 @@ namespace Behaviour.Player
             if (playerDataController == null) throw new Exception("PlayerDataController.Instance is not assigned.");
             var playerData = playerDataController.PlayerData;
             if (playerData == null) throw new Exception("PlayerDataController.PlayerData is not assigned.");
-            _changeableGrav = playerData.PlayerGravChangeLevel >= 1;
+            _changeableGrav = playerData.PlayerGravChangeLevel >= 1 || changeablePlayerGrav;
         }
 
         private new void Update()
@@ -77,14 +97,24 @@ namespace Behaviour.Player
             if (input.GetKeyDown(PlayerKey.SetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
-                if (playerVGrav != null) playerVGrav.SetGravAffected(_targetGravType);
+                if (playerVGrav != null) {
+                    playerVGrav.SetGravAffected(_targetGravType, changeablePlayerGrav).ContinueWith(task => {
+                            // 重力変更が成功したらフラグを立てる
+                        if (task.Result) IsPlayerGravChanged = true;
+                    });
+                }
             }
 
             // 元に戻す
             if (input.GetKeyDown(PlayerKey.UnsetPlayerGravKey) && _changeableGrav)
             {
                 var playerVGrav = GravBehaviour as VGravBehaviour;
-                if (playerVGrav != null) playerVGrav.UnsetGravAffected();
+                if (playerVGrav != null) {
+                    playerVGrav.UnsetGravAffected().ContinueWith(task => {
+                            // 重力変更が解除されたらフラグを立てる
+                        if (task.Result) IsPlayerGravResetted = true;
+                    });
+                }
             }
 
             // 落下をアニメーションに通知
@@ -144,6 +174,8 @@ namespace Behaviour.Player
         /// </summary>
         private void SetGrav()
         {
+            if (!ChangeableObjGrav) return;
+
             if (!input.GetMouseButton((int)PlayerKey.SetObjGravButton, SceneState.InGame)) return;
             
             // カメラの先のオブジェクトを取得
@@ -165,6 +197,8 @@ namespace Behaviour.Player
         /// </summary>
         private void UnsetGrav()
         {
+            if (!ChangeableObjGrav) return;
+
             if (!input.GetMouseButton((int)PlayerKey.UnsetObjGravButton, SceneState.InGame))
                 return;
 
@@ -186,6 +220,8 @@ namespace Behaviour.Player
         {
             var method = SettingDataController.Instance.UserSettings.GravSelectMethod;
             if (method == null) return;
+            
+            if (!ChangeableTargetGravDirection) return;
 
             switch (method)
             {

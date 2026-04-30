@@ -25,12 +25,14 @@ namespace Behaviour.Gravity
         // 重力を変えられたか
         public bool IsGravChanged { get; private set; }
         
-        # region Unity Methods
+        public bool IsGravResetted { get; private set; }
+        
+        #region Unity Methods
 
         protected override void Start()
         {
             _isFocusCameraNotNull = focusCamera != null;
-            
+
             base.Start();
         }
 
@@ -101,6 +103,8 @@ namespace Behaviour.Gravity
                 // 実際の状態遷移に失敗した場合は操作登録をロールバック
                 if (registerOperation && manager != null && !manager.IsReverting)
                 {
+                    Debug.LogWarning($"[{name}] 重力操作の上限({manager.MaxConcurrentOperations})に達しているため変更できません。");
+
                     manager.RollbackOperation(this, handle);
 
                     // 既存操作の再要求失敗など、実質ノーオペに近い失敗ではSEを鳴らさない
@@ -112,7 +116,6 @@ namespace Behaviour.Gravity
             }
 
             IsGravChanged = true;
-
             if (previousType != gravType)
                 SoundController.Instance?.PlaySe("ChangeGrav");
 
@@ -148,6 +151,8 @@ namespace Behaviour.Gravity
         /// </summary>
         public virtual async Task<bool> UnsetGravAffected()
         {
+            IsGravResetted = true;
+
             // 自分の操作を取得
             var manager = GravityOperationManager.Instance;
             if (!manager) return false;

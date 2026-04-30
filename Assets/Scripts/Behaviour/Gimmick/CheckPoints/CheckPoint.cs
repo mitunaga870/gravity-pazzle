@@ -20,7 +20,7 @@ namespace Behaviour.Gimmick.CheckPoints
         private CheckPointAnim _checkPointAnim;
         
         private bool _isActive;
-        
+        public bool IsActive => _isActive;
         private void Start()
         {
             _stageDataController = StageDataController.Instance;

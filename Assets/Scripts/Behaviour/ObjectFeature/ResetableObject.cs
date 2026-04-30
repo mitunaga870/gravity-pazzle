@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using Behaviour.Camera;
 using Behaviour.Gravity;
@@ -103,6 +103,10 @@ namespace Behaviour.ObjectFeature
         private void ResetGravityState()
         {
             if (!_hasGravBehaviour) return;
+
+            var manager = GravityOperationManager.Instance;
+            if (manager != null)
+                manager.ForceRemoveOperation(_gravBehaviour);
 
             // オブジェクトの重力を初期設定に戻す
             _ = _gravBehaviour.SetGravAffected(_initialGravType, true, false);

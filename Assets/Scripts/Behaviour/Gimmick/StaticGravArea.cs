@@ -15,6 +15,8 @@ namespace Behaviour.Gimmick
 
         [SerializeField]
         private GravType _gravType = GravType.YNegative;
+        
+        public bool WasPlayerEntered { get; private set; }
 
         // 触ってるオブジェクトの重力を変える
         private void OnTriggerStay(Collider other)
@@ -27,7 +29,9 @@ namespace Behaviour.Gimmick
                 return;
 
             // GravBehaviourの重力を設定する
-            gravBehaviour.SetGravAffected(_gravType, false, false);
+            gravBehaviour.SetGravAffected(_gravType, false, false).ContinueWith(task => {
+                if (task.Result) WasPlayerEntered = true;
+            });
         }
 
         /// <summary>
