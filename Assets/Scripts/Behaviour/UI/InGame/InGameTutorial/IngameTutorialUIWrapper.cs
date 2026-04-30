@@ -489,7 +489,7 @@ namespace Behaviour.UI.InGame
 
             // チェックポイントを表示
             _highlightController.gameObject.SetActive(true);
-            _highlightController.SetHighlight(_checkPoint.gameObject);
+            _highlightController.SetHighlight(_checkPoint.gameObject, 0.25f);
         }
 
         private void CheckCheckPointTutorial()

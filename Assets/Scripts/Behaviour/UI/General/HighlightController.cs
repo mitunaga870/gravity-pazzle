@@ -26,6 +26,9 @@ namespace Behaviour.UI.General
         
         // highlightさせたいオブジェクト
         private GameObject _target;
+        
+        // 任意の半径
+        private float? _customRadius = null;
 
         private void SetMaskVisible(bool visible)
         {
@@ -206,7 +209,7 @@ namespace Behaviour.UI.General
 
             Vector2 uvPos;
             float radius;
-
+            
             if (isMouseFollowMode && Debug.isDebugBuild)
             {
                 var targetPos = Input.mousePosition;
@@ -244,6 +247,10 @@ namespace Behaviour.UI.General
                 _material.SetFloat(Radius, 0f);
                 return;
             }
+            
+            // 任意の半径が設定されている場合はそれを使用
+            if (_customRadius.HasValue)
+                radius = _customRadius.Value;
 
             _material.SetFloat(Radius, radius);
             _material.SetVector(Center, uvPos);
@@ -253,9 +260,12 @@ namespace Behaviour.UI.General
 
         #region Public Method
 
-        public void SetHighlight(GameObject highlightTarget)
-        {
+        public void SetHighlight(
+            GameObject highlightTarget,
+            float? customRadius = null
+        ){
             _target = highlightTarget;
+            _customRadius = customRadius;
         }
 
         public void ClearHighlightIfCurrent()
