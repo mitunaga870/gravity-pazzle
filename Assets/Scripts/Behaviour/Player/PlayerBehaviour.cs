@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General.DontDestoroy;
@@ -80,6 +80,9 @@ namespace Behaviour.Player
 
         private new void Update()
         {
+            var isFalling = CalcIsFalling();
+            SetFallingState(isFalling);
+
             // 既定を継承しているので、Updateメソッドをオーバーライド
             base.Update();
 
@@ -113,20 +116,6 @@ namespace Behaviour.Player
                     });
                 }
             }
-
-            // 落下方向速度を取得
-            var velocity = PlayerRigidBody.linearVelocity;
-            var gravDirection = GravUtils.GetGravDirectionUnit(GravBehaviour.GravType);
-            var fallVelocity = Vector3.Dot(velocity, gravDirection);
-            const float fallThreshold = 0.1f;
-            // 重力変更中かどうか
-            var isGravChanging = GravBehaviour.IsGravAdapting;
-            // 接地しているか
-            var isGrounded = Physics.Raycast(transform.position, gravDirection, gravDirection.magnitude);
-            // 落下しているか
-            var isFalling =
-                (fallVelocity > fallThreshold && !isGrounded) ||
-                (!isGrounded && isGravChanging);
 
             // 落下をアニメーションに通知
             _animBehaviour.IsFalling(isFalling);
@@ -295,6 +284,25 @@ namespace Behaviour.Player
                     _targetGravType = GravBehaviour.GravType;
                 }
             }
+        }
+
+        private bool CalcIsFalling()
+        {
+            // 落下方向速度を取得
+            var velocity = PlayerRigidBody.linearVelocity;
+            var gravDirection = GravUtils.GetGravDirectionUnit(GravBehaviour.GravType);
+            var fallVelocity = Vector3.Dot(velocity, gravDirection);
+            const float fallThreshold = 0.1f;
+
+            // 重力変更中かどうか
+            var isGravChanging = GravBehaviour.IsGravAdapting;
+
+            // 接地しているか
+            var isGrounded = Physics.Raycast(transform.position, gravDirection, gravDirection.magnitude);
+
+            // 落下しているか
+            return (fallVelocity > fallThreshold && !isGrounded) ||
+                   (!isGrounded && isGravChanging);
         }
 
         #endregion

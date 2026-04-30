@@ -68,6 +68,9 @@ namespace Behaviour.Trigger
             StageDataController.Instance.CollectCoin(coinId);
             PlayerDataController.Instance.CollectCoin(1);
 
+            // SEを再生
+            SoundController.Instance.PlaySe("Get");
+
             // コインオブジェクトを非表示にする
             gameObject.SetActive(false);
         }

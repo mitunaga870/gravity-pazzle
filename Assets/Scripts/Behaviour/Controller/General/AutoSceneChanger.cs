@@ -1,7 +1,8 @@
-﻿#region
+#region
 
 using Lib.DataClass.ForInspector;
 using Lib.Logic;
+using Behaviour.Controller.General.DontDestoroy;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -25,8 +26,25 @@ namespace Behaviour.Controller.General
         private void Start()
         {
             // シーン変更までの時間を待つ
-            StartCoroutine(GeneralUtils.DelayCoroutine(changeTime,
-                () => { SceneManager.LoadScene(nextSceneName.SceneName); }));
+            StartCoroutine(GeneralUtils.DelayCoroutine(
+                changeTime,
+                () =>
+                {
+                    var soundController = SoundController.Instance;
+                    if (soundController != null)
+                    {
+                        soundController.PlaySe("SceneTransition");
+                    }
+
+                    StartCoroutine(LoadNextSceneWithSceneTransitionSe());
+                }));
+        }
+
+        private System.Collections.IEnumerator LoadNextSceneWithSceneTransitionSe()
+        {
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
+            SceneManager.LoadScene(nextSceneName.SceneName);
         }
     }
 }

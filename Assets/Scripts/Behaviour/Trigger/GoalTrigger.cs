@@ -1,9 +1,11 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Gravity.Abstract;
 using Behaviour.Player.Abstract;
+using ScriptableObj.Setting;
 using UnityEngine;
 
 #endregion
@@ -36,6 +38,11 @@ namespace Behaviour.Trigger
         {
             // プレイヤー以外のオブジェクトがトリガーに入った場合は何もしない
             if (!other.CompareTag("Player")) return;
+
+            // ゴール時にステージクリアBGMを再生する
+            var soundController = SoundController.Instance;
+            if (soundController == null) throw new Exception("SoundController not found.");
+            soundController.PlayEventBgm(EventBgmType.StageClear, true);
 
             // ゴールに到達したときのコールバックを実行
             var playerBehaviour = other.GetComponent<APlayerBehaviour>();

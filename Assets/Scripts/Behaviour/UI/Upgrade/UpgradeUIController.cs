@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General;
@@ -90,12 +90,16 @@ namespace Behaviour.UI.Upgrade
             
             if (result)
             {
+                SoundController.Instance?.PlaySe("Upgraded");
+                
                 // 強化成功時の初期化
                 InitButton(UpgradeType.PlayerGravChange);
                 CheckUpgradeable();
             }
             else
             {
+                SoundController.Instance?.PlaySe("Fail");
+
                 // 失敗時は揺らす
                 var button = GetButton(type);
                 var rectTransform = button.GetComponent<RectTransform>();

@@ -223,6 +223,7 @@ GameObject:
   - component: {fileID: 4696166363998768506}
   - component: {fileID: 3829321695325624887}
   - component: {fileID: 3750352260779132260}
+  - component: {fileID: 9088040700190419926}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -343,6 +344,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &9088040700190419926
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 922556482521370204}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 951b00e67d4aeba479d7ee2f44de8962, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  seId: Click
 --- !u!1 &1036880135867796592
 GameObject:
   m_ObjectHideFlags: 0
@@ -1534,8 +1548,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 066bf506d80bae54585543e698ed8ad4, type: 2}
   resolutionDropdown: {fileID: 7076373664579155164}
   masterVolumeSlider: {fileID: 8018865081525626009}
-  bgmVolumeSlider: {fileID: 3646701700911215585}
-  seVolumeSlider: {fileID: 6432704305689565233}
+  bgmVolumeSlider: {fileID: 6432704305689565233}
+  seVolumeSlider: {fileID: 3646701700911215585}
   tutorialToggle: {fileID: 4928798072152284003}
   gravSelectMethodDropdown: {fileID: 7488064283426036594}
   resetButton: {fileID: 1956497383303148542}

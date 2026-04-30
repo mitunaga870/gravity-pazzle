@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
@@ -49,7 +49,19 @@ namespace Behaviour.Controller.Demo
                 surveyController.ResetDemo();
 
 
-            // シーンに遷移
+            StartCoroutine(ReturnToTitleWithSceneTransitionSe());
+        }
+
+        private System.Collections.IEnumerator ReturnToTitleWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
             SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
         }
     }

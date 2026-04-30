@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using System.Collections.Generic;
@@ -252,12 +252,25 @@ namespace Behaviour.UI.General.Settings
             var instance = StageDataController.Instance;
             if (instance != null) instance.DontSaveOnDestroy = true;
 
-            SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
+            StartCoroutine(ReturnToTitleWithSceneTransitionSe());
         }
 
         #endregion
 
         #region Public Methods
+
+        private System.Collections.IEnumerator ReturnToTitleWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
+            SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.TitleScene);
+        }
 
         public void ShowSettings()
         {
