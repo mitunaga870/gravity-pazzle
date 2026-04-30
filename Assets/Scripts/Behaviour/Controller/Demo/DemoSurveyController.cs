@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using Behaviour.Controller.General;
 using Behaviour.Controller.General.DontDestoroy;
@@ -119,8 +119,18 @@ namespace Behaviour.Controller.Demo
 
             // 数秒待ってからアンケートへ遷移
             var waitCoroutine =
-                GeneralUtils.DelayCoroutine(delayForLoad, () =>
-                    SceneManager.LoadScene(SurveySceneName.SceneName));
+                GeneralUtils.DelayCoroutine(
+                    delayForLoad,
+                    () =>
+                    {
+                        var soundController = SoundController.Instance;
+                        if (soundController != null)
+                        {
+                            soundController.PlaySe("SceneTransition");
+                        }
+
+                        SceneManager.LoadScene(SurveySceneName.SceneName);
+                    });
             StartCoroutine(waitCoroutine);
 
             // 初期化フラグを元に戻す

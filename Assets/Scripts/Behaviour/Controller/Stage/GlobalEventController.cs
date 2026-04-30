@@ -1,7 +1,8 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.ObjectFeature;
 using Lib.State.Scene;
 using UnityEngine;
@@ -41,16 +42,13 @@ namespace Behaviour.Controller
         [Obsolete("Obsolete")]
         private void Update()
         {
-            
-            // Shift+Rキーが押されたら、全てのResetableObjectを初期位置に戻す
+            // Shift+Rキーが押されたら、シーン遷移SEを再生してからシーンを再読み込みする
             if (
                 (Input.GetKey(KeyCode.LeftShift, SceneState.InGame)
                  || Input.GetKey(KeyCode.RightShift, SceneState.InGame))
                 && Input.GetKeyDown(KeyCode.R, SceneState.InGame))
             {
-                // シーン再読み込み
-                SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-                IsHardResetCalled = true;
+                StartCoroutine(HardResetWithSceneTransitionSe());
             }
             // Rキーが押されたら、全てのResetableObjectを初期位置に戻す
             else if (Input.GetKeyDown(KeyCode.R, SceneState.InGame))
@@ -70,6 +68,20 @@ namespace Behaviour.Controller
             {
                 resetableObject.ResetPosition();
             }
+        }
+
+        private System.Collections.IEnumerator HardResetWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            IsHardResetCalled = true;
         }
         #endregion
     }

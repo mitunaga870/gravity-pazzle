@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System.Collections.Generic;
 using Coffee.UIEffects;
@@ -9,6 +9,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 using UnityEngine.UI;
+using Behaviour.Controller.General.DontDestoroy;
 
 #endregion
 
@@ -180,9 +181,22 @@ namespace Behaviour.UI.StageSelect
         /// </summary>
         public void TransitionToStage()
         {
-            SceneManager.LoadScene(_stage.StageScene);
+            StartCoroutine(TransitionToStageWithSceneTransitionSe());
         }
 
         #endregion
+
+        private System.Collections.IEnumerator TransitionToStageWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
+            SceneManager.LoadScene(_stage.StageScene);
+        }
     }
 }

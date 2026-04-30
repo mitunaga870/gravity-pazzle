@@ -1,4 +1,4 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Controller.General.DontDestoroy;
@@ -64,7 +64,9 @@ namespace Behaviour.UI.InGame
         private void Update()
         {
             if (_movableToNext && Input.anyKeyDown)
-                SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
+            {
+                StartCoroutine(ReturnToStageSelectWithSceneTransitionSe());
+            }
         }
 
         private void OnGoal()
@@ -94,6 +96,19 @@ namespace Behaviour.UI.InGame
             gameObject.SetActive(true);
             var delay = GeneralUtils.DelayCoroutine(1f, () => { _movableToNext = true; });
             StartCoroutine(delay);
+        }
+
+        private System.Collections.IEnumerator ReturnToStageSelectWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
+            SceneManager.LoadScene(SettingDataController.Instance.EnvironmentSetting.StageSelectScene);
         }
     }
 }

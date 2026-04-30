@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Lib.Logic.General;
@@ -31,8 +31,30 @@ namespace Behaviour.UI
             var instance = StageDataController.Instance;
             if (instance != null) instance.DontSaveOnDestroy = true;
             
-            // 現状のシーンを再読み込み
+            var instanceGo = new GameObject("ResetButtonSceneReloader");
+            instanceGo.AddComponent<ResetButtonSceneReloader>();
+        }
+    }
+
+    internal class ResetButtonSceneReloader : MonoBehaviour
+    {
+        private void Start()
+        {
+            StartCoroutine(ReloadCurrentSceneWithSceneTransitionSe());
+        }
+
+        private System.Collections.IEnumerator ReloadCurrentSceneWithSceneTransitionSe()
+        {
+            var soundController = SoundController.Instance;
+            if (soundController != null)
+            {
+                soundController.PlaySe("SceneTransition");
+            }
+
+            yield return new WaitForSeconds(SoundController.GetSceneTransitionDelaySeconds());
+
             SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+            Destroy(gameObject);
         }
     }
 }

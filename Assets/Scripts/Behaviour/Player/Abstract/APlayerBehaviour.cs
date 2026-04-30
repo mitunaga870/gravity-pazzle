@@ -1,8 +1,9 @@
-﻿#region
+#region
 
 using System;
 using Behaviour.Camera;
 using Behaviour.Controller.General;
+using Behaviour.Controller.General.DontDestoroy;
 using Behaviour.Controller.Stage;
 using Behaviour.Gravity.Abstract;
 using UnityEngine;
@@ -61,8 +62,12 @@ namespace Behaviour.Player.Abstract
         #region Private Fields
 
         private const float AccelerationTime = 0.2f;
+        private const string FootstepsSeId = "Footsteps";
+        private const string FallSeId = "Fall";
+        private const float FallSeFadeOutSeconds = 0.2f;
 
         private bool _wasMoved;
+        private bool _isFalling;
         private float _acceleratedTime;
 
         #endregion
@@ -94,17 +99,23 @@ namespace Behaviour.Player.Abstract
         {
             // 重力適応中は移動しない
             if (GravBehaviour.IsGravAdapting)
+            {
+                HandleFootstepsSe(false);
                 return;
+            }
             
             // プレイヤーの移動
             var moveSpeed = GetMoveSpeed();
             playerRigidBody.MovePosition(transform.position + moveSpeed * Time.deltaTime);
+            var isMoving = moveSpeed != Vector3.zero;
 
             // 移動したかどうかを更新
-            IsFirstMoved = IsFirstMoved || moveSpeed != Vector3.zero;
+            IsFirstMoved = IsFirstMoved || isMoving;
+
+            HandleFootstepsSe(isMoving);
 
             // 速度があれば、移動方向を向く
-            if (moveSpeed != Vector3.zero)
+            if (isMoving)
             {
                 // 値が小さいとLookRotationでエラーになるため、適当な数をかける
                 var adjustedMoveDirection = moveSpeed * 1000f;
@@ -122,5 +133,58 @@ namespace Behaviour.Player.Abstract
          * 移動ベクトルを取得する
          */
         protected abstract Vector3 GetMoveSpeed();
+
+        public void SetFallingState(bool isFalling)
+        {
+            if (_isFalling == isFalling) return;
+            _isFalling = isFalling;
+
+            var soundController = SoundController.Instance;
+            if (soundController == null) return;
+
+            if (_isFalling)
+            {
+                if (soundController.IsLoopSePlaying)
+                    soundController.StopLoopSe();
+                soundController.PlayLoopSe(FallSeId);
+                _wasMoved = false;
+                return;
+            }
+
+            if (soundController.IsLoopSePlaying)
+                soundController.StopLoopSeWithFade(FallSeFadeOutSeconds);
+        }
+
+        private void HandleFootstepsSe(bool isMoving)
+        {
+            if (_isFalling)
+            {
+                _wasMoved = false;
+                return;
+            }
+
+            if (_wasMoved == isMoving) return;
+
+            var soundController = SoundController.Instance;
+            if (soundController == null)
+            {
+                _wasMoved = isMoving;
+                return;
+            }
+
+            // Fall SE のフェードアウト中は Footsteps の再生開始を遅らせる
+            if (isMoving && soundController.IsLoopSeFadingOut)
+            {
+                _wasMoved = false;
+                return;
+            }
+
+            if (isMoving)
+                soundController.PlayLoopSe(FootstepsSeId);
+            else if (soundController.IsLoopSePlaying)
+                soundController.StopLoopSe();
+
+            _wasMoved = isMoving;
+        }
     }
 }
