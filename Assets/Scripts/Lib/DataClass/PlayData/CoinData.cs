@@ -1,6 +1,7 @@
-﻿#region
+#region
 
 using System.Collections.Immutable;
+using System.Linq;
 using Lib.DataClass.Interface;
 using Lib.Logic.General;
 using Newtonsoft.Json;
@@ -26,13 +27,12 @@ namespace Lib.DataClass.PlayData
         }
 
         [JsonConstructor]
-        public CoinData(
-            string stageId,
-            ImmutableHashSet<string> collectedCoinIds
-        )
+        public CoinData(string stageId, string[] collectedCoinIds)
         {
             StageId = stageId;
-            CollectedCoinIds = collectedCoinIds;
+            CollectedCoinIds = collectedCoinIds is { Length: > 0 }
+                ? collectedCoinIds.ToImmutableHashSet()
+                : ImmutableHashSet<string>.Empty;
         }
 
         #endregion
@@ -40,6 +40,7 @@ namespace Lib.DataClass.PlayData
         #region Public Fields
 
         // 取得したコインの識別子を保持するセット
+        [JsonIgnore]
         public readonly ImmutableHashSet<string> CollectedCoinIds;
 
         // 情報を保持しているステージID
@@ -47,11 +48,18 @@ namespace Lib.DataClass.PlayData
 
         #endregion
 
+        #region Serialization
+
+        [JsonProperty("CollectedCoinIds")]
+        private string[] CollectedCoinIdsForJson => CollectedCoinIds.ToArray();
+
+        #endregion
+
         #region deserver
 
         private CoinData DeserveCollectedCoinIds(ImmutableHashSet<string> collectedCoinIds)
         {
-            return new CoinData(StageId, collectedCoinIds);
+            return new CoinData(StageId, collectedCoinIds.ToArray());
         }
 
         #endregion
