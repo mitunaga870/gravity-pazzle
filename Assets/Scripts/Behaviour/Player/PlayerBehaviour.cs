@@ -23,7 +23,7 @@ namespace Behaviour.Player
     [RequireComponent(typeof(PlayerAnimBehaviour))]
     public class PlayerBehaviour : APlayerBehaviour
     {
-        private const float Speed = 5f;
+        private const float Speed = 7.5f;
 
         private PlayerKey PlayerKey => SettingDataController.Instance.PlayerKey;
         
