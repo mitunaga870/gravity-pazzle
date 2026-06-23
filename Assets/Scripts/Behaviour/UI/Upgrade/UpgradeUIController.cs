@@ -31,6 +31,9 @@ namespace Behaviour.UI.Upgrade
         
         [SerializeField]
         private TMP_Text hovCost;
+        
+        [SerializeField]
+        private TMP_Text curCoinText;
 
         [Header("UI要素：各強化要素の強化ボタン")]
         [SerializeField]
@@ -62,6 +65,10 @@ namespace Behaviour.UI.Upgrade
 
         private void Update()
         {
+            var curCoin = _playerDataController.PlayerData.CollectedCoinCount;
+            curCoinText.text = $"所持蒸籠：{curCoin}枚";
+
+
             if (_inputController.GetKey(KeyCode.Escape, SceneState.Upgrade)) HideUpgradeUI();
         }
 
